@@ -1,0 +1,292 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<EventItems>
+  <Event name="AcesCoin">
+    <Item>/Items/Weapons/Basic/HandGuns/Revolver/Weapon_Revolver</Item>
+  </Event>
+  <Event name="ArmorVault">
+    <Item>/Items/Armor/Akari/Armor_Head_Akari</Item>
+    <Item>/Items/Armor/Akari/Armor_Body_Akari</Item>
+    <Item>/Items/Armor/Akari/Armor_Legs_Akari</Item>
+  </Event>
+  <Event name="BandOfStrength">
+    <Item>/Items/Trinkets/BandOfStrength</Item>
+  </Event>
+  <Event name="BlinkFiend">
+    <Item>/Items/Mods/BlinkToken</Item>
+  </Event>
+  <Event name="BlinkThief">
+    <Item>/Items/Weapons/Basic/RicochetRifle/Weapon_Pan_RicochetRifle</Item>
+    <Item>/Items/Trinkets/Trinket_CelerityStone</Item>
+  </Event>
+  <Event name="BloodFont">
+    <Item>/Items/Trinkets/Trinket_BloodFont</Item>
+  </Event>
+  <Event name="Brabus">
+    <Item>/Items/Mods/ExplosiveShot</Item>
+    <Item>/Items/Armor/Bandit/Armor_Head_Bandit</Item>
+    <Item>/Items/Armor/Bandit/Armor_Body_Bandit</Item>
+    <Item>/Items/Armor/Bandit/Armor_Legs_Bandit</Item>
+    <Item>/Items/Traits/Trait_ColdAsIce</Item>
+  </Event>
+  <Event name="BrutalMark">
+    <Item>/Items/Trinkets/BrutalMark</Item>
+  </Event>
+  <Event name="ButchersFetish">
+    <Item>/Items/Trinkets/ButchersFetish</Item>
+  </Event>
+  <Event name="CleansingJewel">
+    <Item>/Items/Trinkets/CleansingJewel</Item>
+  </Event>
+  <Event name="DevouringLoop">
+    <Item>/Items/Trinkets/DevouringLoop</Item>
+  </Event>
+  <Event name="DoeShrine">
+    <Item>/Items/Trinkets/Trinket_ScavengersBauble</Item>
+    <Item>/Items/Traits/Trait_Swiftness</Item>
+  </Event>
+  <Event name="DrifterMask">
+    <Item>/Items/Armor/Drifter/Armor_Head_Drifter</Item>
+  </Event>
+  <Event name="EzlansBand">
+    <Item>/Items/Trinkets/Trinket_EzlansBand</Item>
+  </Event>
+  <Event name="Fatty">
+    <Item>/Items/Weapons/Boss/Devastator/Weapon_Swamp_Devastator</Item>
+    <Item>/Items/Traits/Trait_Glutton</Item>
+  </Event>
+  <Event name="Flautist">
+    <Item>/Items/Trinkets/Trinket_HeartOfTheWolf</Item>
+    <Item>/Items/Traits/Trait_Swiftness</Item>
+  </Event>
+  <Event name="FoundersHideout">
+    <Item>/Items/Armor/Drifter/Armor_Body_Drifter</Item>
+    <Item>/Items/Armor/Drifter/Armor_Legs_Drifter</Item>
+  </Event>
+  <Event name="GalenicCharm">
+    <Item>/Items/Trinkets/Trinket_GalenicCharm</Item>
+  </Event>
+  <Event name="GravityStone">
+    <Item>/Items/Trinkets/GravityStone</Item>
+  </Event>
+  <Event name="GunslingersCharm">
+    <Item>/Items/Trinkets/Trinket_GunslingersCharm</Item>
+  </Event>
+  <Event name="HeartSeeker">
+    <Item>/Items/Trinkets/HeartSeeker</Item>
+  </Event>
+  <Event name="HoundMaster">
+    <Item>/Items/Mods/HowlersImmunity</Item>
+  </Event>
+  <Event name="HuntersBand">
+    <Item>/Items/Trinkets/HuntersBand</Item>
+  </Event>
+  <Event name="HuntersHalo">
+    <Item>/Items/Trinkets/Trinket_HuntersHalo</Item>
+  </Event>
+  <Event name="HuntersHideout">
+    <Item>/Items/Weapons/Basic/HandGuns/HuntingPistol/Weapon_HuntingPistol</Item>
+    <Item>/Items/Traits/Trait_ShadowWalker</Item>
+  </Event>
+  <Event name="ImmolatorAndZephyr">
+    <Item>/Items/Mods/WildfireShot</Item>
+  </Event>
+  <Event name="KeepersRing">
+    <Item>/Items/Trinkets/Trinket_KeepersRing</Item>
+  </Event>
+  <Event name="KinCaller">
+    <Item>/Items/Mods/SongOfSwords</Item>
+  </Event>
+  <Event name="LastWill">
+    <Item>/Items/Weapons/Basic/LongGuns/AssaultRifle/Weapon_AssaultRifle</Item>
+    <Item>/Items/Traits/Trait_Spirit</Item>
+  </Event>
+  <Event name="LeechEmber">
+    <Item>/Items/Trinkets/Trinket_LeechEmber</Item>
+  </Event>
+  <Event name="LizAndLiz">
+    <Item>/Items/Weapons/Basic/LongGuns/MachineGun/Weapon_Machinegun</Item>
+    <Item>/Items/Traits/Trait_Warrior</Item>
+  </Event>
+  <Event name="MadMerchant">
+    <Item>/Items/QuestItems/TwistedMask/Quest_TwistedMask</Item>
+  </Event>
+  <Event name="Monolith">
+    <Item>/Items/Armor/Void/Armor_Head_Void</Item>
+    <Item>/Items/Armor/Void/Armor_Body_Void</Item>
+    <Item>/Items/Armor/Void/Armor_Legs_Void</Item>
+  </Event>
+  <Event name="MothersRing">
+    <Item>/Items/Trinkets/Trinket_MothersRing</Item>
+  </Event>
+  <Event name="MudTooth">
+    <Item>/Quests/Quest_OverworldPOI_MudTooth/Quest_BrabusPocketWatch</Item>
+  </Event>
+  <Event name="OldManAndConstruct">
+    <Item>/Items/Trinkets/JewelOfTheBlackSun</Item>
+    <Item>/Items/Trinkets/MendersCharm</Item>
+    <Item>/Items/Armor/Osseous/Armor_Head_Osseous</Item>
+    <Item>/Items/Armor/Osseous/Armor_Body_Osseous</Item>
+    <Item>/Items/Armor/Osseous/Armor_Legs_Osseous</Item>
+    <Item>/Items/Mods/IronSentinel</Item>
+  </Event>
+  <Event name="Penitent">
+    <Item>/Items/Trinkets/Trinket_LetosAmulet</Item>
+  </Event>
+  <Event name="PillarOfStone">
+    <Item>/Items/Trinkets/Trinket_PillarOfStone</Item>
+  </Event>
+  <Event name="RazorStone">
+    <Item>/Items/Trinkets/Razorstone</Item>
+  </Event>
+  <Event name="ReggiesRing">
+    <Item>/Items/Traits/Trait_Scavenger</Item>
+  </Event>
+  <Event name="RingOfEvasion">
+    <Item>/Items/Trinkets/Trinket_RingOfEvasion</Item>
+  </Event>
+  <Event name="RockOfAnguish">
+    <Item>/Items/Trinkets/RockOfAnguish</Item>
+  </Event>
+  <Event name="RootBrute">
+    <Item>/Items/Mods/MantleOfThorns</Item>
+  </Event>
+  <Event name="RootCultist">
+    <Item>/Items/Trinkets/BraidedThorns</Item>
+    <Item>/Items/Trinkets/Trinket_RootCirclet</Item>
+  </Event>
+  <Event name="RootDragon">
+    <Item>/Items/Weapons/Boss/Root_Spitfire/Weapon_Root_Spitfire</Item>
+    <Item>/Items/Weapons/Boss/Root_Smolder/Weapon_Root_Smolder</Item>
+  </Event>
+  <Event name="RootTumbleweed">
+    <Item>/Items/Mods/SeedCaller</Item>
+  </Event>
+  <Event name="RootWraith">
+    <Item>/Items/Mods/Rattleweed</Item>
+  </Event>
+  <Event name="RootEnt">
+    <Item>/Items/Weapons/Boss/Root_SporeLauncher/Weapon_Root_SporeLauncher</Item>
+    <Item>/Items/Weapons/Boss/Root_PetrifiedMaul/Weapon_Root_PetrifiedMaul</Item>
+    <Item>/Items/Traits/Trait_QuickHands</Item>
+  </Event>
+  <Event name="RootShrine">
+    <Item>/Items/Armor/Twisted/Armor_Head_Twisted</Item>
+    <Item>/Items/Armor/Twisted/Armor_Body_Twisted</Item>
+    <Item>/Items/Armor/Twisted/Armor_Legs_Twisted</Item>
+  </Event>
+  <Event name="Sagestone">
+    <Item>/Items/Trinkets/Trinket_Sagestone</Item>
+  </Event>
+  <Event name="Sentinel">
+    <Item>/Items/Mods/Beckon</Item>
+  </Event>
+  <Event name="SlimeHulk">
+    <Item>/Items/Mods/CorrosiveAura</Item>
+    <Item>/Items/Traits/Trait_Catalyst</Item>
+  </Event>
+  <Event name="Splitter">
+    <Item>/Items/Mods/FlickerCloak</Item>
+  </Event>
+  <Event name="StoneOfBalance">
+    <Item>/Items/Trinkets/Trinket_StoneOfBalance</Item>
+  </Event>
+  <Event name="StormAmulet">
+    <Item>/Items/Trinkets/Trinket_StormAmulet</Item>
+  </Event>
+  <Event name="StormCaller">
+    <Item>/Items/Mods/StormCaller</Item>
+  </Event>
+  <Event name="StuckMerchant">
+    <Item>/Items/Weapons/Basic/Spear/Weapon_Pan_Spear</Item>
+    <Item>/Items/Armor/Radiant/Armor_Legs_Radiant</Item>
+    <Item>/Items/Armor/Radiant/Armor_Body_Radiant</Item>
+    <Item>/Items/Armor/Radiant/Armor_Head_Radiant</Item>
+    <Item>/Items/Trinkets/Trinket_GuardiansRing</Item>
+    <Item>/Items/Traits/Trait_GuardiansBlessing</Item>
+  </Event>
+  <Event name="SwampGuardian">
+    <Item>/Items/Weapons/Boss/HiveCannon/Weapon_Swamp_HiveCannon</Item>
+    <Item>/Items/Weapons/Boss/GuardianAxe/Weapon_Swamp_GuardianAxe</Item>
+    <Item>/Items/Traits/Trait_Executioner</Item>
+  </Event>
+  <Event name="SwarmMaster">
+    <Item>/Items/Mods/BreathOfDesert</Item>
+  </Event>
+  <Event name="TheCleanRoom">
+    <Item>/Items/Weapons/Basic/Wasteland_Flail/Weapon_Wasteland_Flail</Item>
+  </Event>
+  <Event name="TheHarrow">
+    <Item>/Items/Weapons/Boss/Defiler/Weapon_Wasteland_Defiler</Item>
+    <Item>/Items/Weapons/Boss/LostHarpoon/Weapon_Wasteland_LostHarpoon</Item>
+  </Event>
+  <Event name="TheLostGantry">
+    <Item>/Items/Weapons/Basic/Wasteland_BeamRifle/Weapon_Wasteland_BeamRifle</Item>
+  </Event>
+  <Event name="TheRisen">
+    <Item>/Items/Trinkets/SoulAnchor</Item>
+  </Event>
+  <Event name="TotemFather">
+    <Item>/Items/Traits/Trait_ArcaneStrike</Item>
+    <Item>/Items/Weapons/Boss/Pan_EyeOfTheStorm/Weapon_Pan_EyeOfTheStorm</Item>
+    <Item>/Items/Weapons/Boss/Pan_VoiceOfTheTempest/Weapon_Pan_VoiceOfTheTempest</Item>
+  </Event>
+  <Event name="Tyrant">
+    <Item>/Items/Mods/Swarm</Item>
+    <Item>/Items/Traits/Trait_Catalyst</Item>
+  </Event>
+  <Event name="UndyingKing">
+    <Item>/Items/Weapons/Boss/Ruin/Weapon_Wasteland_Ruin</Item>
+    <Item>/Items/Traits/Trait_Kingslayer</Item>
+    <Item>/Items/Weapons/Boss/Riven/Weapon_Wasteland_Riven</Item>
+  </Event>
+  <Event name="VengeanceIdol">
+    <Item>/Items/Trinkets/VengeanceIdol</Item>
+  </Event>
+  <Event name="Vyr">
+    <Item>/Items/Mods/VeilOfTheBlackTear</Item>
+  </Event>
+  <Event name="WailingWood">
+    <Item>/Items/Trinkets/Trinket_TwistedIdol</Item>
+    <Item>/Items/Traits/Trait_BarkSkin</Item>
+  </Event>
+  <Event name="Ward13">
+    <Item>/Items/Weapons/Basic/LongGuns/Coachgun/Weapon_Coachgun</Item>
+    <Item>/Items/Weapons/Human/Melee/Hatchet/Weapon_Hatchet</Item>
+    <Item>/Items/Armor/Cultist/Armor_Body_Cultist</Item>
+    <Item>/Items/Armor/Cultist/Armor_Head_Cultist</Item>
+    <Item>/Items/Armor/Cultist/Armor_Legs_Cultist</Item>
+    <Item>/Items/Weapons/Basic/LongGuns/HuntingRifle/Weapon_HuntingRifle</Item>
+    <Item>/Items/Weapons/Human/Melee/Sword/Weapon_Sword</Item>
+    <Item>/Items/Armor/Hunter/Armor_Body_Hunter</Item>
+    <Item>/Items/Armor/Hunter/Armor_Head_Hunter</Item>
+    <Item>/Items/Armor/Hunter/Armor_Legs_Hunter</Item>
+    <Item>/Items/Weapons/Basic/LongGuns/Shotgun/Weapon_Shotgun</Item>
+    <Item>/Items/Armor/Scrapper/Armor_Body_Scrapper</Item>
+    <Item>/Items/Armor/Scrapper/Armor_Head_Scrapper</Item>
+    <Item>/Items/Armor/Scrapper/Armor_Legs_Scrapper</Item>
+    <Item>/Items/Weapons/Human/Melee/Hammer/Weapon_Hammer</Item>
+    <Item>/Items/Traits/Trait_ElderKnowledge</Item>
+    <Item>/Items/Weapons/Basic/HandGuns/SubMachineGun/Weapon_Submachinegun</Item>
+    <Item>/Items/Trinkets/RingOfTheAdmiral</Item>
+  </Event>
+  <Event name="Ward17">
+    <Item>/Items/Weapons/Boss/Guns/LongGuns/Repulsor/Weapon_Atoll_Repulsor</Item>
+    <Item>/Items/Traits/Trait_MindsEye</Item>
+  </Event>
+  <Event name="WastelandGuardian">
+    <Item>/Items/Weapons/Boss/WorldBreaker/Weapon_Wasteland_WorldBreaker</Item>
+    <Item>/Items/Weapons/Boss/ParticleAccelerator/Weapon_Wasteland_ParticleAccelerator</Item>
+    <Item>/Items/Traits/Trait_Recovery</Item>
+  </Event>
+  <Event name="Wolf">
+    <Item>/Items/Weapons/Boss/Pan_CurseOfTheJungleGod/Weapon_Pan_CurseOfTheJungleGod</Item>
+    <Item>/Items/Weapons/Boss/Pan_ScarOfTheJungleGod/Weapon_Pan_ScarOfTheJungleGod</Item>
+    <Item>/Items/Traits/Trait_ArcaneStrike</Item>
+    <Item>/Items/Traits/Trait_Swiftness</Item>
+  </Event>
+  <Event name="WolfShrine">
+    <Item>/Items/Armor/Elder/Armor_Head_Elder</Item>
+    <Item>/Items/Armor/Elder/Armor_Body_Elder</Item>
+    <Item>/Items/Armor/Elder/Armor_Legs_Elder</Item>
+  </Event>
+</EventItems>

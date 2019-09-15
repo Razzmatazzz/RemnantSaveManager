@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace RemnantSaveManager
 {
@@ -100,7 +101,57 @@ namespace RemnantSaveManager
             return prefix + name;
         }
 
-        public static Dictionary<string, string[]> EventItem = new Dictionary<string, string[]>(){
+        private static Dictionary<string, string[]> eventItem = new Dictionary<string, string[]>();
+        public static Dictionary<string, string[]> EventItem
+        {
+            get
+            {
+                if (eventItem.Count == 0)
+                {
+                    RefreshEventItems();
+                }
+
+                return eventItem;
+            }
+        }
+
+        public static void RefreshEventItems()
+        {
+            eventItem.Clear();
+            string eventName = null;
+            List<string> items = new List<string>();
+            XmlTextReader reader = new XmlTextReader("Resources\\EventItem.xml");
+            reader.WhitespaceHandling = WhitespaceHandling.None;
+            while (reader.Read())
+            {
+                switch (reader.NodeType)
+                {
+                    case XmlNodeType.Element:
+                        if (reader.Name.Equals("Event"))
+                        {
+                            eventName = reader.GetAttribute("name");
+                        }
+                        else if (reader.Name.Equals("Item"))
+                        {
+                            //do anything?
+                        }
+                        break;
+                    case XmlNodeType.Text:
+                        items.Add(reader.Value);
+                        break;
+                    case XmlNodeType.EndElement:
+                        if (reader.Name.Equals("Event"))
+                        {
+                            eventItem.Add(eventName, items.ToArray());
+                            eventName = null;
+                            items.Clear();
+                        }
+                        break;
+                }
+            }
+        }
+
+        /*public static Dictionary<string, string[]> EventItem = new Dictionary<string, string[]>(){
             { "AcesCoin", new string[] {"/Items/Weapons/Basic/HandGuns/Revolver/Weapon_Revolver" } },
             { "ArmorVault", new string[] {"/Items/Armor/Akari/Armor_Head_Akari", "/Items/Armor/Akari/Armor_Body_Akari", "/Items/Armor/Akari/Armor_Legs_Akari" } },
             { "BandOfStrength", new string[] {"/Items/Trinkets/BandOfStrength" } },
@@ -175,7 +226,7 @@ namespace RemnantSaveManager
             { "WastelandGuardian", new string[] {"/Items/Weapons/Boss/WorldBreaker/Weapon_Wasteland_WorldBreaker", "/Items/Weapons/Boss/ParticleAccelerator/Weapon_Wasteland_ParticleAccelerator", "/Items/Traits/Trait_Recovery" } },
             { "Wolf", new string[] {"/Items/Weapons/Boss/Pan_CurseOfTheJungleGod/Weapon_Pan_CurseOfTheJungleGod", "/Items/Weapons/Boss/Pan_ScarOfTheJungleGod/Weapon_Pan_ScarOfTheJungleGod", "/Items/Traits/Trait_ArcaneStrike", "/Items/Traits/Trait_Swiftness" } },
             { "WolfShrine", new string[] {"/Items/Armor/Elder/Armor_Head_Elder", "/Items/Armor/Elder/Armor_Body_Elder", "/Items/Armor/Elder/Armor_Legs_Elder" } }
-        };
+        };*/
         //To do
         //Verify that Brabus has correct Cold As Ice trait name (Earth)
         //Verify that Penitent event has correct name for Leto's Amulet (Earth)

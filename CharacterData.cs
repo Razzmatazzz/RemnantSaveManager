@@ -162,7 +162,13 @@ namespace RemnantSaveManager
                     {
                         eventType = "Side Dungeon";
                         eventName = textLine.Split('/')[3].Split('_')[2];
-                        currentSublocation = sublocations[eventName];
+                        if (sublocations.ContainsKey(eventName))
+                        {
+                            currentSublocation = sublocations[eventName];
+                        } else
+                        {
+                            currentSublocation = null;
+                        }
                     }
                     if (textLine.Contains("Quest_Boss"))
                     {
@@ -175,19 +181,40 @@ namespace RemnantSaveManager
                         {
                             eventName = textLine.Split('/')[3].Split('_')[2];
                         }
-                        currentSublocation = sublocations[eventName];
+                        if (sublocations.ContainsKey(eventName))
+                        {
+                            currentSublocation = sublocations[eventName];
+                        }
+                        else
+                        {
+                            currentSublocation = null;
+                        }
                     }
                     if (textLine.Contains("Siege"))
                     {
                         eventType = "Siege";
                         eventName = textLine.Split('/')[3].Split('_')[2];
-                        currentSublocation = sublocations[eventName];
+                        if (sublocations.ContainsKey(eventName))
+                        {
+                            currentSublocation = sublocations[eventName];
+                        }
+                        else
+                        {
+                            currentSublocation = null;
+                        }
                     }
                     if (textLine.Contains("Mini"))
                     {
                         eventType = "Miniboss";
                         eventName = textLine.Split('/')[3].Split('_')[2];
-                        currentSublocation = sublocations[eventName];
+                        if (sublocations.ContainsKey(eventName))
+                        {
+                            currentSublocation = sublocations[eventName];
+                        }
+                        else
+                        {
+                            currentSublocation = null;
+                        }
                     }
                     if (textLine.Contains("Quest_Event"))
                     {
@@ -198,7 +225,13 @@ namespace RemnantSaveManager
                     if (textLine.Contains("Overworld_Zone"))
                     {
                         currentMainLocation = textLine.Split('/')[3].Split('_')[1] + " " + textLine.Split('/')[3].Split('_')[2] + " " + textLine.Split('/')[3].Split('_')[3];
-                        currentMainLocation = mainLocations[currentMainLocation];
+                        if (mainLocations.ContainsKey(currentMainLocation))
+                        {
+                            currentMainLocation = mainLocations[currentMainLocation];
+                        } else
+                        {
+                            currentMainLocation = null;
+                        }
                     }
 
                     if (mode == ProcessMode.Adventure) currentMainLocation = null;

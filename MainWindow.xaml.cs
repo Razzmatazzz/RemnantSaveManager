@@ -16,6 +16,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Data;
 using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace RemnantSaveManager
 {
@@ -92,6 +93,28 @@ namespace RemnantSaveManager
                 saveWatcher.EnableRaisingEvents = true;
             }
             updateActiveCharacterData();
+
+            /*XmlTextWriter xmlWriter = new XmlTextWriter("Resources\\EventItem.xml", Encoding.UTF8);
+            xmlWriter.Formatting = Formatting.Indented;
+            xmlWriter.WriteStartDocument();
+            xmlWriter.WriteStartElement("EventItems");
+            Dictionary<string, string[]> eventItems = SaveEvent.EventItem;
+            foreach(var saveEvent in eventItems)
+            {
+                xmlWriter.WriteStartElement("Event");
+                xmlWriter.WriteAttributeString("name", saveEvent.Key);
+                //xmlWriter.WriteString("Content written inside element");
+                foreach (string item in saveEvent.Value)
+                {
+                    xmlWriter.WriteStartElement("Item");
+                    xmlWriter.WriteString(item);
+                    xmlWriter.WriteEndElement();
+                }
+                xmlWriter.WriteEndElement();
+            }
+
+            xmlWriter.WriteEndDocument();
+            xmlWriter.Close();*/
         }
 
         private void loadBackups()
@@ -693,13 +716,17 @@ namespace RemnantSaveManager
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
-            System.Environment.Exit(1);
             /*activeSaveAnalyzer.ActiveSave = false;
             activeSaveAnalyzer.Close();
             for (int i = backupSaveAnalyzers.Count - 1; i > -1; i--)
             {
                 backupSaveAnalyzers[i].Close();
             }*/
+        }
+
+        private void Window_Closed(object sender, EventArgs e)
+        {
+            System.Environment.Exit(1);
         }
     }
 }

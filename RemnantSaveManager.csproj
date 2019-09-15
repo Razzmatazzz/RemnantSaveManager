@@ -163,6 +163,9 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\EventItem.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="Resources\OpenFolder_32x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
