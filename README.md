@@ -8,3 +8,6 @@ https://dotnet.microsoft.com/download/dotnet-framework/net472
 
 You can download from the Releases section:
 https://github.com/Razzmatazzz/RemnantSaveManager/releases
+
+Credit to hzla for the original online world analyzer:
+https://hzla.github.io/Remnant-World-Analyzer/
