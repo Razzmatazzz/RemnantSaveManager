@@ -82,5 +82,17 @@ namespace RemnantSaveManager.Properties {
                 this["BackupName"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
+        public string BackupFolder {
+            get {
+                return ((string)(this["BackupFolder"]));
+            }
+            set {
+                this["BackupFolder"] = value;
+            }
+        }
     }
 }

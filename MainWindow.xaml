@@ -28,15 +28,18 @@
             </TabItem>
             <TabItem Header="Settings" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
                 <Grid Background="#FFE5E5E5">
-                    <Grid.ColumnDefinitions>
+                    <!--Grid.ColumnDefinitions>
                         <ColumnDefinition Width="59*"/>
                         <ColumnDefinition Width="334*"/>
-                    </Grid.ColumnDefinitions>
+                    </-->
                     <CheckBox x:Name="chkAutoBackup" Content="Automatically Backup" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="ChkAutoBackup_Click" Grid.ColumnSpan="2"/>
                     <TextBox x:Name="txtBackupMins" HorizontalAlignment="Left" Height="23" Margin="10,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" LostFocus="TxtBackupMins_LostFocus" KeyUp="TxtBackupMins_KeyUp"/>
                     <Label Content="Minutes between backups" HorizontalAlignment="Left" Margin="80,27,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="188"/>
                     <TextBox x:Name="txtBackupLimit" HorizontalAlignment="Left" Height="23" Margin="10,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" KeyUp="TxtBackupLimit_KeyUp" LostFocus="TxtBackupLimit_LostFocus"/>
                     <Label Content="Backups to keep (0 for unlimited)" HorizontalAlignment="Left" Margin="80,66,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="264"/>
+                    <Label Content="Backup Folder" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top"/>
+                    <TextBox x:Name="txtBackupFolder" HorizontalAlignment="Left" Height="23" Margin="180,101,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="596" IsReadOnly="True"/>
+                    <Button x:Name="btnBackupFolder" Content="Choose" HorizontalAlignment="Left" Margin="100,100,0,0" VerticalAlignment="Top" Width="75" Click="BtnBackupFolder_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Log">

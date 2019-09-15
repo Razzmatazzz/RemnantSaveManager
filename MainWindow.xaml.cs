@@ -26,7 +26,8 @@ namespace RemnantSaveManager
     /// </summary>
     public partial class MainWindow : Window
     {
-        private static string backupDirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Remnant\\Saved\\Backups";
+        private static string defaultBackupFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Remnant\\Saved\\Backups";
+        private static string backupDirPath;
         private static string saveDirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Remnant\\Saved\\SaveGames";
         private List<SaveBackup> listBackups;
         private Boolean suppressLog;
@@ -43,6 +44,22 @@ namespace RemnantSaveManager
             InitializeComponent();
 
             System.IO.File.WriteAllText("log.txt", DateTime.Now.ToString()+": Loading...\r\n");
+
+            if (Properties.Settings.Default.BackupFolder.Length == 0)
+            {
+                Properties.Settings.Default.BackupFolder = defaultBackupFolder;
+                Properties.Settings.Default.Save();
+                backupDirPath = Properties.Settings.Default.BackupFolder;
+            } else if (!Directory.Exists(Properties.Settings.Default.BackupFolder))
+            {
+                Properties.Settings.Default.BackupFolder = defaultBackupFolder;
+                Properties.Settings.Default.Save();
+                backupDirPath = Properties.Settings.Default.BackupFolder;
+            } else
+            {
+                backupDirPath = Properties.Settings.Default.BackupFolder;
+            }
+            txtBackupFolder.Text = backupDirPath;
 
             saveWatcher = new FileSystemWatcher();
             saveWatcher.Path = saveDirPath;
@@ -105,27 +122,6 @@ namespace RemnantSaveManager
                     logMessage(newGameInfoCheck);
                 });
             }).Start();
-            /*XmlTextWriter xmlWriter = new XmlTextWriter("Resources\\EventItem.xml", Encoding.UTF8);
-            xmlWriter.Formatting = Formatting.Indented;
-            xmlWriter.WriteStartDocument();
-            xmlWriter.WriteStartElement("EventItems");
-            Dictionary<string, string[]> eventItems = SaveEvent.EventItem;
-            foreach(var saveEvent in eventItems)
-            {
-                xmlWriter.WriteStartElement("Event");
-                xmlWriter.WriteAttributeString("name", saveEvent.Key);
-                //xmlWriter.WriteString("Content written inside element");
-                foreach (string item in saveEvent.Value)
-                {
-                    xmlWriter.WriteStartElement("Item");
-                    xmlWriter.WriteString(item);
-                    xmlWriter.WriteEndElement();
-                }
-                xmlWriter.WriteEndElement();
-            }
-
-            xmlWriter.WriteEndDocument();
-            xmlWriter.Close();*/
         }
 
         private void loadBackups()
@@ -738,6 +734,51 @@ namespace RemnantSaveManager
         private void Window_Closed(object sender, EventArgs e)
         {
             System.Environment.Exit(1);
+        }
+
+        private void BtnBackupFolder_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog openFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
+            openFolderDialog.SelectedPath = backupDirPath;
+            //openFolderDialog.RootFolder = Environment.SpecialFolder.LocalApplicationData;
+            openFolderDialog.Description = "Select the folder where you want your backup saves kept.";
+            System.Windows.Forms.DialogResult result = openFolderDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string folderName = openFolderDialog.SelectedPath;
+                if (folderName.Equals(saveDirPath))
+                {
+                    MessageBox.Show("Please select a folder other than the game's save folder.",
+                                     "Invalid Folder", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK);
+                    return;
+                }
+                if (folderName.Equals(backupDirPath))
+                {
+                    return;
+                }
+                if (listBackups.Count > 0)
+                {
+                    var confirmResult = MessageBox.Show("Do you want to move your backups to this new folder?",
+                                     "Move Backups", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+                    if (confirmResult == MessageBoxResult.Yes)
+                    {
+                        List<String> backupFiles = Directory.GetDirectories(backupDirPath).ToList();
+                        foreach (string file in backupFiles)
+                        {
+                            if (File.Exists(file+@"\profile.sav"))
+                            {
+                                string subFolderName = file.Substring(file.LastIndexOf(@"\"));
+                                Directory.Move(file, folderName + subFolderName);
+                            }
+                        }
+                    }
+                }
+                txtBackupFolder.Text = folderName;
+                backupDirPath = folderName;
+                Properties.Settings.Default.BackupFolder = folderName;
+                Properties.Settings.Default.Save();
+                loadBackups();
+            }
         }
     }
 }
