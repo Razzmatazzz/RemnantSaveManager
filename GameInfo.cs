@@ -120,8 +120,8 @@ namespace RemnantSaveManager
         public static string CheckForNewGameInfo()
         {
             string message = "No new game info found.";
-            try
-            {
+            //try
+            //{
                 WebClient client = new WebClient();
                 client.DownloadFile("https://raw.githubusercontent.com/Razzmatazzz/RemnantSaveManager/master/Resources/GameInfo.xml", "Resources\\TempGameInfo.xml");
                 
@@ -133,7 +133,7 @@ namespace RemnantSaveManager
                 {
                     if (reader.NodeType == XmlNodeType.Element)
                     {
-                        if (reader.Name.Equals("EventItems"))
+                        if (reader.Name.Equals("GameInfo"))
                         {
                             remoteversion = int.Parse(reader.GetAttribute("version"));
                             break;
@@ -146,7 +146,7 @@ namespace RemnantSaveManager
                 {
                     if (reader.NodeType == XmlNodeType.Element)
                     {
-                        if (reader.Name.Equals("EventItems"))
+                        if (reader.Name.Equals("GameInfo"))
                         {
                             localversion = int.Parse(reader.GetAttribute("version"));
                             break;
@@ -165,10 +165,10 @@ namespace RemnantSaveManager
                 {
                     File.Delete("Resources\\TempGameInfo.xml");
                 }
-            } catch (Exception ex)
+            /*} catch (Exception ex)
             {
                 message = "Error checking for new game info: " + ex.Message;
-            }
+            }*/
 
             return message;
         }
