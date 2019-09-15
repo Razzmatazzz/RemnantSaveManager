@@ -5,3 +5,6 @@ You can also analyze the world to see what events rolled for your campaign or ad
 
 Requires .NET Framework 4.7.2 to run. Download here:
 https://dotnet.microsoft.com/download/dotnet-framework/net472
+
+You can download from the Releases section:
+https://github.com/Razzmatazzz/RemnantSaveManager/releases
