@@ -290,3 +290,11 @@
     <Item>/Items/Armor/Elder/Armor_Legs_Elder</Item>
   </Event>
 </EventItems>
+<!--
+To do
+Verify that Brabus has correct Cold As Ice trait name (Earth)
+Verify that Penitent event has correct name for Leto's Amulet (Earth)
+Verify that Splitter event name and weapon mod name are correct
+
+Note: SoulAnchor was previously /Items/Trinkets/Trinket_SoulAnchor
+-->

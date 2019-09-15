@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Xml;
+using System.Net;
 
 namespace RemnantSaveManager
 {
@@ -149,6 +150,51 @@ namespace RemnantSaveManager
                         break;
                 }
             }
+            reader.Close();
+        }
+
+        public static string CheckForNewEventItems()
+        {
+            string message = "No new event items found.";
+            XmlTextReader reader = new XmlTextReader("https://raw.githubusercontent.com/Razzmatazzz/RemnantSaveManager/master/Resources/EventItem.xml");
+            reader.WhitespaceHandling = WhitespaceHandling.None;
+            int remoteversion = 0;
+            int localversion = 0;
+            while (reader.Read())
+            {
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    if (reader.Name.Equals("EventItems"))
+                    {
+                        remoteversion = int.Parse(reader.GetAttribute("version"));
+                        break;
+                    }
+                }
+            }
+            reader.Close();
+            reader = new XmlTextReader("Resources\\EventItem.xml");
+            while (reader.Read())
+            {
+                if (reader.NodeType == XmlNodeType.Element)
+                {
+                    if (reader.Name.Equals("EventItems"))
+                    {
+                        localversion = int.Parse(reader.GetAttribute("version"));
+                        break;
+                    }
+                }
+            }
+            reader.Close();
+
+            if (remoteversion > localversion)
+            {
+                WebClient client = new WebClient();
+                client.DownloadFile("https://raw.githubusercontent.com/Razzmatazzz/RemnantSaveManager/master/Resources/EventItem.xml", "Resources\\EventItem.xml");
+                RefreshEventItems();
+                message = "Event items updated!";
+            }
+
+            return message;
         }
 
         /*public static Dictionary<string, string[]> EventItem = new Dictionary<string, string[]>(){
@@ -227,11 +273,5 @@ namespace RemnantSaveManager
             { "Wolf", new string[] {"/Items/Weapons/Boss/Pan_CurseOfTheJungleGod/Weapon_Pan_CurseOfTheJungleGod", "/Items/Weapons/Boss/Pan_ScarOfTheJungleGod/Weapon_Pan_ScarOfTheJungleGod", "/Items/Traits/Trait_ArcaneStrike", "/Items/Traits/Trait_Swiftness" } },
             { "WolfShrine", new string[] {"/Items/Armor/Elder/Armor_Head_Elder", "/Items/Armor/Elder/Armor_Body_Elder", "/Items/Armor/Elder/Armor_Legs_Elder" } }
         };*/
-        //To do
-        //Verify that Brabus has correct Cold As Ice trait name (Earth)
-        //Verify that Penitent event has correct name for Leto's Amulet (Earth)
-        //Verify that Splitter event name and weapon mod name are correct
-
-        //Note: SoulAnchor was previously /Items/Trinkets/Trinket_SoulAnchor
     }
 }
