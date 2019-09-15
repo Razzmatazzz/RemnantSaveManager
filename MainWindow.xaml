@@ -1,0 +1,64 @@
+﻿<Window x:Class="RemnantSaveManager.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:RemnantSaveManager"
+        mc:Ignorable="d"
+        Title="Remnant Save Manager" Height="450" Width="800" Loaded="Window_Loaded" Icon="Resources/Copy_32x.png" Closing="Window_Closing">
+    <Grid Background="#FF4B4B4B">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="479*"/>
+            <ColumnDefinition Width="313*"/>
+        </Grid.ColumnDefinitions>
+        <Label Content="Active save status:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White"/>
+        <Label x:Name="lblStatus" Content="Not Backed Up" HorizontalAlignment="Left" Margin="128,10,0,0" VerticalAlignment="Top" Width="103" Background="#00000000" Foreground="Red" FontWeight="Bold"/>
+        <Button x:Name="btnBackup" Content="Backup" HorizontalAlignment="Left" Margin="236,13,0,0" VerticalAlignment="Top" Width="75" Click="BtnBackup_Click"/>
+        <Button x:Name="btnRestore" Content="Restore" HorizontalAlignment="Left" Margin="332,13,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="BtnRestore_Click"/>
+        <TabControl Margin="0,54,0,28" Background="#FFB9B9B9" Grid.ColumnSpan="2">
+            <TabItem Header="Backups">
+                <DataGrid x:Name="dataBackups" BeginningEdit="DataBackups_BeginningEdit" SelectionMode="Single" CellEditEnding="DataBackups_CellEditEnding" SelectionChanged="DataBackups_SelectionChanged">
+                    <DataGrid.ContextMenu>
+                        <ContextMenu>
+                            <MenuItem Header="Analyze World"/>
+                            <MenuItem Header="Delete"/>
+                        </ContextMenu>
+                    </DataGrid.ContextMenu>
+                </DataGrid>
+            </TabItem>
+            <TabItem Header="Settings" HorizontalAlignment="Left" Height="20" VerticalAlignment="Top" Width="54">
+                <Grid Background="#FFE5E5E5">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="59*"/>
+                        <ColumnDefinition Width="334*"/>
+                    </Grid.ColumnDefinitions>
+                    <CheckBox x:Name="chkAutoBackup" Content="Automatically Backup" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Click="ChkAutoBackup_Click" Grid.ColumnSpan="2"/>
+                    <TextBox x:Name="txtBackupMins" HorizontalAlignment="Left" Height="23" Margin="10,30,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" LostFocus="TxtBackupMins_LostFocus" KeyUp="TxtBackupMins_KeyUp"/>
+                    <Label Content="Minutes between backups" HorizontalAlignment="Left" Margin="80,27,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="188"/>
+                    <TextBox x:Name="txtBackupLimit" HorizontalAlignment="Left" Height="23" Margin="10,69,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" KeyUp="TxtBackupLimit_KeyUp" LostFocus="TxtBackupLimit_LostFocus"/>
+                    <Label Content="Backups to keep (0 for unlimited)" HorizontalAlignment="Left" Margin="80,66,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="264"/>
+                </Grid>
+            </TabItem>
+            <TabItem Header="Log">
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="68*"/>
+                        <ColumnDefinition Width="325*"/>
+                    </Grid.ColumnDefinitions>
+                    <TextBox x:Name="txtLog" TextWrapping="Wrap" Background="White" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2"/>
+                </Grid>
+            </TabItem>
+        </TabControl>
+        <Label x:Name="lblLastMessage" Content="" HorizontalAlignment="Left" VerticalAlignment="Bottom" Width="792" Height="28" Background="{x:Null}" Foreground="White" Grid.ColumnSpan="2"/>
+        <Button x:Name="btnOpenFolder" HorizontalAlignment="Left" Margin="271,13,0,0" VerticalAlignment="Top" Width="32" Height="32" IsCancel="True" Foreground="Black" Click="BtnOpenFolder_Click" ToolTip="Open backups folder" Grid.Column="1">
+            <Image Height="22" Width="22" Source="Resources/OpenFolder_32x.png" ToolTip="Open backups folder"/>
+        </Button>
+        <Button x:Name="btnAnalyzeCurrent" HorizontalAlignment="Left" Margin="188,13,0,0" VerticalAlignment="Top" Width="32" Height="32" Click="BtnAnalyzeCurrent_Click" ToolTip="Analyze active save" Grid.Column="1">
+            <Button.ContextMenu>
+                <ContextMenu/>
+            </Button.ContextMenu>
+            <Image Height="22" Width="22" Source="Resources/SearchMember_32x.png"/>
+        </Button>
+
+    </Grid>
+</Window>
