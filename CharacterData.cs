@@ -96,7 +96,7 @@ namespace RemnantSaveManager
 
             string[] textArray = savefile.Split('\n');
 
-            Dictionary<string, Dictionary<string,string>> zones = new Dictionary<string, Dictionary<string, string>>();
+            /*Dictionary<string, Dictionary<string,string>> zones = new Dictionary<string, Dictionary<string, string>>();
             zones.Add("Earth", new Dictionary<string, string>());
             zones.Add("Rhom", new Dictionary<string, string>());
             zones.Add("Yaesha", new Dictionary<string, string>());
@@ -105,7 +105,14 @@ namespace RemnantSaveManager
             zoneEvents.Add("Earth", new List<SaveEvent>());
             zoneEvents.Add("Rhom", new List<SaveEvent>());
             zoneEvents.Add("Corsus", new List<SaveEvent>());
-            zoneEvents.Add("Yaesha", new List<SaveEvent>());
+            zoneEvents.Add("Yaesha", new List<SaveEvent>());*/
+            Dictionary<string, Dictionary<string, string>> zones = new Dictionary<string, Dictionary<string, string>>();
+            Dictionary<string, List<SaveEvent>> zoneEvents = new Dictionary<string, List<SaveEvent>>();
+            foreach (string z in GameInfo.Zones)
+            {
+                zones.Add(z, new Dictionary<string, string>());
+                zoneEvents.Add(z, new List<SaveEvent>());
+            }
 
             string currentMainLocation = "Fairview";
             string currentSublocation = null;
@@ -162,9 +169,9 @@ namespace RemnantSaveManager
                     {
                         eventType = "Side Dungeon";
                         eventName = textLine.Split('/')[3].Split('_')[2];
-                        if (sublocations.ContainsKey(eventName))
+                        if (GameInfo.SubLocations.ContainsKey(eventName))
                         {
-                            currentSublocation = sublocations[eventName];
+                            currentSublocation = GameInfo.SubLocations[eventName];
                         } else
                         {
                             currentSublocation = null;
@@ -181,9 +188,9 @@ namespace RemnantSaveManager
                         {
                             eventName = textLine.Split('/')[3].Split('_')[2];
                         }
-                        if (sublocations.ContainsKey(eventName))
+                        if (GameInfo.SubLocations.ContainsKey(eventName))
                         {
-                            currentSublocation = sublocations[eventName];
+                            currentSublocation = GameInfo.SubLocations[eventName];
                         }
                         else
                         {
@@ -194,9 +201,9 @@ namespace RemnantSaveManager
                     {
                         eventType = "Siege";
                         eventName = textLine.Split('/')[3].Split('_')[2];
-                        if (sublocations.ContainsKey(eventName))
+                        if (GameInfo.SubLocations.ContainsKey(eventName))
                         {
-                            currentSublocation = sublocations[eventName];
+                            currentSublocation = GameInfo.SubLocations[eventName];
                         }
                         else
                         {
@@ -207,9 +214,9 @@ namespace RemnantSaveManager
                     {
                         eventType = "Miniboss";
                         eventName = textLine.Split('/')[3].Split('_')[2];
-                        if (sublocations.ContainsKey(eventName))
+                        if (GameInfo.SubLocations.ContainsKey(eventName))
                         {
-                            currentSublocation = sublocations[eventName];
+                            currentSublocation = GameInfo.SubLocations[eventName];
                         }
                         else
                         {
@@ -225,9 +232,9 @@ namespace RemnantSaveManager
                     if (textLine.Contains("Overworld_Zone"))
                     {
                         currentMainLocation = textLine.Split('/')[3].Split('_')[1] + " " + textLine.Split('/')[3].Split('_')[2] + " " + textLine.Split('/')[3].Split('_')[3];
-                        if (mainLocations.ContainsKey(currentMainLocation))
+                        if (GameInfo.MainLocations.ContainsKey(currentMainLocation))
                         {
-                            currentMainLocation = mainLocations[currentMainLocation];
+                            currentMainLocation = GameInfo.MainLocations[currentMainLocation];
                         } else
                         {
                             currentMainLocation = null;
@@ -332,59 +339,6 @@ namespace RemnantSaveManager
                 }
             }
         }
-
-        //credit to /u/hzla00 for original javascript
-        private static Dictionary<string, string> sublocations = new Dictionary<string, string>() {
-            { "RootCultist", "MarrowPass" },
-            { "RootWraith", "TheHiddenSanctum" },
-            { "RootBrute", "SunkenPassage" },
-            { "Brabus", "CutthroatChannel" },
-            { "RootTumbleweed", "TheTangledPass" },
-            { "RootEnt", "TheChokingHollow" },
-            { "RootDragon", "TheAshYard" },
-            { "HuntersHideout", "HiddenGrotto" },
-            { "MadMerchant", "Junktown" },
-            { "LizAndLiz", "TheWarren" },
-            { "LastWill", "FindMonkeyKey" },
-            { "RootShrine", "TheGallows" },
-            { "SwarmMaster", "TheIronRift" },
-            { "HoundMaster", "TheBurrows" },
-            { "Sentinel", "ShackledCanyon" },
-            { "Vyr", "TheArdentTemple" },
-            { "WastelandGuardian", "LoomOfTheBlackSun" },
-            { "TheHarrow", "TheBunker" },
-            { "TheLostGantry", "ConcourseOfTheSun" },
-            { "ArmorVault", "VaultOfTheHeralds" },
-            { "TheCleanRoom", "ThePurgeHall" },
-            { "SlimeHulk", "TheDrownedTrench" },
-            { "Fatty", "TheFetidGlade" },
-            { "Tyrant", "TheCapillary" },
-            { "SwampGuardian", "The Grotto" },
-            { "KinCaller", "TheHallOfJudgement" },
-            { "BlinkFiend", "Widow'sPass" },
-            { "StuckMerchant", "MerchantDungeon" },
-            { "BlinkThief", "ForgottenUndercroft" },
-            { "StormCaller", "Heretic'sNest" },
-            { "ImmolatorAndZephyr", "WitheringVillage" },
-            { "Wolf", "TheScaldingGlade" },
-            { "TotemFather", "TheScaldingGlade" },
-            { "TheRisen", "Ahanae'sLament" },
-            { "DoeShrine", "Widow'sVestry" },
-            { "WolfShrine", "Martyr'sSanctuary" },
-            { "UndyingKing" , "UndyingThrone" }
-        };
-
-        //credit to /u/hzla00 for original javascript
-        private static Dictionary<string, string> mainLocations = new Dictionary<string, string>() {
-            { "City Overworld Zone1", "Fairview" },
-            { "City Overworld Zone2", "Westcourt" },
-            { "Wasteland Overworld Zone1", "TheEasternWind" },
-            { "Wasteland Overworld Zone2", "TheScouringWaste" },
-            { "Jungle Overworld Zone1", "TheVerdantStrand" },
-            { "Jungle Overworld Zone2", "TheScaldingGlade" },
-            { "Swamp Overworld Zone1", "TheFetidGlade" },
-            { "Swamp Overworld Zone2", "TheMistFen" }
-        };
 
         public enum CharacterProcessingMode { All, NoEvents };
 

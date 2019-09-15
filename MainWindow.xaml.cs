@@ -17,6 +17,7 @@ using System.Diagnostics;
 using System.Data;
 using System.Text.RegularExpressions;
 using System.Xml;
+using System.Threading;
 
 namespace RemnantSaveManager
 {
@@ -94,6 +95,16 @@ namespace RemnantSaveManager
             }
             updateActiveCharacterData();
 
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                string newGameInfoCheck = GameInfo.CheckForNewGameInfo();
+                this.Dispatcher.Invoke(() =>
+                {
+                    logMessage(newGameInfoCheck);
+                });
+            }).Start();
             /*XmlTextWriter xmlWriter = new XmlTextWriter("Resources\\EventItem.xml", Encoding.UTF8);
             xmlWriter.Formatting = Formatting.Indented;
             xmlWriter.WriteStartDocument();

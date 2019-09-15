@@ -95,6 +95,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="GameInfo.cs" />
     <Compile Include="SaveAnalyzer.xaml.cs">
       <DependentUpon>SaveAnalyzer.xaml</DependentUpon>
     </Compile>
@@ -149,6 +150,9 @@
     <Content Include="Resources\Copy_32x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="Resources\GameInfo.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -163,9 +167,6 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\EventItem.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="Resources\OpenFolder_32x.png">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>

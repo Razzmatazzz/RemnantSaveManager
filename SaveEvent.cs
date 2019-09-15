@@ -36,9 +36,9 @@ namespace RemnantSaveManager
         public List<string> getPossibleItems()
         {
             List<string> items = new List<string>();
-            if (EventItem.ContainsKey(this.eventKey))
+            if (GameInfo.EventItem.ContainsKey(this.eventKey))
             {
-                string[] arrItems = EventItem[this.eventKey];
+                string[] arrItems = GameInfo.EventItem[this.eventKey];
                 for (int i=0; i < arrItems.Length; i++)
                 {
                     items.Add(arrItems[i]);
@@ -102,7 +102,7 @@ namespace RemnantSaveManager
             return prefix + name;
         }
 
-        private static Dictionary<string, string[]> eventItem = new Dictionary<string, string[]>();
+        /*private static Dictionary<string, string[]> eventItem = new Dictionary<string, string[]>();
         public static Dictionary<string, string[]> EventItem
         {
             get
@@ -195,7 +195,7 @@ namespace RemnantSaveManager
             }
 
             return message;
-        }
+        }*/
 
         /*public static Dictionary<string, string[]> EventItem = new Dictionary<string, string[]>(){
             { "AcesCoin", new string[] {"/Items/Weapons/Basic/HandGuns/Revolver/Weapon_Revolver" } },
