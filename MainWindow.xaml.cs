@@ -278,24 +278,36 @@ namespace RemnantSaveManager
 
         private void doBackup(bool overwrite)
         {
-            bool dirExisted = true;
-            DateTime saveDate = File.GetLastWriteTime(saveDirPath + "\\profile.sav");
-            if (!Directory.Exists(backupDirPath + "\\" + saveDate.Ticks))
+            try
             {
-                Directory.CreateDirectory(backupDirPath + "\\" + saveDate.Ticks);
-                dirExisted = false;
+                bool dirExisted = true;
+                DateTime saveDate = File.GetLastWriteTime(saveDirPath + "\\profile.sav");
+                if (!Directory.Exists(backupDirPath + "\\" + saveDate.Ticks))
+                {
+                    Directory.CreateDirectory(backupDirPath + "\\" + saveDate.Ticks);
+                    dirExisted = false;
+                }
+                if (!dirExisted || (dirExisted && overwrite))
+                {
+                    foreach (var file in Directory.GetFiles(saveDirPath))
+                        File.Copy(file, backupDirPath + "\\" + saveDate.Ticks + "\\" + System.IO.Path.GetFileName(file), true);
+                    checkBackupLimit();
+                    loadBackups(false);
+                    logMessage($"Backup completed ({saveDate.ToString()})!");
+                }
+                else
+                {
+                    logMessage("This save is already backed up.");
+                }
             }
-            if (!dirExisted || (dirExisted && overwrite))
+            catch (IOException ex)
             {
-                foreach (var file in Directory.GetFiles(saveDirPath))
-                    File.Copy(file, backupDirPath + "\\" + saveDate.Ticks + "\\" + System.IO.Path.GetFileName(file), true);
-                checkBackupLimit();
-                loadBackups(false);
-                logMessage($"Backup completed ({saveDate.ToString()})!");
-            }
-            else
-            {
-                logMessage("This save is already backed up.");
+                if (ex.Message.Contains("being used by another process"))
+                {
+                    logMessage("Save file in use; waiting 0.5 seconds and retrying.");
+                    System.Threading.Thread.Sleep(500);
+                    doBackup(overwrite);
+                }
             }
         }
 

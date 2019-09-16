@@ -350,81 +350,92 @@ namespace RemnantSaveManager
         public static List<CharacterData> GetCharactersFromSave(string saveFolderPath, CharacterProcessingMode mode)
         {
             List<CharacterData> charData = new List<CharacterData>();
-            string profileData = File.ReadAllText(saveFolderPath + "\\profile.sav");
-            MatchCollection archetypes = new Regex(@"/Game/_Core/Archetypes/[a-zA-Z_]+").Matches(profileData);
-            for (int i = 0; i < archetypes.Count; i++)
+            try
             {
-                CharacterData cd = new CharacterData();
-                cd.Archetype = archetypes[i].Value.Replace("/Game/_Core/Archetypes/", "").Split('_')[1];
-                cd.savePath = saveFolderPath;
-                charData.Add(cd);
-            }
+                string profileData = File.ReadAllText(saveFolderPath + "\\profile.sav");
+                MatchCollection archetypes = new Regex(@"/Game/_Core/Archetypes/[a-zA-Z_]+").Matches(profileData);
+                for (int i = 0; i < archetypes.Count; i++)
+                {
+                    CharacterData cd = new CharacterData();
+                    cd.Archetype = archetypes[i].Value.Replace("/Game/_Core/Archetypes/", "").Split('_')[1];
+                    cd.savePath = saveFolderPath;
+                    charData.Add(cd);
+                }
 
-            string[] inventories = profileData.Split(new string[] { "/Game/_Core/Archetypes/" }, StringSplitOptions.None);
-            for (var i = 1; i < inventories.Length; i++)
+                string[] inventories = profileData.Split(new string[] { "/Game/_Core/Archetypes/" }, StringSplitOptions.None);
+                for (var i = 1; i < inventories.Length; i++)
+                {
+                    List<string> saveItems = new List<string>();
+                    inventories[i] = inventories[i].Substring(inventories[i].IndexOf("/Game/Characters/Player/Base/Character_Master_Player.Character_Master_Player_C"));
+                    Regex rx = new Regex(@"/Items/Weapons(/[a-zA-Z0-9_]+)+/[a-zA-Z0-9_]+");
+                    MatchCollection matches = rx.Matches(inventories[i]);
+                    foreach (Match match in matches)
+                    {
+                        saveItems.Add(match.Value);
+                    }
+
+                    rx = new Regex(@"/Items/Armor/[a-zA-Z0-9_]+/[a-zA-Z0-9_]+");
+                    matches = rx.Matches(inventories[i]);
+                    foreach (Match match in matches)
+                    {
+                        saveItems.Add(match.Value);
+                    }
+
+                    rx = new Regex(@"/Items/Trinkets/[a-zA-Z0-9_]+");
+                    matches = rx.Matches(inventories[i]);
+                    foreach (Match match in matches)
+                    {
+                        saveItems.Add(match.Value);
+                    }
+
+                    rx = new Regex(@"/Items/Mods/[a-zA-Z0-9_]+");
+                    matches = rx.Matches(inventories[i]);
+                    foreach (Match match in matches)
+                    {
+                        saveItems.Add(match.Value);
+                    }
+
+                    rx = new Regex(@"/Items/Traits/[a-zA-Z0-9_]+");
+                    matches = rx.Matches(inventories[i]);
+                    foreach (Match match in matches)
+                    {
+                        saveItems.Add(match.Value);
+                    }
+
+                    rx = new Regex(@"/Items/QuestItems(/[a-zA-Z0-9_]+)+/[a-zA-Z0-9_]+");
+                    matches = rx.Matches(inventories[i]);
+                    foreach (Match match in matches)
+                    {
+                        saveItems.Add(match.Value);
+                    }
+
+                    rx = new Regex(@"/Quests/[a-zA-Z0-9_]+/[a-zA-Z0-9_]+");
+                    matches = rx.Matches(inventories[i]);
+                    foreach (Match match in matches)
+                    {
+                        saveItems.Add(match.Value);
+                    }
+                    charData[i - 1].Inventory = saveItems;
+                }
+
+                if (mode == CharacterProcessingMode.All)
+                {
+                    string[] saves = Directory.GetFiles(saveFolderPath, "save_*.sav");
+                    for (int i = 0; i < saves.Length && i < charData.Count; i++)
+                    {
+                        charData[i].processSaveData(File.ReadAllText(saves[i]));
+                    }
+                }
+            }
+            catch (IOException ex)
             {
-                List<string> saveItems = new List<string>();
-                inventories[i] = inventories[i].Substring(inventories[i].IndexOf("/Game/Characters/Player/Base/Character_Master_Player.Character_Master_Player_C"));
-                Regex rx = new Regex(@"/Items/Weapons(/[a-zA-Z0-9_]+)+/[a-zA-Z0-9_]+");
-                MatchCollection matches = rx.Matches(inventories[i]);
-                foreach (Match match in matches)
+                if (ex.Message.Contains("being used by another process"))
                 {
-                    saveItems.Add(match.Value);
-                }
-
-                rx = new Regex(@"/Items/Armor/[a-zA-Z0-9_]+/[a-zA-Z0-9_]+");
-                matches = rx.Matches(inventories[i]);
-                foreach (Match match in matches)
-                {
-                    saveItems.Add(match.Value);
-                }
-
-                rx = new Regex(@"/Items/Trinkets/[a-zA-Z0-9_]+");
-                matches = rx.Matches(inventories[i]);
-                foreach (Match match in matches)
-                {
-                    saveItems.Add(match.Value);
-                }
-
-                rx = new Regex(@"/Items/Mods/[a-zA-Z0-9_]+");
-                matches = rx.Matches(inventories[i]);
-                foreach (Match match in matches)
-                {
-                    saveItems.Add(match.Value);
-                }
-
-                rx = new Regex(@"/Items/Traits/[a-zA-Z0-9_]+");
-                matches = rx.Matches(inventories[i]);
-                foreach (Match match in matches)
-                {
-                    saveItems.Add(match.Value);
-                }
-
-                rx = new Regex(@"/Items/QuestItems(/[a-zA-Z0-9_]+)+/[a-zA-Z0-9_]+");
-                matches = rx.Matches(inventories[i]);
-                foreach (Match match in matches)
-                {
-                    saveItems.Add(match.Value);
-                }
-
-                rx = new Regex(@"/Quests/[a-zA-Z0-9_]+/[a-zA-Z0-9_]+");
-                matches = rx.Matches(inventories[i]);
-                foreach (Match match in matches)
-                {
-                    saveItems.Add(match.Value);
-                }
-                charData[i - 1].Inventory = saveItems;
-            }
-
-            if (mode == CharacterProcessingMode.All)
-            {
-                string[] saves = Directory.GetFiles(saveFolderPath, "save_*.sav");
-                for (int i = 0; i < saves.Length && i < charData.Count; i++)
-                {
-                    charData[i].processSaveData(File.ReadAllText(saves[i]));
+                    Console.WriteLine("Save file in use; waiting 0.5 seconds and retrying.");
+                    System.Threading.Thread.Sleep(500);
+                    charData = GetCharactersFromSave(saveFolderPath, mode);
                 }
             }
-
             return charData;
         }
 
