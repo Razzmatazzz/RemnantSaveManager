@@ -48,7 +48,8 @@
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
-    <DefineConstants>TRACE</DefineConstants>
+    <DefineConstants>
+    </DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
@@ -96,12 +97,13 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GameInfo.cs" />
+    <Compile Include="RemnantSave.cs" />
     <Compile Include="SaveAnalyzer.xaml.cs">
       <DependentUpon>SaveAnalyzer.xaml</DependentUpon>
     </Compile>
     <Compile Include="SaveBackup.cs" />
-    <Compile Include="CharacterData.cs" />
-    <Compile Include="SaveEvent.cs" />
+    <Compile Include="RemnantCharacter.cs" />
+    <Compile Include="RemnantWorldEvent.cs" />
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -147,12 +149,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Copy_32x.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-    <Content Include="Resources\GameInfo.xml">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Resources\Copy_32x.png" />
+    <Content Include="Resources\GameInfo.xml" />
   </ItemGroup>
   <ItemGroup>
     <BootstrapperPackage Include=".NETFramework,Version=v4.7.2">
@@ -167,18 +165,15 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\OpenFolder_32x.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Copy_32x.ico" />
+    <Resource Include="Resources\OpenFolder_32x.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Resources\Copy_32x.ico" />
-    <Content Include="Resources\SearchMember_32x.png">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
+    <Resource Include="Resources\SearchMember_32x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <PropertyGroup>
+    <PostBuildEvent>copy "$(ProjectDir)Resources\GameInfo.xml" "$(ProjectDir)$(OutDir)"
+copy "$(ProjectDir)Resources\GameInfo.xml" "$(ProjectDir)$(OutDir)app.publish\"</PostBuildEvent>
+  </PropertyGroup>
 </Project>

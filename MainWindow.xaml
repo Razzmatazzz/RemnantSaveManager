@@ -17,7 +17,7 @@
         <Button x:Name="btnRestore" Content="Restore" HorizontalAlignment="Left" Margin="332,13,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="BtnRestore_Click"/>
         <TabControl Margin="0,54,0,28" Background="#FFB9B9B9" Grid.ColumnSpan="2">
             <TabItem Header="Backups">
-                <DataGrid x:Name="dataBackups" BeginningEdit="DataBackups_BeginningEdit" SelectionMode="Single" CellEditEnding="DataBackups_CellEditEnding" SelectionChanged="DataBackups_SelectionChanged">
+                <DataGrid x:Name="dataBackups" BeginningEdit="DataBackups_BeginningEdit" SelectionMode="Single" CellEditEnding="DataBackups_CellEditEnding" SelectionChanged="DataBackups_SelectionChanged" AutoGeneratingColumn="DataBackups_AutoGeneratingColumn">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
                             <MenuItem Header="Analyze World"/>

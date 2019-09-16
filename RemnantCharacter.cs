@@ -8,12 +8,12 @@ using System.IO;
 
 namespace RemnantSaveManager
 {
-    public class CharacterData
+    public class RemnantCharacter
     {
         public string Archetype { get; set; }
         public List<string> Inventory { get; set; }
-        public List<SaveEvent> CampaignEvents { get; set; }
-        public List<SaveEvent> AdventureEvents { get; set; }
+        public List<RemnantWorldEvent> CampaignEvents { get; set; }
+        public List<RemnantWorldEvent> AdventureEvents { get; set; }
 
         public int Progression {
             get {
@@ -36,12 +36,12 @@ namespace RemnantSaveManager
             return str;
         }
 
-        public CharacterData()
+        public RemnantCharacter()
         {
             this.Archetype = "";
             this.Inventory = new List<string>();
-            this.CampaignEvents = new List<SaveEvent>();
-            this.AdventureEvents = new List<SaveEvent>();
+            this.CampaignEvents = new List<RemnantWorldEvent>();
+            this.AdventureEvents = new List<RemnantWorldEvent>();
             this.savePath = null;
         }
 
@@ -107,11 +107,11 @@ namespace RemnantSaveManager
             zoneEvents.Add("Corsus", new List<SaveEvent>());
             zoneEvents.Add("Yaesha", new List<SaveEvent>());*/
             Dictionary<string, Dictionary<string, string>> zones = new Dictionary<string, Dictionary<string, string>>();
-            Dictionary<string, List<SaveEvent>> zoneEvents = new Dictionary<string, List<SaveEvent>>();
+            Dictionary<string, List<RemnantWorldEvent>> zoneEvents = new Dictionary<string, List<RemnantWorldEvent>>();
             foreach (string z in GameInfo.Zones)
             {
                 zones.Add(z, new Dictionary<string, string>());
-                zoneEvents.Add(z, new List<SaveEvent>());
+                zoneEvents.Add(z, new List<RemnantWorldEvent>());
             }
 
             string currentMainLocation = "Fairview";
@@ -119,7 +119,7 @@ namespace RemnantSaveManager
 
             if (mode == ProcessMode.Campaign)
             {
-                SaveEvent ward13 = new SaveEvent();
+                RemnantWorldEvent ward13 = new RemnantWorldEvent();
                 ward13.setKey("Ward13");
                 ward13.Name = "Ward 13";
                 ward13.Location = "Earth: Ward 13";
@@ -127,7 +127,7 @@ namespace RemnantSaveManager
                 ward13.setMissingItems(this);
                 if (ward13.MissingItems.Length > 0) zoneEvents["Earth"].Add(ward13);
 
-                SaveEvent hideout = new SaveEvent();
+                RemnantWorldEvent hideout = new RemnantWorldEvent();
                 hideout.setKey("FoundersHideout");
                 hideout.Name = "Founder's Hideout";
                 hideout.Location = "Earth: Fairview";
@@ -139,7 +139,7 @@ namespace RemnantSaveManager
             string eventName = null;
             for (int i = 0; i < textArray.Length; i++)
             {
-                SaveEvent se = new SaveEvent();
+                RemnantWorldEvent se = new RemnantWorldEvent();
                 string zone = null;
                 string eventType = null;
                 string lastEventname = eventName;
@@ -298,7 +298,7 @@ namespace RemnantSaveManager
                 }
             }
 
-            List<SaveEvent> orderedEvents = new List<SaveEvent>();
+            List<RemnantWorldEvent> orderedEvents = new List<RemnantWorldEvent>();
             for(int i=0; i < zoneEvents["Earth"].Count; i++)
             {
                 orderedEvents.Add(zoneEvents["Earth"][i]);
@@ -318,7 +318,7 @@ namespace RemnantSaveManager
 
             if (mode == ProcessMode.Campaign)
             {
-                SaveEvent ward17 = new SaveEvent();
+                RemnantWorldEvent ward17 = new RemnantWorldEvent();
                 ward17.setKey("Ward17");
                 ward17.Name = "The Dreamer";
                 ward17.Location = "Earth: Ward 17";
@@ -342,21 +342,21 @@ namespace RemnantSaveManager
 
         public enum CharacterProcessingMode { All, NoEvents };
 
-        public static List<CharacterData> GetCharactersFromSave(string saveFolderPath)
+        public static List<RemnantCharacter> GetCharactersFromSave(string saveFolderPath)
         {
             return GetCharactersFromSave(saveFolderPath, CharacterProcessingMode.All);
         }
 
-        public static List<CharacterData> GetCharactersFromSave(string saveFolderPath, CharacterProcessingMode mode)
+        public static List<RemnantCharacter> GetCharactersFromSave(string saveFolderPath, CharacterProcessingMode mode)
         {
-            List<CharacterData> charData = new List<CharacterData>();
+            List<RemnantCharacter> charData = new List<RemnantCharacter>();
             try
             {
                 string profileData = File.ReadAllText(saveFolderPath + "\\profile.sav");
                 MatchCollection archetypes = new Regex(@"/Game/_Core/Archetypes/[a-zA-Z_]+").Matches(profileData);
                 for (int i = 0; i < archetypes.Count; i++)
                 {
-                    CharacterData cd = new CharacterData();
+                    RemnantCharacter cd = new RemnantCharacter();
                     cd.Archetype = archetypes[i].Value.Replace("/Game/_Core/Archetypes/", "").Split('_')[1];
                     cd.savePath = saveFolderPath;
                     charData.Add(cd);
@@ -451,7 +451,17 @@ namespace RemnantSaveManager
                         try
                         {
                             this.processSaveData(File.ReadAllText(saves[charIndex]));
-                        } catch (Exception ex)
+                        }
+                        catch (IOException ex)
+                        {
+                            if (ex.Message.Contains("being used by another process"))
+                            {
+                                Console.WriteLine("Save file in use; waiting 0.5 seconds and retrying.");
+                                System.Threading.Thread.Sleep(500);
+                                LoadWorldData(charIndex);
+                            }
+                        }
+                        catch (Exception ex)
                         {
                             Console.WriteLine("Error loading world Data: ");
                             Console.WriteLine("\tCharacterData.LoadWorldData");

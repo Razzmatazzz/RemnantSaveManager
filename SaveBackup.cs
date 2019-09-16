@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.ComponentModel;
+using System.IO;
 
 namespace RemnantSaveManager
 {
@@ -22,7 +23,8 @@ namespace RemnantSaveManager
         private SaveData backupData;
         private bool inTxn = false;
         //private int[] progression;
-        private List<CharacterData> charData;
+        //private List<RemnantCharacter> charData;
+        private RemnantSave save;
         public string Name
         {
             get
@@ -56,7 +58,7 @@ namespace RemnantSaveManager
         {
             get
             {
-                return string.Join(",", this.charData);
+                return string.Join(",", this.save.Characters);
             }
         }
         public bool Keep
@@ -84,11 +86,21 @@ namespace RemnantSaveManager
             }
         }
 
-        public SaveBackup(DateTime saveDate)
+        public RemnantSave Save
         {
+            get
+            {
+                return save;
+            }
+        }
+
+        //public SaveBackup(DateTime saveDate)
+        public SaveBackup(string savePath)
+        {
+            this.save = new RemnantSave(savePath);
             this.saveData = new SaveData();
-            this.saveData.name = saveDate.Ticks.ToString();
-            this.saveData.date = saveDate;
+            this.saveData.name = this.SaveDateTime.Ticks.ToString();
+            this.saveData.date = this.SaveDateTime;
             this.saveData.keep = false;
         }
 
@@ -101,15 +113,15 @@ namespace RemnantSaveManager
                 prog[i] = allItemList[i].Count;
             }
             this.progression = prog;
-        }*/
-        public List<CharacterData> GetCharacters()
+        }
+        public List<RemnantCharacter> GetCharacters()
         {
             return this.charData;
         }
         public void LoadCharacterData(string saveFolder)
         {
-            this.charData = CharacterData.GetCharactersFromSave(saveFolder, CharacterData.CharacterProcessingMode.NoEvents);
-        }
+            this.charData = RemnantCharacter.GetCharactersFromSave(saveFolder, RemnantCharacter.CharacterProcessingMode.NoEvents);
+        }*/
 
         // Implements IEditableObject
         void IEditableObject.BeginEdit()
@@ -159,6 +171,14 @@ namespace RemnantSaveManager
         {
             EventHandler<UpdatedEventArgs> handler = Updated;
             if (null != handler) handler(this, args);
+        }
+
+        private DateTime SaveDateTime
+        {
+            get
+            {
+                return File.GetLastWriteTime(save.SaveFolderPath + "\\profile.sav");
+            }
         }
     }
 

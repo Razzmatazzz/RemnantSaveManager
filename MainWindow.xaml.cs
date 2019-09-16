@@ -34,7 +34,8 @@ namespace RemnantSaveManager
         private FileSystemWatcher saveWatcher;
         private Process gameProcess;
 
-        private List<CharacterData> activeCharacters;
+        //private List<RemnantCharacter> activeCharacters;
+        private RemnantSave activeSave;
 
         private SaveAnalyzer activeSaveAnalyzer;
         private List<SaveAnalyzer> backupSaveAnalyzers;
@@ -82,7 +83,7 @@ namespace RemnantSaveManager
             ((MenuItem)dataBackups.ContextMenu.Items[1]).Click += deleteMenuItem_Click;
             //((MenuItem)dataBackups.ContextMenu.Items[2]).Click += infoMenuItem_Click;
 
-            activeCharacters = new List<CharacterData>();
+            //activeCharacters = new List<RemnantCharacter>();
 
             activeSaveAnalyzer = new SaveAnalyzer(this)
             {
@@ -110,7 +111,9 @@ namespace RemnantSaveManager
             {
                 saveWatcher.EnableRaisingEvents = true;
             }
-            updateActiveCharacterData();
+            //updateActiveCharacterData();
+            activeSave = new RemnantSave(saveDirPath);
+            updateCurrentWorldAnalyzer();
 
             new Thread(() =>
             {
@@ -151,32 +154,33 @@ namespace RemnantSaveManager
             dataBackups.Columns.Add(col3);*/
             for (int i = 0; i < files.Length; i++)
             {
-                string folder = files[i].Replace(backupDirPath + "\\", "");
-                if (validBackup(folder))
+                //string folder = files[i].Replace(backupDirPath + "\\", "");
+                if (RemnantSave.ValidSaveFolder(files[i]))
                 {
-                    DateTime backupDate = getBackupDateTime(folder);
+                    //DateTime backupDate = getBackupDateTime(folder);
                     //logMessage("Found save backup dated " + backupDate.ToString());
-                    SaveBackup save = new SaveBackup(backupDate);
-                    if (backupNames.ContainsKey(save.SaveDate.Ticks))
+                    //SaveBackup backup = new SaveBackup(backupDate);
+                    SaveBackup backup = new SaveBackup(files[i]);
+                    if (backupNames.ContainsKey(backup.SaveDate.Ticks))
                     {
-                        save.Name = backupNames[save.SaveDate.Ticks];
+                        backup.Name = backupNames[backup.SaveDate.Ticks];
                     }
-                    if (backupKeeps.ContainsKey(save.SaveDate.Ticks))
+                    if (backupKeeps.ContainsKey(backup.SaveDate.Ticks))
                     {
-                        save.Keep = backupKeeps[save.SaveDate.Ticks];
-                    }
-
-                    if (backupActive(save))
-                    {
-                        save.Active = true;
-                        activeBackup = save;
+                        backup.Keep = backupKeeps[backup.SaveDate.Ticks];
                     }
 
-                    save.LoadCharacterData(files[i]);
+                    if (backupActive(backup))
+                    {
+                        backup.Active = true;
+                        activeBackup = backup;
+                    }
 
-                    save.Updated += saveUpdated;
+                    //backup.Save.LoadCharacterData(files[i]);
 
-                    listBackups.Add(save);
+                    backup.Updated += saveUpdated;
+
+                    listBackups.Add(backup);
                 }
             }
             dataBackups.ItemsSource = listBackups;
@@ -222,14 +226,14 @@ namespace RemnantSaveManager
             suppressLog = oldVal;
         }
 
-        private Boolean validBackup(String folder)
+        /*private Boolean validBackup(String folder)
         {
             if (!File.Exists(backupDirPath + "\\" + folder + "\\profile.sav"))
             {
                 return false;
             }
             return true;
-        }
+        }*/
 
         private Boolean backupActive(SaveBackup saveBackup)
         {
@@ -417,7 +421,8 @@ namespace RemnantSaveManager
                         logMessage("Latest backup and current backup times not equal.");
                     }*/
                 }
-                updateActiveCharacterData();
+                //updateActiveCharacterData();
+                updateCurrentWorldAnalyzer();
 
                 if (gameProcess == null || gameProcess.HasExited)
                 {
@@ -679,7 +684,7 @@ namespace RemnantSaveManager
             SaveAnalyzer analyzer = new SaveAnalyzer(this);
             analyzer.Title = "Backup Save ("+saveBackup.Name+") World Analyzer";
             analyzer.Closing += Backup_Analyzer_Closing;
-            List<CharacterData> chars = saveBackup.GetCharacters();
+            List<RemnantCharacter> chars = saveBackup.Save.Characters;
             for (int i = 0; i < chars.Count; i++)
             {
                 chars[i].LoadWorldData(i);
@@ -723,14 +728,15 @@ namespace RemnantSaveManager
             activeSaveAnalyzer.Show();
         }
 
-        private void updateActiveCharacterData()
+        private void updateCurrentWorldAnalyzer()
         {
-            activeCharacters = CharacterData.GetCharactersFromSave(saveDirPath);//getAllSaveData(saveDirPath);
-            for (int i = 0; i < activeCharacters.Count; i++)
+            //activeCharacters = RemnantCharacter.GetCharactersFromSave(saveDirPath);//getAllSaveData(saveDirPath);
+            activeSave.UpdateCharacters();
+            for (int i = 0; i < activeSave.Characters.Count; i++)
             {
-                Console.WriteLine(activeCharacters[i]);
+                Console.WriteLine(activeSave.Characters[i]);
             }
-            activeSaveAnalyzer.LoadData(activeCharacters);
+            activeSaveAnalyzer.LoadData(activeSave.Characters);
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -790,6 +796,13 @@ namespace RemnantSaveManager
                 Properties.Settings.Default.BackupFolder = folderName;
                 Properties.Settings.Default.Save();
                 loadBackups();
+            }
+        }
+
+        private void DataBackups_AutoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
+        {
+            if (e.Column.Header.Equals("Save")) {
+                e.Cancel = true;
             }
         }
     }

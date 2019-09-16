@@ -23,7 +23,7 @@ namespace RemnantSaveManager
     {
         private MainWindow mainWindow;
         public bool ActiveSave { get; set; }
-        private List<CharacterData> listCharacters;
+        private List<RemnantCharacter> listCharacters;
         private AnalyzerColor analyzerColor;
         public SaveAnalyzer(MainWindow mw)
         {
@@ -31,7 +31,7 @@ namespace RemnantSaveManager
 
             mainWindow = mw;
 
-            listCharacters = new List<CharacterData>();
+            listCharacters = new List<RemnantCharacter>();
 
             cmbCharacter.ItemsSource = listCharacters;
 
@@ -60,7 +60,7 @@ namespace RemnantSaveManager
             lblCredits.Content = "Thanks to /u/hzla00 for the original online implementation.\n\nLots of code used here was adapted from his original javascript (as was the styling!).";
         }
 
-        public void LoadData(List<CharacterData> chars)
+        public void LoadData(List<RemnantCharacter> chars)
         {
             int selectedChar = cmbCharacter.SelectedIndex;
             listCharacters = chars;
@@ -86,7 +86,6 @@ namespace RemnantSaveManager
 
         private void CmbCharacter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            Console.WriteLine("Character changed: " + cmbCharacter.SelectedIndex);
             if (cmbCharacter.Items.Count > 0 && cmbCharacter.SelectedIndex > -1)
             {
                 dgCampaign.ItemsSource = listCharacters[cmbCharacter.SelectedIndex].CampaignEvents;

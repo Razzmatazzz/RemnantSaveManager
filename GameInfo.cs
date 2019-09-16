@@ -71,7 +71,7 @@ namespace RemnantSaveManager
             mainLocations.Clear();
             string eventName = null;
             List<string> eventItems = new List<string>();
-            XmlTextReader reader = new XmlTextReader("Resources\\GameInfo.xml");
+            XmlTextReader reader = new XmlTextReader("GameInfo.xml");
             reader.WhitespaceHandling = WhitespaceHandling.None;
             while (reader.Read())
             {
@@ -120,12 +120,12 @@ namespace RemnantSaveManager
         public static string CheckForNewGameInfo()
         {
             string message = "No new game info found.";
-            //try
-            //{
+            try
+            {
                 WebClient client = new WebClient();
-                client.DownloadFile("https://raw.githubusercontent.com/Razzmatazzz/RemnantSaveManager/master/Resources/GameInfo.xml", "Resources\\TempGameInfo.xml");
+                client.DownloadFile("https://raw.githubusercontent.com/Razzmatazzz/RemnantSaveManager/master/Resources/GameInfo.xml", "TempGameInfo.xml");
                 
-                XmlTextReader reader = new XmlTextReader("Resources\\TempGameInfo.xml");
+                XmlTextReader reader = new XmlTextReader("TempGameInfo.xml");
                 reader.WhitespaceHandling = WhitespaceHandling.None;
                 int remoteversion = 0;
                 int localversion = 0;
@@ -141,34 +141,43 @@ namespace RemnantSaveManager
                     }
                 }
                 reader.Close();
-                reader = new XmlTextReader("Resources\\GameInfo.xml");
-                while (reader.Read())
+                if (File.Exists("GameInfo.xml"))
                 {
-                    if (reader.NodeType == XmlNodeType.Element)
+                    reader = new XmlTextReader("GameInfo.xml");
+                    while (reader.Read())
                     {
-                        if (reader.Name.Equals("GameInfo"))
+                        if (reader.NodeType == XmlNodeType.Element)
                         {
-                            localversion = int.Parse(reader.GetAttribute("version"));
-                            break;
+                            if (reader.Name.Equals("GameInfo"))
+                            {
+                                localversion = int.Parse(reader.GetAttribute("version"));
+                                break;
+                            }
                         }
                     }
-                }
-                reader.Close();
+                    reader.Close();
 
-                if (remoteversion > localversion)
-                {
-                    File.Delete("Resources\\GameInfo.xml");
-                    File.Move("Resources\\TempGameInfo.xml", "Resources\\GameInfo.xml");
-                    RefreshGameInfo();
-                    message = "Game info updated!";
+                    if (remoteversion > localversion)
+                    {
+                        File.Delete("GameInfo.xml");
+                        File.Move("TempGameInfo.xml", "GameInfo.xml");
+                        RefreshGameInfo();
+                        message = "Game info updated!";
+                    }
+                    else
+                    {
+                        File.Delete("TempGameInfo.xml");
+                    }
                 } else
                 {
-                    File.Delete("Resources\\TempGameInfo.xml");
+                    File.Move("TempGameInfo.xml", "GameInfo.xml");
+                    RefreshGameInfo();
+                    message = "Game info updated!";
                 }
-            /*} catch (Exception ex)
+            } catch (Exception ex)
             {
                 message = "Error checking for new game info: " + ex.Message;
-            }*/
+            }
 
             return message;
         }

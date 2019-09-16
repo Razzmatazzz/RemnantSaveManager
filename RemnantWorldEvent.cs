@@ -9,7 +9,7 @@ using System.Net;
 
 namespace RemnantSaveManager
 {
-    public class SaveEvent
+    public class RemnantWorldEvent
     {
         private string eventKey;
         private List<string> mItems;
@@ -47,7 +47,7 @@ namespace RemnantSaveManager
             return items;
         }
 
-        public void setMissingItems(CharacterData charData)
+        public void setMissingItems(RemnantCharacter charData)
         {
             List<string> missingItems = new List<string>();
             List<string> possibleItems = this.getPossibleItems();
