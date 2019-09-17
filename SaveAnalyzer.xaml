@@ -28,6 +28,12 @@
                     <DataGrid x:Name="dgAdventure" Background="#FF343A40" Grid.ColumnSpan="2" BeginningEdit="DgAdventure_BeginningEdit" AutoGeneratingColumn="DgAdventure_AutoGeneratingColumn" CanUserSortColumns="False" BorderBrush="{x:Null}" Foreground="Black" IsReadOnly="True"/>
                 </Grid>
             </TabItem>
+            <TabItem Header="Missing Items">
+                <Grid Background="#FF343A40">
+                    <TextBox x:Name="txtMissingItems" TextWrapping="Wrap" Background="{x:Null}" BorderBrush="{x:Null}" Foreground="Red" VerticalScrollBarVisibility="Auto" FontSize="14" Padding="5,5,0,0" IsReadOnly="True"/>
+
+                </Grid>
+            </TabItem>
             <TabItem Header="Credits">
                 <Grid Background="#FF343A40">
                     <Label x:Name="lblCredits" Content="" Margin="15,15,10,10" Foreground="#FFF8F9FA" FontSize="18" Cursor="Hand" MouseLeftButtonUp="LblCredits_MouseLeftButtonUp"/>

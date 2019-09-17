@@ -732,10 +732,10 @@ namespace RemnantSaveManager
         {
             //activeCharacters = RemnantCharacter.GetCharactersFromSave(saveDirPath);//getAllSaveData(saveDirPath);
             activeSave.UpdateCharacters();
-            for (int i = 0; i < activeSave.Characters.Count; i++)
+            /*for (int i = 0; i < activeSave.Characters.Count; i++)
             {
                 Console.WriteLine(activeSave.Characters[i]);
-            }
+            }*/
             activeSaveAnalyzer.LoadData(activeSave.Characters);
         }
 

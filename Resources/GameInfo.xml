@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="1">
+<GameInfo version="2">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -24,6 +24,7 @@
     <SubLocation eventName="RootCultist" location="MarrowPass"></SubLocation>
     <SubLocation eventName="RootDragon" location="TheAshYard"></SubLocation>
     <SubLocation eventName="RootEnt" location="TheChokingHollow"></SubLocation>
+    <SubLocation eventName="RootMother" location="ChurchOfTheHarbinger"></SubLocation>
     <SubLocation eventName="RootShrine" location="TheGallows"></SubLocation>
     <SubLocation eventName="RootTumbleweed" location="TheTangledPass"></SubLocation>
     <SubLocation eventName="RootWraith" location="TheHiddenSanctum"></SubLocation>
@@ -37,12 +38,12 @@
     <SubLocation eventName="TheHarrow" location="TheBunker"></SubLocation>
     <SubLocation eventName="TheLostGantry" location="ConcourseOfTheSun"></SubLocation>
     <SubLocation eventName="TheRisen" location="Ahanae'sLament"></SubLocation>
-    <SubLocation eventName="TotemFather" location="TheScaldingGlade"></SubLocation>
+    <SubLocation eventName="TotemFather" location="TheTempestCourt"></SubLocation>
     <SubLocation eventName="Tyrant" location="TheCapillary"></SubLocation>
     <SubLocation eventName="UndyingKing" location="UndyingThrone"></SubLocation>
     <SubLocation eventName="Vyr" location="TheArdentTemple"></SubLocation>
     <SubLocation eventName="WastelandGuardian" location="LoomOfTheBlackSun"></SubLocation>
-    <SubLocation eventName="Wolf" location="TheScaldingGlade"></SubLocation>
+    <SubLocation eventName="Wolf" location="TheRavager'sHaunt"></SubLocation>
     <SubLocation eventName="WolfShrine" location="Martyr'sSanctuary"></SubLocation>
   </SubLocations>
   <MainLocations>
@@ -50,10 +51,10 @@
     <MainLocation key="City Overworld Zone2" name="Westcourt"></MainLocation>
     <MainLocation key="Wasteland Overworld Zone1" name="TheEasternWind"></MainLocation>
     <MainLocation key="Wasteland Overworld Zone2" name="TheScouringWaste"></MainLocation>
-    <MainLocation key="Jungle Overworld Zone1" name="TheVerdantStrand"></MainLocation>
-    <MainLocation key="Jungle Overworld Zone2" name="TheScaldingGlade"></MainLocation>
     <MainLocation key="Swamp Overworld Zone1" name="TheFetidGlade"></MainLocation>
     <MainLocation key="Swamp Overworld Zone2" name="TheMistFen"></MainLocation>
+    <MainLocation key="Jungle Overworld Zone1" name="TheVerdantStrand"></MainLocation>
+    <MainLocation key="Jungle Overworld Zone2" name="TheScaldingGlade"></MainLocation>
   </MainLocations>
   <EventItems>
     <Event name="AcesCoin">
@@ -146,6 +147,13 @@
     <Event name="ImmolatorAndZephyr">
       <Item>/Items/Mods/WildfireShot</Item>
     </Event>
+    <Event name="IskalQueen">
+      <Item>/Items/Weapons/Basic/Melee/Weapon_Swamp_Scythe</Item>
+      <Item>/Items/Weapons/Basic/LongGuns/Crossbow/Weapon_Swamp_Crossbow</Item>
+      <Item>/Items/Armor/Slayer/Armor_Head_Slayer</Item>
+      <Item>/Items/Armor/Slayer/Armor_Body_Slayer</Item>
+      <Item>/Items/Armor/Slayer/Armor_Legs_Slayer</Item>
+    </Event>
     <Event name="KeepersRing">
       <Item>/Items/Trinkets/Trinket_KeepersRing</Item>
     </Event>
@@ -214,6 +222,10 @@
       <Item>/Items/Weapons/Boss/Root_Spitfire/Weapon_Root_Spitfire</Item>
       <Item>/Items/Weapons/Boss/Root_Smolder/Weapon_Root_Smolder</Item>
     </Event>
+    <Event name="RootMother">
+      <Item>/Items/Traits/Trait_MothersBlessing</Item>
+      <Item>/Items/Weapons/Basic/LongGuns/SniperRifle/Weapon_SniperRifle</Item>
+    </Event>
     <Event name="RootTumbleweed">
       <Item>/Items/Mods/SeedCaller</Item>
     </Event>
@@ -236,13 +248,16 @@
     <Event name="Sentinel">
       <Item>/Items/Mods/Beckon</Item>
     </Event>
+    <Event name="SlaveRevolt">
+      <Item>/Items/Traits/Trait_Triage</Item>
+    </Event>
     <Event name="SlimeHulk">
       <Item>/Items/Mods/CorrosiveAura</Item>
       <Item>/Items/Traits/Trait_Catalyst</Item>
     </Event>
-    <Event name="Splitter">
+    <!--Event name="Splitter">
       <Item>/Items/Mods/FlickerCloak</Item>
-    </Event>
+    </Event-->
     <Event name="StoneOfBalance">
       <Item>/Items/Trinkets/Trinket_StoneOfBalance</Item>
     </Event>
@@ -298,6 +313,20 @@
     <Event name="VengeanceIdol">
       <Item>/Items/Trinkets/VengeanceIdol</Item>
     </Event>
+    <Event name="Uncategorized">
+      <Item>/Items/Traits/Trait_Exploiter</Item>
+      <Item>/Items/Traits/Trait_Handling</Item>
+      <Item>/Items/Traits/Trait_KeepersBlessing</Item>
+      <Item>/Items/Traits/Trait_RapidStrike</Item>
+      <Item>/Items/Traits/Trait_Revivalist</Item>
+      <Item>/Items/Traits/Trait_SleightOfHand</Item>
+      <Item>/Items/Traits/Trait_Suspicion</Item>
+      <Item>/Items/Traits/Trait_Teamwork</Item>
+      <Item>/Items/Traits/Trait_TriggerHappy</Item>
+      <Item>/Items/Traits/Trait_WillToLive</Item>
+      <Item>/Items/Traits/Trait_WorldWalker</Item>
+      <Item></Item>
+    </Event>
     <Event name="Vyr">
       <Item>/Items/Mods/VeilOfTheBlackTear</Item>
     </Event>
@@ -350,7 +379,6 @@
       
       To do:
       Verify that Brabus has correct Cold As Ice trait name (Earth)
-      Verify that Penitent event has correct name for Leto's Amulet (Earth)
       Verify that Splitter event name and weapon mod name are correct
 
       Note: SoulAnchor was previously /Items/Trinkets/Trinket_SoulAnchor

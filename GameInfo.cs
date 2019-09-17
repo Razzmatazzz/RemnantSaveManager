@@ -95,7 +95,7 @@ namespace RemnantSaveManager
                         }
                         else if (reader.Name.Equals("MainLocation"))
                         {
-                            subLocations.Add(reader.GetAttribute("key"), reader.GetAttribute("name"));
+                            mainLocations.Add(reader.GetAttribute("key"), reader.GetAttribute("name"));
                         }
                         break;
                     case XmlNodeType.Text:

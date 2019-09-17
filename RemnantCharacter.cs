@@ -21,6 +21,8 @@ namespace RemnantSaveManager
             }
         }
 
+        private List<string> missingItems;
+
         private string savePath;
 
         public enum ProcessMode { Campaign, Adventure };
@@ -42,6 +44,7 @@ namespace RemnantSaveManager
             this.Inventory = new List<string>();
             this.CampaignEvents = new List<RemnantWorldEvent>();
             this.AdventureEvents = new List<RemnantWorldEvent>();
+            this.missingItems = new List<string>();
             this.savePath = null;
         }
 
@@ -87,25 +90,24 @@ namespace RemnantSaveManager
             {
                 Console.WriteLine("Campaign not found; likely in tutorial mission.");
             }
+
+            missingItems.Clear();
+            foreach (string[] eventItems in GameInfo.EventItem.Values)
+            {
+                foreach (string item in eventItems)
+                {
+                    if (!this.Inventory.Contains(item))
+                    {
+                        missingItems.Add(RemnantWorldEvent.GetCleanItemName(item));
+                    }
+                }
+            }
+            missingItems.Sort();
         }
 
-        //credit to /u/hzla00 for original javascript
+        //credit to /u/hzla00 for original javascript implementation
         private void processEvents(string eventsText, ProcessMode mode)
         {
-            string savefile = eventsText.Replace("Game", "\n");
-
-            string[] textArray = savefile.Split('\n');
-
-            /*Dictionary<string, Dictionary<string,string>> zones = new Dictionary<string, Dictionary<string, string>>();
-            zones.Add("Earth", new Dictionary<string, string>());
-            zones.Add("Rhom", new Dictionary<string, string>());
-            zones.Add("Yaesha", new Dictionary<string, string>());
-            zones.Add("Corsus", new Dictionary<string, string>());
-            Dictionary<string, List<SaveEvent>> zoneEvents = new Dictionary<string, List<SaveEvent>>();
-            zoneEvents.Add("Earth", new List<SaveEvent>());
-            zoneEvents.Add("Rhom", new List<SaveEvent>());
-            zoneEvents.Add("Corsus", new List<SaveEvent>());
-            zoneEvents.Add("Yaesha", new List<SaveEvent>());*/
             Dictionary<string, Dictionary<string, string>> zones = new Dictionary<string, Dictionary<string, string>>();
             Dictionary<string, List<RemnantWorldEvent>> zoneEvents = new Dictionary<string, List<RemnantWorldEvent>>();
             foreach (string z in GameInfo.Zones)
@@ -117,27 +119,9 @@ namespace RemnantSaveManager
             string currentMainLocation = "Fairview";
             string currentSublocation = null;
 
-            if (mode == ProcessMode.Campaign)
-            {
-                RemnantWorldEvent ward13 = new RemnantWorldEvent();
-                ward13.setKey("Ward13");
-                ward13.Name = "Ward 13";
-                ward13.Location = "Earth: Ward 13";
-                ward13.Type = "Home";
-                ward13.setMissingItems(this);
-                if (ward13.MissingItems.Length > 0) zoneEvents["Earth"].Add(ward13);
-
-                RemnantWorldEvent hideout = new RemnantWorldEvent();
-                hideout.setKey("FoundersHideout");
-                hideout.Name = "Founder's Hideout";
-                hideout.Location = "Earth: Fairview";
-                hideout.Type = "Point of Interest";
-                hideout.setMissingItems(this);
-                if (hideout.MissingItems.Length > 0) zoneEvents["Earth"].Add(hideout);
-            }
-
             string eventName = null;
-            for (int i = 0; i < textArray.Length; i++)
+            MatchCollection matches = Regex.Matches(eventsText, "(?:/[a-zA-Z0-9_]+){3}/([a-zA-Z0-9]+_[a-zA-Z0-9]+_[a-zA-Z0-9_]+)");
+            foreach (Match match in matches)
             {
                 RemnantWorldEvent se = new RemnantWorldEvent();
                 string zone = null;
@@ -145,124 +129,60 @@ namespace RemnantSaveManager
                 string lastEventname = eventName;
                 eventName = null;
 
-                string textLine = textArray[i];
+                string textLine = match.Value;
                 try
                 {
-                    if (textLine.Contains("World_City"))
-                    {
-                        zone = "Earth";
+                    if (currentSublocation != null) {
+                        if (currentSublocation.Equals("TheRavagersHaunt") || currentSublocation.Equals("TheTempestCourt")) currentSublocation = null;
                     }
-                    if (textLine.Contains("World_Wasteland"))
-                    {
-                        zone = "Rhom";
-                    }
-                    if (textLine.Contains("World_Jungle"))
-                    {
-                        zone = "Yaesha";
-                    }
-                    if (textLine.Contains("World_Swamp"))
-                    {
-                        zone = "Corsus";
-                    }
+                    zone = getZone(textLine);
 
-                    if (textLine.Contains("SmallD"))
-                    {
-                        eventType = "Side Dungeon";
-                        eventName = textLine.Split('/')[3].Split('_')[2];
-                        if (GameInfo.SubLocations.ContainsKey(eventName))
-                        {
-                            currentSublocation = GameInfo.SubLocations[eventName];
-                        } else
-                        {
-                            currentSublocation = null;
-                        }
-                    }
-                    if (textLine.Contains("Quest_Boss"))
-                    {
-                        eventType = "World Boss";
-                        if (textLine.Contains("UndyingKing"))
-                        {
-                            eventName = textLine.Split('/')[3].Split('_')[1];
-                        }
-                        else
-                        {
-                            eventName = textLine.Split('/')[3].Split('_')[2];
-                        }
-                        if (GameInfo.SubLocations.ContainsKey(eventName))
-                        {
-                            currentSublocation = GameInfo.SubLocations[eventName];
-                        }
-                        else
-                        {
-                            currentSublocation = null;
-                        }
-                    }
-                    if (textLine.Contains("Siege"))
-                    {
-                        eventType = "Siege";
-                        eventName = textLine.Split('/')[3].Split('_')[2];
-                        if (GameInfo.SubLocations.ContainsKey(eventName))
-                        {
-                            currentSublocation = GameInfo.SubLocations[eventName];
-                        }
-                        else
-                        {
-                            currentSublocation = null;
-                        }
-                    }
-                    if (textLine.Contains("Mini"))
-                    {
-                        eventType = "Miniboss";
-                        eventName = textLine.Split('/')[3].Split('_')[2];
-                        if (GameInfo.SubLocations.ContainsKey(eventName))
-                        {
-                            currentSublocation = GameInfo.SubLocations[eventName];
-                        }
-                        else
-                        {
-                            currentSublocation = null;
-                        }
-                    }
-                    if (textLine.Contains("Quest_Event"))
-                    {
-                        eventType = "Item Drop";
-                        eventName = textLine.Split('/')[3].Split('_')[2];
-                    }
-
+                    eventType = getEventType(textLine);
                     if (textLine.Contains("Overworld_Zone"))
                     {
-                        currentMainLocation = textLine.Split('/')[3].Split('_')[1] + " " + textLine.Split('/')[3].Split('_')[2] + " " + textLine.Split('/')[3].Split('_')[3];
+                        currentMainLocation = textLine.Split('/')[4].Split('_')[1] + " " + textLine.Split('/')[4].Split('_')[2] + " " + textLine.Split('/')[4].Split('_')[3];
                         if (GameInfo.MainLocations.ContainsKey(currentMainLocation))
                         {
                             currentMainLocation = GameInfo.MainLocations[currentMainLocation];
-                        } else
+                        }
+                        else
                         {
                             currentMainLocation = null;
                         }
                     }
+                    else if (eventType != null)
+                    {
+                        eventName = textLine.Split('/')[4].Split('_')[2];
+                        if (textLine.Contains("OverworldPOI"))
+                        {
+                            currentSublocation = null;
+                        } else if (!textLine.Contains("Quest_Event"))
+                        {
+                            if (GameInfo.SubLocations.ContainsKey(eventName))
+                            {
+                                currentSublocation = GameInfo.SubLocations[eventName];
+                            }
+                            else
+                            {
+                                currentSublocation = null;
+                            }
+                        }
+                    }
 
                     if (mode == ProcessMode.Adventure) currentMainLocation = null;
-
-                    if (textLine.Contains("OverworldPOI"))
-                    {
-                        eventType = "Point of Interest";
-                        currentSublocation = null;
-                        eventName = textLine.Split('/')[3].Split('_')[2];
-                    }
-                    //var missingItems = getMissingItems(eventName);
+                    
                     if (eventName != lastEventname)
                     {
                         // Replacements
                         if (eventName != null)
                         {
                             se.setKey(eventName);
-                            se.Name = eventName.Replace("LizAndLiz", "Land'sEnd").Replace("Fatty", "TheUncleanOne").Replace("WastelandGuardian", "Claviger").Replace("RootEnt", "TheEnt").Replace("Wolf", "TheRavager").Replace("RootDragon", "Singe").Replace("SwarmMaster", "Scourge").Replace("RootWraith", "Shroud").Replace("RootTumbleweed", "TheMangler").Replace("Kincaller", "Warden").Replace("Tyrant", "Thrall").Replace("Vyr", "ShadeAndShatter").Replace("ImmolatorAndZephyr", "ScaldAndSear").Replace("RootBrute", "Gorefist").Replace("SlimeHulk", "Canker").Replace("BlinkFiend", "Onslaught").Replace("Sentinel", "Raze").Replace("Penitent", "Leto'sAmulet").Replace("LastWill", "FindTheMonkeyKey").Replace("SwampGuardian", "Ixillis").Replace("OldManAndConstruct", "WudAndAncientConstruct");
+                            se.Name = eventName.Replace("LizAndLiz", "ATaleOfTwoLiz's").Replace("Fatty", "TheUncleanOne").Replace("WastelandGuardian", "Claviger").Replace("RootEnt", "TheEnt").Replace("Wolf", "TheRavager").Replace("RootDragon", "Singe").Replace("SwarmMaster", "Scourge").Replace("RootWraith", "Shroud").Replace("RootTumbleweed", "TheMangler").Replace("Kincaller", "Warden").Replace("Tyrant", "Thrall").Replace("Vyr", "ShadeAndShatter").Replace("ImmolatorAndZephyr", "ScaldAndSear").Replace("RootBrute", "Gorefist").Replace("SlimeHulk", "Canker").Replace("BlinkFiend", "Onslaught").Replace("Sentinel", "Raze").Replace("Penitent", "Leto'sAmulet").Replace("LastWill", "SupplyRun").Replace("SwampGuardian", "Ixillis").Replace("OldManAndConstruct", "WudAndAncientConstruct");
                             se.Name = Regex.Replace(se.Name, "([a-z])([A-Z])", "$1 $2");
                         }
 
                         if (zone != null && eventType != null && eventName != null)
                         {
-
                             if (!zones[zone].ContainsKey(eventType))
                             {
                                 zones[zone].Add(eventType, "");
@@ -278,14 +198,6 @@ namespace RemnantSaveManager
                                 se.Type = eventType;
                                 se.setMissingItems(this);
                                 zoneEvents[zone].Add(se);
-                                /*if (mode == ProcessMode.Campaign)
-                                {
-                                    this.CampaignEvents.Add(se);
-                                }
-                                else
-                                {
-                                    this.AdventureEvents.Add(se);
-                                }*/
                             }
                         }
 
@@ -299,31 +211,99 @@ namespace RemnantSaveManager
             }
 
             List<RemnantWorldEvent> orderedEvents = new List<RemnantWorldEvent>();
+
+            bool churchAdded = false;
+            bool queenAdded = false;
+            bool navunAdded = false;
+            RemnantWorldEvent ward13 = new RemnantWorldEvent();
+            RemnantWorldEvent hideout = new RemnantWorldEvent();
+            RemnantWorldEvent church = new RemnantWorldEvent();
+            RemnantWorldEvent undying = new RemnantWorldEvent();
+            RemnantWorldEvent queen = new RemnantWorldEvent();
+            RemnantWorldEvent navun = new RemnantWorldEvent();
+            RemnantWorldEvent ward17 = new RemnantWorldEvent();
+            if (mode == ProcessMode.Campaign)
+            {
+                ward13.setKey("Ward13");
+                ward13.Name = "Ward 13";
+                ward13.Location = "Earth: Ward 13";
+                ward13.Type = "Home";
+                ward13.setMissingItems(this);
+                if (ward13.MissingItems.Length > 0) orderedEvents.Add(ward13);
+
+                hideout.setKey("FoundersHideout");
+                hideout.Name = "Founder's Hideout";
+                hideout.Location = "Earth: Fairview";
+                hideout.Type = "Point of Interest";
+                hideout.setMissingItems(this);
+                if (hideout.MissingItems.Length > 0) orderedEvents.Add(hideout);
+
+                church.setKey("RootMother");
+                church.Name = "Root Mother";
+                church.Location = "Earth: Church of the Harbinger";
+                church.Type = "Siege";
+                church.setMissingItems(this);
+
+                undying.setKey("UndyingKing");
+                undying.Name = "Undying King";
+                undying.Location = "Rhom: Undying Throne";
+                undying.Type = "World Boss";
+                undying.setMissingItems(this);
+
+                queen.Name = "Iskal Queen";
+                queen.setKey("IskalQueen");
+                queen.Location = "Corsus: The Mist Fen";
+                queen.Type = "Point of Interest";
+                queen.setMissingItems(this);
+
+                navun.Name = "Fight With The Rebels";
+                navun.setKey("SlaveRevolt");
+                navun.Location = "Yaesha: Shrine of the Immortals";
+                navun.Type = "Siege";
+                navun.setMissingItems(this);
+
+                ward17.setKey("Ward17");
+                ward17.Name = "The Dreamer";
+                ward17.Location = "Earth: Ward 17";
+                ward17.Type = "World Boss";
+                ward17.setMissingItems(this);
+            }
+
             for(int i=0; i < zoneEvents["Earth"].Count; i++)
             {
+                if (mode == ProcessMode.Campaign && !churchAdded && zoneEvents["Earth"][i].Location.Contains("Westcourt"))
+                {
+                    if (church.MissingItems.Length > 0) orderedEvents.Add(church);
+                    churchAdded = true;
+                }
                 orderedEvents.Add(zoneEvents["Earth"][i]);
             }
             for (int i = 0; i < zoneEvents["Rhom"].Count; i++)
             {
                 orderedEvents.Add(zoneEvents["Rhom"][i]);
             }
+            if (mode == ProcessMode.Campaign && undying.MissingItems.Length > 0) orderedEvents.Add(undying);
             for (int i = 0; i < zoneEvents["Corsus"].Count; i++)
             {
+                if (mode == ProcessMode.Campaign && !queenAdded && zoneEvents["Corsus"][i].Location.Contains("The Mist Fen"))
+                {
+                    if (queen.MissingItems.Length > 0) orderedEvents.Add(queen);
+                    queenAdded = true;
+                }
                 orderedEvents.Add(zoneEvents["Corsus"][i]);
             }
             for (int i = 0; i < zoneEvents["Yaesha"].Count; i++)
             {
+                if (mode == ProcessMode.Campaign && !navunAdded && zoneEvents["Yaesha"][i].Location.Contains("The Scalding Glade"))
+                {
+                    if (navun.MissingItems.Length > 0) orderedEvents.Add(navun);
+                    navunAdded = true;
+                }
                 orderedEvents.Add(zoneEvents["Yaesha"][i]);
             }
 
             if (mode == ProcessMode.Campaign)
             {
-                RemnantWorldEvent ward17 = new RemnantWorldEvent();
-                ward17.setKey("Ward17");
-                ward17.Name = "The Dreamer";
-                ward17.Location = "Earth: Ward 17";
-                ward17.Type = "World Boss";
-                ward17.setMissingItems(this);
                 if (ward17.MissingItems.Length > 0) orderedEvents.Add(ward17);
             }
 
@@ -338,6 +318,58 @@ namespace RemnantSaveManager
                     this.AdventureEvents.Add(orderedEvents[i]);
                 }
             }
+        }
+
+        private string getZone(string textLine)
+        {
+            string zone = null;
+            if (textLine.Contains("World_City"))
+            {
+                zone = "Earth";
+            }
+            else if (textLine.Contains("World_Wasteland"))
+            {
+                zone = "Rhom";
+            }
+            else if (textLine.Contains("World_Jungle"))
+            {
+                zone = "Yaesha";
+            }
+            else if (textLine.Contains("World_Swamp"))
+            {
+                zone = "Corsus";
+            }
+            return zone;
+        }
+
+        private string getEventType(string textLine)
+        {
+            string eventType = null;
+            if (textLine.Contains("SmallD"))
+            {
+                eventType = "Side Dungeon";
+            }
+            else if (textLine.Contains("Quest_Boss"))
+            {
+                eventType = "World Boss";
+            }
+            else if (textLine.Contains("Siege"))
+            {
+                eventType = "Siege";
+            }
+            else if (textLine.Contains("Mini"))
+            {
+                eventType = "Miniboss";
+            }
+            else if (textLine.Contains("Quest_Event"))
+            {
+                eventType = "Item Drop";
+            }
+            else if (textLine.Contains("OverworldPOI"))
+            {
+                eventType = "Point of Interest";
+            }
+            return eventType;
         }
 
         public enum CharacterProcessingMode { All, NoEvents };
@@ -470,6 +502,11 @@ namespace RemnantSaveManager
                     }
                 }
             }
+        }
+
+        public List<string> GetMissingItems()
+        {
+            return missingItems;
         }
     }
 }

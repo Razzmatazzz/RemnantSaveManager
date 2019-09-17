@@ -58,6 +58,8 @@ namespace RemnantSaveManager
             dgAdventure.ColumnHeaderStyle.Setters.Add(new Setter(DataGridColumnHeader.BackgroundProperty, new SolidColorBrush(analyzerColor.headerBackgroundColor)));
 
             lblCredits.Content = "Thanks to /u/hzla00 for the original online implementation.\n\nLots of code used here was adapted from his original javascript (as was the styling!).";
+
+            txtMissingItems.BorderThickness = new Thickness(0);
         }
 
         public void LoadData(List<RemnantCharacter> chars)
@@ -98,7 +100,8 @@ namespace RemnantSaveManager
                     ((TabItem)tabAnalyzer.Items[1]).IsEnabled = false;
                     tabAnalyzer.SelectedIndex = 0;
                 }
-                Console.WriteLine(listCharacters[cmbCharacter.SelectedIndex].ToFullString());
+                //Console.WriteLine(listCharacters[cmbCharacter.SelectedIndex].ToFullString());
+                txtMissingItems.Text = string.Join("\n", listCharacters[cmbCharacter.SelectedIndex].GetMissingItems());
             }
         }
 

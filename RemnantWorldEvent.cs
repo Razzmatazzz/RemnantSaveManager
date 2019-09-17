@@ -56,7 +56,7 @@ namespace RemnantSaveManager
 
                 if (!charData.Inventory.Contains(item))
                 {
-                    missingItems.Add(getCleanItemName(item));
+                    missingItems.Add(GetCleanItemName(item));
                 }
             }
             mItems = missingItems;
@@ -67,7 +67,7 @@ namespace RemnantSaveManager
             return this.Name;
         }
 
-        private string getCleanItemName(string itemKey)
+       public static string GetCleanItemName(string itemKey)
         {
             string name = itemKey.Substring(itemKey.LastIndexOf('/') + 1);
             string prefix = "";
