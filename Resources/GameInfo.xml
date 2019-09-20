@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="2">
+<GameInfo version="3">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -17,7 +17,7 @@
     <SubLocation eventName="HuntersHideout" location="HiddenGrotto"></SubLocation>
     <SubLocation eventName="ImmolatorAndZephyr" location="WitheringVillage"></SubLocation>
     <SubLocation eventName="KinCaller" location="TheHallOfJudgement"></SubLocation>
-    <SubLocation eventName="LastWill" location="FindTheMonkeyKey"></SubLocation>
+    <SubLocation eventName="LastWill" location="Sorrow'sField"></SubLocation>
     <SubLocation eventName="LizAndLiz" location="TheWarren"></SubLocation>
     <SubLocation eventName="MadMerchant" location="Junktown"></SubLocation>
     <SubLocation eventName="RootBrute" location="SunkenPassage"></SubLocation>
@@ -30,6 +30,7 @@
     <SubLocation eventName="RootWraith" location="TheHiddenSanctum"></SubLocation>
     <SubLocation eventName="Sentinel" location="ShackledCanyon"></SubLocation>
     <SubLocation eventName="SlimeHulk" location="TheDrownedTrench"></SubLocation>
+    <SubLocation eventName="Splitter" location="ResearchStationAlpha"></SubLocation>
     <SubLocation eventName="StormCaller" location="Heretic'sNest"></SubLocation>
     <SubLocation eventName="StuckMerchant" location="MerchantDungeon"></SubLocation>
     <SubLocation eventName="SwampGuardian" location="TheGrotto"></SubLocation>
@@ -255,9 +256,12 @@
       <Item>/Items/Mods/CorrosiveAura</Item>
       <Item>/Items/Traits/Trait_Catalyst</Item>
     </Event>
-    <!--Event name="Splitter">
+    <Event name="Splitter">
+      <Item>/Items/Armor/Leto/Armor_Head_Leto</Item>
+      <Item>/Items/Armor/Leto/Armor_Body_Leto</Item>
+      <Item>/Items/Armor/Leto/Armor_Legs_Leto</Item>
       <Item>/Items/Mods/FlickerCloak</Item>
-    </Event-->
+    </Event>
     <Event name="StoneOfBalance">
       <Item>/Items/Trinkets/Trinket_StoneOfBalance</Item>
     </Event>

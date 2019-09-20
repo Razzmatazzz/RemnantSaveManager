@@ -192,17 +192,23 @@ namespace RemnantSaveManager
             if (activeBackup != null)
             {
                 dataBackups.SelectedItem = activeBackup;
+            }
+            SetActiveSaveIsBackedup(activeBackup != null);
+        }
+
+        private void SetActiveSaveIsBackedup(bool backedUp)
+        {
+            if (backedUp)
+            {
                 lblStatus.Content = "Backed Up";
                 lblStatus.Foreground = Brushes.Green;
                 btnBackup.IsEnabled = false;
-                btnRestore.IsEnabled = false;
             }
             else
             {
                 lblStatus.Content = "Not Backed Up";
                 lblStatus.Foreground = Brushes.Red;
                 btnBackup.IsEnabled = true;
-                btnRestore.IsEnabled = false;
             }
         }
 
@@ -280,29 +286,58 @@ namespace RemnantSaveManager
             doBackup();
         }
 
-        private void doBackup(bool overwrite)
+        private void doBackup()
         {
             try
             {
                 bool dirExisted = true;
                 DateTime saveDate = File.GetLastWriteTime(saveDirPath + "\\profile.sav");
-                if (!Directory.Exists(backupDirPath + "\\" + saveDate.Ticks))
+                string backupFolder = backupDirPath + "\\" + saveDate.Ticks;
+                if (!Directory.Exists(backupFolder))
                 {
-                    Directory.CreateDirectory(backupDirPath + "\\" + saveDate.Ticks);
+                    Directory.CreateDirectory(backupFolder);
                     dirExisted = false;
                 }
-                if (!dirExisted || (dirExisted && overwrite))
-                {
+                /*if (!dirExisted || (dirExisted && overwrite))
+                {*/
                     foreach (var file in Directory.GetFiles(saveDirPath))
-                        File.Copy(file, backupDirPath + "\\" + saveDate.Ticks + "\\" + System.IO.Path.GetFileName(file), true);
+                        File.Copy(file, backupFolder + "\\" + System.IO.Path.GetFileName(file), true);
+                    /*if (!dirExisted && !overwrite)
+                    {*/
+                        if (RemnantSave.ValidSaveFolder(backupFolder))
+                        {
+                            Dictionary<long, string> backupNames = getSavedBackupNames();
+                            Dictionary<long, bool> backupKeeps = getSavedBackupKeeps();
+                            SaveBackup backup = new SaveBackup(backupFolder);
+                            if (backupNames.ContainsKey(backup.SaveDate.Ticks))
+                            {
+                                backup.Name = backupNames[backup.SaveDate.Ticks];
+                            }
+                            if (backupKeeps.ContainsKey(backup.SaveDate.Ticks))
+                            {
+                                backup.Keep = backupKeeps[backup.SaveDate.Ticks];
+                            }
+                            foreach (SaveBackup saveBackup in listBackups)
+                            {
+                                saveBackup.Active = false;
+                            }
+                            backup.Active = true;
+                            activeSave = backup.Save;
+                            backup.Updated += saveUpdated;
+                            listBackups.Add(backup);
+                        }
+                    //}
                     checkBackupLimit();
-                    loadBackups(false);
+                    dataBackups.Items.Refresh();
+                    SetActiveSaveIsBackedup(true);
+                    btnBackup.IsEnabled = false;
+                    //loadBackups(false);
                     logMessage($"Backup completed ({saveDate.ToString()})!");
-                }
+                /*}
                 else
                 {
                     logMessage("This save is already backed up.");
-                }
+                }*/
             }
             catch (IOException ex)
             {
@@ -310,15 +345,15 @@ namespace RemnantSaveManager
                 {
                     logMessage("Save file in use; waiting 0.5 seconds and retrying.");
                     System.Threading.Thread.Sleep(500);
-                    doBackup(overwrite);
+                    doBackup();
                 }
             }
         }
 
-        private void doBackup()
+        /*private void doBackup()
         {
             doBackup(false);
-        }
+        }*/
 
         private Boolean isRemnantRunning()
         {
@@ -352,11 +387,19 @@ namespace RemnantSaveManager
                 {
                     file.Delete();
                 }
-
-                string backupFolder = ((SaveBackup)dataBackups.SelectedItem).SaveDate.Ticks.ToString();
-                foreach (var file in Directory.GetFiles(backupDirPath + "\\" + backupFolder))
+                SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
+                foreach (var file in Directory.GetFiles(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks))
                     File.Copy(file, saveDirPath + "\\" + System.IO.Path.GetFileName(file));
-                loadBackups(false);
+                //loadBackups(false);
+                foreach (SaveBackup saveBackup in listBackups)
+                {
+                    saveBackup.Active = false;
+                }
+                selectedBackup.Active = true;
+                activeSave = selectedBackup.Save;
+                dataBackups.Items.Refresh();
+                //SetActiveSaveIsBackedup(true);
+                btnRestore.IsEnabled = false;
                 logMessage("Backup restored!");
                 saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
             }
@@ -402,7 +445,7 @@ namespace RemnantSaveManager
                 }
                 if (DateTime.Compare(DateTime.Now, newBackupTime) > 0 || DateTime.Compare(latestBackupTime, File.GetLastWriteTime(e.FullPath)) == 0)
                 {
-                    doBackup(true);
+                    doBackup();
                 } else
                 {
                     lblStatus.Content = "Not Backed Up";
@@ -651,7 +694,7 @@ namespace RemnantSaveManager
             //MenuItem infoMenu = ((MenuItem)dataBackups.ContextMenu.Items[2]);
             if (e.AddedItems.Count > 0)
             {
-                SaveBackup selectedBackup = (SaveBackup)(e.AddedItems[0]);
+                SaveBackup selectedBackup = (SaveBackup)(dataBackups.SelectedItem);
                 if (backupActive(selectedBackup))
                 {
                     btnRestore.IsEnabled = false;
