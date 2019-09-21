@@ -331,7 +331,7 @@ namespace RemnantSaveManager
                         saveBackup.Active = false;
                     }
                     backup.Active = true;
-                    activeSave = backup.Save;
+                    //activeSave = backup.Save;
                     backup.Updated += saveUpdated;
                     if (existingSaveIndex > -1)
                     {
@@ -410,7 +410,8 @@ namespace RemnantSaveManager
                     saveBackup.Active = false;
                 }
                 selectedBackup.Active = true;
-                activeSave = selectedBackup.Save;
+                //activeSave = selectedBackup.Save;
+                updateCurrentWorldAnalyzer();
                 dataBackups.Items.Refresh();
                 //SetActiveSaveIsBackedup(true);
                 btnRestore.IsEnabled = false;
