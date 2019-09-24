@@ -177,7 +177,7 @@ namespace RemnantSaveManager
                         if (eventName != null)
                         {
                             se.setKey(eventName);
-                            se.Name = eventName.Replace("LizAndLiz", "TaleOfTwoLiz's").Replace("Fatty", "TheUncleanOne").Replace("WastelandGuardian", "Claviger").Replace("RootEnt", "TheEnt").Replace("Wolf", "TheRavager").Replace("RootDragon", "Singe").Replace("SwarmMaster", "Scourge").Replace("RootWraith", "Shroud").Replace("RootTumbleweed", "TheMangler").Replace("Kincaller", "Warden").Replace("Tyrant", "Thrall").Replace("Vyr", "ShadeAndShatter").Replace("ImmolatorAndZephyr", "ScaldAndSear").Replace("RootBrute", "Gorefist").Replace("SlimeHulk", "Canker").Replace("BlinkFiend", "Onslaught").Replace("Sentinel", "Raze").Replace("Penitent", "Leto'sAmulet").Replace("LastWill", "SupplyRun").Replace("SwampGuardian", "Ixillis").Replace("OldManAndConstruct", "WudAndAncientConstruct").Replace("Splitter","Riphide");
+                            se.Name = eventName.Replace("LizAndLiz", "TaleOfTwoLiz's").Replace("Fatty", "TheUncleanOne").Replace("WastelandGuardian", "Claviger").Replace("RootEnt", "TheEnt").Replace("Wolf", "TheRavager").Replace("RootDragon", "Singe").Replace("SwarmMaster", "Scourge").Replace("RootWraith", "Shroud").Replace("RootTumbleweed", "TheMangler").Replace("Kincaller", "Warden").Replace("Tyrant", "Thrall").Replace("Vyr", "ShadeAndShatter").Replace("ImmolatorAndZephyr", "ScaldAndSear").Replace("RootBrute", "Gorefist").Replace("SlimeHulk", "Canker").Replace("BlinkFiend", "Onslaught").Replace("Sentinel", "Raze").Replace("Penitent", "Leto'sAmulet").Replace("LastWill", "SupplyRun").Replace("SwampGuardian", "Ixillis").Replace("OldManAndConstruct", "WudAndAncientConstruct").Replace("Splitter","Riphide").Replace("Nexus", "RootNexus");
                             se.Name = Regex.Replace(se.Name, "([a-z])([A-Z])", "$1 $2");
                         }
 
@@ -363,7 +363,13 @@ namespace RemnantSaveManager
             }
             else if (textLine.Contains("Quest_Event"))
             {
-                eventType = "Item Drop";
+                if (textLine.Contains("Nexus"))
+                {
+                    eventType = "Siege";
+                } else
+                {
+                    eventType = "Item Drop";
+                }
             }
             else if (textLine.Contains("OverworldPOI"))
             {

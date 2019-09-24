@@ -452,7 +452,7 @@ namespace RemnantSaveManager
                     DateTime newBackupTime;
                     if (listBackups.Count > 0)
                     {
-                        latestBackupTime = listBackups.ToArray()[listBackups.Count - 1].SaveDate;
+                        latestBackupTime = listBackups[listBackups.Count - 1].SaveDate;
                         newBackupTime = latestBackupTime.AddMinutes(Properties.Settings.Default.BackupMinutes);
                     }
                     else
@@ -473,6 +473,7 @@ namespace RemnantSaveManager
                         {
                             if (backup.Active) backup.Active = false;
                         }
+                        dataBackups.Items.Refresh();
                         /*if (DateTime.Compare(DateTime.Now, newBackupTime) < 1)
                         {
                             logMessage($"Last backup less than {Properties.Settings.Default.BackupMinutes} minutes ago");
@@ -597,15 +598,22 @@ namespace RemnantSaveManager
         {
             if (listBackups.Count > Properties.Settings.Default.BackupLimit)
             {
+                List<SaveBackup> removeBackups = new List<SaveBackup>();
                 int delNum = listBackups.Count - Properties.Settings.Default.BackupLimit;
                 for (int i = 0; i < listBackups.Count && delNum > 0; i++)
                 {
                     if (!listBackups[i].Keep && !listBackups[i].Active)
                     {
-                        Directory.Delete(backupDirPath + "\\" + listBackups[i].SaveDate.Ticks, true);
                         logMessage("Deleting excess backup " + listBackups[i].Name + " (" + listBackups[i].SaveDate + ")");
+                        Directory.Delete(backupDirPath + "\\" + listBackups[i].SaveDate.Ticks, true);
+                        removeBackups.Add(listBackups[i]);
                         delNum--;
                     }
+                }
+
+                for (int i=0; i < removeBackups.Count; i++)
+                {
+                    listBackups.Remove(removeBackups[i]);
                 }
             }
         }
@@ -659,11 +667,10 @@ namespace RemnantSaveManager
 
         private void updateSavedNames()
         {
-            SaveBackup[] saves = listBackups.ToArray();
             List<string> savedNames = new List<string>();
-            for (int i = 0; i < saves.Length; i++)
+            for (int i = 0; i < listBackups.Count; i++)
             {
-                SaveBackup s = saves[i];
+                SaveBackup s = listBackups[i];
                 if (!s.Name.Equals(s.SaveDate.Ticks.ToString()))
                 {
                     savedNames.Add(s.SaveDate.Ticks + "=" + System.Net.WebUtility.UrlEncode(s.Name));
@@ -685,11 +692,10 @@ namespace RemnantSaveManager
 
         private void updateSavedKeeps()
         {
-            SaveBackup[] saves = listBackups.ToArray();
             List<string> savedKeeps = new List<string>();
-            for (int i = 0; i < saves.Length; i++)
+            for (int i = 0; i < listBackups.Count; i++)
             {
-                SaveBackup s = saves[i];
+                SaveBackup s = listBackups[i];
                 if (s.Keep)
                 {
                     savedKeeps.Add(s.SaveDate.Ticks + "=True");
