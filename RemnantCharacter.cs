@@ -403,6 +403,10 @@ namespace RemnantSaveManager
                 string[] inventories = profileData.Split(new string[] { "/Game/_Core/Archetypes/" }, StringSplitOptions.None);
                 for (var i = 1; i < inventories.Length; i++)
                 {
+                    if (inventories[i].IndexOf("/Game/Characters/Player/Base/Character_Master_Player.Character_Master_Player_C") == -1)
+                    {
+                        continue;
+                    }
                     List<string> saveItems = new List<string>();
                     inventories[i] = inventories[i].Substring(inventories[i].IndexOf("/Game/Characters/Player/Base/Character_Master_Player.Character_Master_Player_C"));
                     Regex rx = new Regex(@"/Items/Weapons(/[a-zA-Z0-9_]+)+/[a-zA-Z0-9_]+");
