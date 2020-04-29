@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="7">
+<GameInfo version="8">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -100,6 +100,7 @@
       <Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
       <Item>/Items/Armor/Carapace/Armor_Body_Carapace</Item>
       <Item>/Items/Armor/Carapace/Armor_Legs_Carapace</Item>
+      <Item>/Items/Traits/Trait_Luminescent</Item>
     </Event>
     <Event name="BrutalMark">
       <Item>/Items/Trinkets/BrutalMark</Item>
@@ -295,6 +296,14 @@
     <Event name="Sentinel">
       <Item>/Items/Mods/Beckon</Item>
     </Event>
+    <Event name="Sketterling">
+      <Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
+      <Item>/Items/Armor/Carapace/Armor_Body_Carapace</Item>
+      <Item>/Items/Armor/Carapace/Armor_Legs_Carapace</Item>
+      <Item>/Items/Trinkets/IskalHunterBand</Item>
+      <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item>
+      <Item>/Items/Trinkets/MantisRing</Item>
+    </Event>
     <Event name="SlaveRevolt">
       <Item>/Items/Traits/Trait_Triage</Item>
     </Event>
@@ -380,9 +389,6 @@
       <Item>/Items/Traits/Trait_WillToLive</Item>
       <Item>/Items/Traits/Trait_WorldWalker</Item>
       <Item>/Player/Emotes/Emote_Wave</Item>
-      <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item>
-      <Item>/Items/Trinkets/MantisRing</Item>
-      <Item>/Items/Trinkets/IskalHunterBand</Item>
       <Item>/Items/Armor/Adventurer/Armor_Head_Adventurer</Item>
       <Item></Item>
     </Event>
@@ -448,8 +454,6 @@
       Verify that Brabus has correct Cold As Ice trait name (Earth)
 
       Note: SoulAnchor was previously /Items/Trinkets/Trinket_SoulAnchor
-      
-      <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item> dropped from killing a small red bug in the Strange Pass on the way to the Brain Bug. Currently in Uncategorized.
     -->
   </EventItems>
 </GameInfo>
