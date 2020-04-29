@@ -74,7 +74,7 @@ namespace RemnantSaveManager
                 string strAdventureEnd = String.Format("/Game/World_{0}/Quests/Quest_AdventureMode/Quest_AdventureMode_{0}.Quest_AdventureMode_{0}_C", adventureZone);
                 int adventureEnd = savetext.IndexOf(strAdventureEnd) + strAdventureEnd.Length;
                 string advtext = savetext.Substring(0, adventureEnd);
-                advtext = advtext.Substring(advtext.LastIndexOf("\n"));
+                advtext = advtext.Substring(advtext.LastIndexOf("ItemInstanceData"));
                 processEvents(advtext, ProcessMode.Adventure);
             }
 
@@ -403,7 +403,8 @@ namespace RemnantSaveManager
                         saveItems.Add(match.Value);
                     }
 
-                    rx = new Regex(@"/Items/Armor/[a-zA-Z0-9_]+/[a-zA-Z0-9_]+");
+                    //rx = new Regex(@"/Items/Armor/[a-zA-Z0-9_]+/[a-zA-Z0-9_]+");
+                    rx = new Regex(@"/Items/Armor/([a-zA-Z0-9_]+/)?[a-zA-Z0-9_]+");
                     matches = rx.Matches(inventories[i]);
                     foreach (Match match in matches)
                     {

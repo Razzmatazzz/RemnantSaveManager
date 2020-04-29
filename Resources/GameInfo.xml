@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="4">
+<GameInfo version="5">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -106,6 +106,10 @@
     </Event>
     <Event name="Cryptolith">
       <Item>/Items/Traits/Trait_Concentration</Item>
+      <Item>/Items/Traits/Trait_BloodBond</Item>
+      <Item>/Items/Armor/Armor_Head_Labyrinth</Item>
+      <Item>/Items/Armor/Armor_Body_Labyrinth</Item>
+      <Item>/Items/Armor/Armor_Legs_Labyrinth</Item>
     </Event>
     <Event name="DevouringLoop">
       <Item>/Items/Trinkets/DevouringLoop</Item>
@@ -225,6 +229,7 @@
     </Event>
     <Event name="QueensTemple">
       <Item>/Items/Traits/Trait_Footwork</Item>
+      <Item>/Items/Mods/Seeker</Item>
     </Event>
     <Event name="RazorStone">
       <Item>/Items/Trinkets/Razorstone</Item>
