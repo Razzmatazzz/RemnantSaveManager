@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="5">
+<GameInfo version="6">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -149,6 +149,7 @@
     </Event>
     <Event name="GraveyardElf">
       <Item>/Items/Trinkets/GrimCoil</Item>
+      <Item>/Items/Traits/Trait_Potency</Item>
     </Event>
     <Event name="GravityStone">
       <Item>/Items/Trinkets/GravityStone</Item>
@@ -367,6 +368,8 @@
       <Item>/Items/Traits/Trait_WillToLive</Item>
       <Item>/Items/Traits/Trait_WorldWalker</Item>
       <Item>/Player/Emotes/Emote_Wave</Item>
+      <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item>
+      <Item>/Items/Armor/Adventurer/Armor_Head_Adventurer</Item>
       <Item></Item>
     </Event>
     <Event name="Vyr">
@@ -430,7 +433,8 @@
       Verify that Brabus has correct Cold As Ice trait name (Earth)
 
       Note: SoulAnchor was previously /Items/Trinkets/Trinket_SoulAnchor
-      <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item> dropped from killing a small red bug in the Strange Pass on the way to the Brain Bug
+      
+      <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item> dropped from killing a small red bug in the Strange Pass on the way to the Brain Bug. Currently in Uncategorized.
     -->
   </EventItems>
 </GameInfo>
