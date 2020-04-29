@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="6">
+<GameInfo version="7">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -61,6 +61,9 @@
     <MainLocation key="Jungle Overworld Zone2" name="TheScaldingGlade"></MainLocation>
   </MainLocations>
   <EventItems>
+    <Event name="AbandonedThrone">
+      <Item>/Items/Traits/Trait_Luminescent</Item>
+    </Event>
     <Event name="AcesCoin">
       <Item>/Items/Weapons/Basic/HandGuns/Revolver/Weapon_Revolver</Item>
     </Event>
@@ -94,6 +97,9 @@
     </Event>
     <Event name="BrainBug">
       <Item>/Items/Trinkets/GIftOfTheIskal</Item>
+      <Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
+      <Item>/Items/Armor/Carapace/Armor_Body_Carapace</Item>
+      <Item>/Items/Armor/Carapace/Armor_Legs_Carapace</Item>
     </Event>
     <Event name="BrutalMark">
       <Item>/Items/Trinkets/BrutalMark</Item>
@@ -156,6 +162,9 @@
     </Event>
     <Event name="GunslingersCharm">
       <Item>/Items/Trinkets/Trinket_GunslingersCharm</Item>
+    </Event>
+    <Event name="GunslignersRing">
+      <Item>/Items/Trinkets/Trinket_GunslingersRing</Item>
     </Event>
     <Event name="HeartSeeker">
       <Item>/Items/Trinkets/HeartSeeker</Item>
@@ -243,6 +252,9 @@
     </Event>
     <Event name="RockOfAnguish">
       <Item>/Items/Trinkets/RockOfAnguish</Item>
+    </Event>
+    <Event name="RingOfShadows">
+      <Item>/Items/Trinkets/Trinket_RingOfShadows</Item>
     </Event>
     <Event name="RootBrute">
       <Item>/Items/Mods/MantleOfThorns</Item>
@@ -369,6 +381,8 @@
       <Item>/Items/Traits/Trait_WorldWalker</Item>
       <Item>/Player/Emotes/Emote_Wave</Item>
       <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item>
+      <Item>/Items/Trinkets/MantisRing</Item>
+      <Item>/Items/Trinkets/IskalHunterBand</Item>
       <Item>/Items/Armor/Adventurer/Armor_Head_Adventurer</Item>
       <Item></Item>
     </Event>
@@ -407,6 +421,7 @@
     </Event>
     <Event name="Wisp">
       <Item>/Items/Trinkets/SoulEmber</Item>
+      <Item>/Items/Traits/Trait_Evocation</Item>
     </Event>
     <Event name="WastelandGuardian">
       <Item>/Items/Weapons/Boss/WorldBreaker/Weapon_Wasteland_WorldBreaker</Item>
