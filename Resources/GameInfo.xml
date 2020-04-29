@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="3">
+<GameInfo version="4">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -8,11 +8,14 @@
   </Zones>
   <SubLocations>
     <SubLocation eventName="ArmorVault" location="VaultOfTheHeralds"></SubLocation>
+    <SubLocation eventName="BarbTerror" location="NeedleLair"></SubLocation>
     <SubLocation eventName="BlinkFiend" location="Widow'sPass"></SubLocation>
     <SubLocation eventName="BlinkThief" location="ForgottenUndercroft"></SubLocation>
     <SubLocation eventName="Brabus" location="CutthroatChannel"></SubLocation>
+    <SubLocation eventName="BrainBug" location="StrangePass"></SubLocation>
     <SubLocation eventName="DoeShrine" location="Widow'sVestry"></SubLocation>
     <SubLocation eventName="Fatty" location="TheFetidGlade"></SubLocation>
+    <SubLocation eventName="FlickeringHorror" location="CorruptedSanctum"></SubLocation>
     <SubLocation eventName="HoundMaster" location="TheBurrows"></SubLocation>
     <SubLocation eventName="HuntersHideout" location="HiddenGrotto"></SubLocation>
     <SubLocation eventName="ImmolatorAndZephyr" location="WitheringVillage"></SubLocation>
@@ -69,6 +72,9 @@
     <Event name="BandOfStrength">
       <Item>/Items/Trinkets/BandOfStrength</Item>
     </Event>
+    <Event name="BarbTerror">
+      <Item>/Items/Mods/UnstableQuills</Item>
+    </Event>
     <Event name="BlinkFiend">
       <Item>/Items/Mods/BlinkToken</Item>
     </Event>
@@ -86,6 +92,9 @@
       <Item>/Items/Armor/Bandit/Armor_Legs_Bandit</Item>
       <Item>/Items/Traits/Trait_ColdAsIce</Item>
     </Event>
+    <Event name="BrainBug">
+      <Item>/Items/Trinkets/GIftOfTheIskal</Item>
+    </Event>
     <Event name="BrutalMark">
       <Item>/Items/Trinkets/BrutalMark</Item>
     </Event>
@@ -94,6 +103,9 @@
     </Event>
     <Event name="CleansingJewel">
       <Item>/Items/Trinkets/CleansingJewel</Item>
+    </Event>
+    <Event name="Cryptolith">
+      <Item>/Items/Traits/Trait_Concentration</Item>
     </Event>
     <Event name="DevouringLoop">
       <Item>/Items/Trinkets/DevouringLoop</Item>
@@ -110,11 +122,19 @@
     </Event>
     <Event name="Fatty">
       <Item>/Items/Weapons/Boss/Devastator/Weapon_Swamp_Devastator</Item>
+      <Item>/Items/Weapons/Boss/ButchersFlail/Weapon_Swamp_ButchersFlail</Item>
       <Item>/Items/Traits/Trait_Glutton</Item>
+      <Item>/Player/Emotes/Emote_Exhausted</Item>
+    </Event>
+    <Event name="FetidPool">
+      <Item>/Items/Trinkets/Trinket_RustedAmulet</Item>
     </Event>
     <Event name="Flautist">
       <Item>/Items/Trinkets/Trinket_HeartOfTheWolf</Item>
       <Item>/Items/Traits/Trait_Swiftness</Item>
+    </Event>
+    <Event name="FlickeringHorror">
+      <Item>/Items/Mods/RiftWalker</Item>
     </Event>
     <Event name="FoundersHideout">
       <Item>/Items/Armor/Drifter/Armor_Body_Drifter</Item>
@@ -122,6 +142,9 @@
     </Event>
     <Event name="GalenicCharm">
       <Item>/Items/Trinkets/Trinket_GalenicCharm</Item>
+    </Event>
+    <Event name="GraveyardElf">
+      <Item>/Items/Trinkets/GrimCoil</Item>
     </Event>
     <Event name="GravityStone">
       <Item>/Items/Trinkets/GravityStone</Item>
@@ -200,6 +223,9 @@
     <Event name="PillarOfStone">
       <Item>/Items/Trinkets/Trinket_PillarOfStone</Item>
     </Event>
+    <Event name="QueensTemple">
+      <Item>/Items/Traits/Trait_Footwork</Item>
+    </Event>
     <Event name="RazorStone">
       <Item>/Items/Trinkets/Razorstone</Item>
     </Event>
@@ -222,6 +248,7 @@
     <Event name="RootDragon">
       <Item>/Items/Weapons/Boss/Root_Spitfire/Weapon_Root_Spitfire</Item>
       <Item>/Items/Weapons/Boss/Root_Smolder/Weapon_Root_Smolder</Item>
+      <Item>/Player/Emotes/Emote_Beckon</Item>
     </Event>
     <Event name="RootMother">
       <Item>/Items/Traits/Trait_MothersBlessing</Item>
@@ -237,6 +264,7 @@
       <Item>/Items/Weapons/Boss/Root_SporeLauncher/Weapon_Root_SporeLauncher</Item>
       <Item>/Items/Weapons/Boss/Root_PetrifiedMaul/Weapon_Root_PetrifiedMaul</Item>
       <Item>/Items/Traits/Trait_QuickHands</Item>
+      <Item>/Player/Emotes/Emote_Cheer</Item>
     </Event>
     <Event name="RootShrine">
       <Item>/Items/Armor/Twisted/Armor_Head_Twisted</Item>
@@ -283,6 +311,7 @@
       <Item>/Items/Weapons/Boss/HiveCannon/Weapon_Swamp_HiveCannon</Item>
       <Item>/Items/Weapons/Boss/GuardianAxe/Weapon_Swamp_GuardianAxe</Item>
       <Item>/Items/Traits/Trait_Executioner</Item>
+      <Item>/Player/Emotes/Emote_Confused</Item>
     </Event>
     <Event name="SwarmMaster">
       <Item>/Items/Mods/BreathOfDesert</Item>
@@ -293,6 +322,7 @@
     <Event name="TheHarrow">
       <Item>/Items/Weapons/Boss/Defiler/Weapon_Wasteland_Defiler</Item>
       <Item>/Items/Weapons/Boss/LostHarpoon/Weapon_Wasteland_LostHarpoon</Item>
+      <Item>/Player/Emotes/Emote_Fail</Item>
     </Event>
     <Event name="TheLostGantry">
       <Item>/Items/Weapons/Basic/Wasteland_BeamRifle/Weapon_Wasteland_BeamRifle</Item>
@@ -304,6 +334,7 @@
       <Item>/Items/Traits/Trait_ArcaneStrike</Item>
       <Item>/Items/Weapons/Boss/Pan_EyeOfTheStorm/Weapon_Pan_EyeOfTheStorm</Item>
       <Item>/Items/Weapons/Boss/Pan_VoiceOfTheTempest/Weapon_Pan_VoiceOfTheTempest</Item>
+      <Item>/Player/Emotes/Emote_TeaTime</Item>
     </Event>
     <Event name="Tyrant">
       <Item>/Items/Mods/Swarm</Item>
@@ -313,6 +344,7 @@
       <Item>/Items/Weapons/Boss/Ruin/Weapon_Wasteland_Ruin</Item>
       <Item>/Items/Traits/Trait_Kingslayer</Item>
       <Item>/Items/Weapons/Boss/Riven/Weapon_Wasteland_Riven</Item>
+      <Item>/Player/Emotes/Emote_Gravedigger</Item>
     </Event>
     <Event name="VengeanceIdol">
       <Item>/Items/Trinkets/VengeanceIdol</Item>
@@ -329,6 +361,7 @@
       <Item>/Items/Traits/Trait_TriggerHappy</Item>
       <Item>/Items/Traits/Trait_WillToLive</Item>
       <Item>/Items/Traits/Trait_WorldWalker</Item>
+      <Item>/Player/Emotes/Emote_Wave</Item>
       <Item></Item>
     </Event>
     <Event name="Vyr">
@@ -361,17 +394,24 @@
     <Event name="Ward17">
       <Item>/Items/Weapons/Boss/Guns/LongGuns/Repulsor/Weapon_Atoll_Repulsor</Item>
       <Item>/Items/Traits/Trait_MindsEye</Item>
+      <Item>/Player/Emotes/Emote_HighFive</Item>
+      <Item>/Player/Emotes/Emote_PraiseTheGun</Item>
+    </Event>
+    <Event name="Wisp">
+      <Item>/Items/Trinkets/SoulEmber</Item>
     </Event>
     <Event name="WastelandGuardian">
       <Item>/Items/Weapons/Boss/WorldBreaker/Weapon_Wasteland_WorldBreaker</Item>
       <Item>/Items/Weapons/Boss/ParticleAccelerator/Weapon_Wasteland_ParticleAccelerator</Item>
       <Item>/Items/Traits/Trait_Recovery</Item>
+      <Item>/Player/Emotes/Emote_Laugh</Item>
     </Event>
     <Event name="Wolf">
       <Item>/Items/Weapons/Boss/Pan_CurseOfTheJungleGod/Weapon_Pan_CurseOfTheJungleGod</Item>
       <Item>/Items/Weapons/Boss/Pan_ScarOfTheJungleGod/Weapon_Pan_ScarOfTheJungleGod</Item>
       <Item>/Items/Traits/Trait_ArcaneStrike</Item>
       <Item>/Items/Traits/Trait_Swiftness</Item>
+      <Item>/Player/Emotes/Emote_FreezeFrame</Item>
     </Event>
     <Event name="WolfShrine">
       <Item>/Items/Armor/Elder/Armor_Head_Elder</Item>
@@ -385,6 +425,7 @@
       Verify that Brabus has correct Cold As Ice trait name (Earth)
 
       Note: SoulAnchor was previously /Items/Trinkets/Trinket_SoulAnchor
+      <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item> dropped from killing a small red bug in the Strange Pass on the way to the Brain Bug
     -->
   </EventItems>
 </GameInfo>

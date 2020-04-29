@@ -50,45 +50,32 @@ namespace RemnantSaveManager
 
         public void processSaveData(string savetext)
         {
-            //get adventure info
-            string adventureZone = null;
-            if (savetext.Contains("Quest_AdventureMode_City")) adventureZone = "City";
-            if (savetext.Contains("Quest_AdventureMode_Wasteland")) adventureZone = "Wasteland";
-            if (savetext.Contains("Quest_AdventureMode_Swamp")) adventureZone = "Swamp";
-            if (savetext.Contains("Quest_AdventureMode_Jungle")) adventureZone = "Jungle";
-
-            string strCampaignEnd = "/Game/Campaign_Main/Quest_Campaign_Ward13.Quest_Campaign_Ward13";
-            int campaignEnd = savetext.IndexOf(strCampaignEnd)+strCampaignEnd.Length;
-            int eventsEnd = campaignEnd;
-
-            if (adventureZone != null)
-            {
-                string strAdventureEnd = String.Format("/Game/World_{0}/Quests/Quest_AdventureMode/Quest_AdventureMode_{0}.Quest_AdventureMode_{0}_C", adventureZone);
-                int adventureEnd = savetext.IndexOf(strAdventureEnd) + strAdventureEnd.Length;
-                if (adventureEnd > campaignEnd)
-                {
-                    savetext = savetext.Substring(0, adventureEnd);
-                } else
-                {
-                    savetext = savetext.Substring(0, campaignEnd);
-                }
-                string adventuretext = savetext.Split(new string[] { strAdventureEnd }, StringSplitOptions.None)[0];
-                adventuretext = adventuretext.Split(new string[] { String.Format("/Game/World_{0}/Quests/Quest_AdventureMode/Quest_AdventureMode_{0}_0", adventureZone) }, StringSplitOptions.None)[1];
-                adventuretext = adventuretext.Split(new string[] { "PersistenceKeys" }, StringSplitOptions.None)[0];
-                adventuretext = adventuretext.Split(new string[] { "\r\n" }, StringSplitOptions.None)[0].Split(new string[] { "\n" }, StringSplitOptions.None)[0];
-                processEvents(adventuretext, ProcessMode.Adventure);
-            }
-
             //get campaign info
-            savetext = savetext.Split(new string[] { "/Game/Campaign_Main/Quest_Campaign_Ward13.Quest_Campaign_Ward13" }, StringSplitOptions.None)[0];
-            string[] campaign = savetext.Split(new string[] { "/Game/Campaign_Main/Quest_Campaign_City.Quest_Campaign_City" }, StringSplitOptions.None);
+            string campaigntext = savetext.Split(new string[] { "/Game/Campaign_Main/Quest_Campaign_Ward13.Quest_Campaign_Ward13" }, StringSplitOptions.None)[0];
+            string[] campaign = campaigntext.Split(new string[] { "/Game/Campaign_Main/Quest_Campaign_City.Quest_Campaign_City" }, StringSplitOptions.None);
             if (campaign.Length > 1)
             {
-                savetext = campaign[1];
-                processEvents(savetext, ProcessMode.Campaign);
+                campaigntext = campaign[1];
+                processEvents(campaigntext, ProcessMode.Campaign);
             } else
             {
                 Console.WriteLine("Campaign not found; likely in tutorial mission.");
+            }
+
+            //get adventure info
+            if (savetext.Contains("Quest_AdventureMode_"))
+            {
+                string adventureZone = null;
+                if (savetext.Contains("Quest_AdventureMode_City_C")) adventureZone = "City";
+                if (savetext.Contains("Quest_AdventureMode_Wasteland_C")) adventureZone = "Wasteland";
+                if (savetext.Contains("Quest_AdventureMode_Swamp_C")) adventureZone = "Swamp";
+                if (savetext.Contains("Quest_AdventureMode_Jungle_C")) adventureZone = "Jungle";
+
+                string strAdventureEnd = String.Format("/Game/World_{0}/Quests/Quest_AdventureMode/Quest_AdventureMode_{0}.Quest_AdventureMode_{0}_C", adventureZone);
+                int adventureEnd = savetext.IndexOf(strAdventureEnd) + strAdventureEnd.Length;
+                string advtext = savetext.Substring(0, adventureEnd);
+                advtext = advtext.Substring(advtext.LastIndexOf("\n"));
+                processEvents(advtext, ProcessMode.Adventure);
             }
 
             missingItems.Clear();
@@ -177,7 +164,7 @@ namespace RemnantSaveManager
                         if (eventName != null)
                         {
                             se.setKey(eventName);
-                            se.Name = eventName.Replace("LizAndLiz", "TaleOfTwoLiz's").Replace("Fatty", "TheUncleanOne").Replace("WastelandGuardian", "Claviger").Replace("RootEnt", "TheEnt").Replace("Wolf", "TheRavager").Replace("RootDragon", "Singe").Replace("SwarmMaster", "Scourge").Replace("RootWraith", "Shroud").Replace("RootTumbleweed", "TheMangler").Replace("Kincaller", "Warden").Replace("Tyrant", "Thrall").Replace("Vyr", "ShadeAndShatter").Replace("ImmolatorAndZephyr", "ScaldAndSear").Replace("RootBrute", "Gorefist").Replace("SlimeHulk", "Canker").Replace("BlinkFiend", "Onslaught").Replace("Sentinel", "Raze").Replace("Penitent", "Leto'sAmulet").Replace("LastWill", "SupplyRun").Replace("SwampGuardian", "Ixillis").Replace("OldManAndConstruct", "WudAndAncientConstruct").Replace("Splitter","Riphide").Replace("Nexus", "RootNexus");
+                            se.Name = eventName.Replace("LizAndLiz", "TaleOfTwoLiz's").Replace("Fatty", "TheUncleanOne").Replace("WastelandGuardian", "Claviger").Replace("RootEnt", "TheEnt").Replace("Wolf", "TheRavager").Replace("RootDragon", "Singe").Replace("SwarmMaster", "Scourge").Replace("RootWraith", "Shroud").Replace("RootTumbleweed", "TheMangler").Replace("Kincaller", "Warden").Replace("Tyrant", "Thrall").Replace("Vyr", "ShadeAndShatter").Replace("ImmolatorAndZephyr", "ScaldAndSear").Replace("RootBrute", "Gorefist").Replace("SlimeHulk", "Canker").Replace("BlinkFiend", "Onslaught").Replace("Sentinel", "Raze").Replace("Penitent", "Leto'sAmulet").Replace("LastWill", "SupplyRun").Replace("SwampGuardian", "Ixillis").Replace("OldManAndConstruct", "WudAndAncientConstruct").Replace("Splitter","Riphide").Replace("Nexus", "RootNexus").Replace("FlickeringHorror", "DreamEater").Replace("BarbTerror", "BarbedTerror").Replace("Wisp", "CircletHatchery");
                             se.Name = Regex.Replace(se.Name, "([a-z])([A-Z])", "$1 $2");
                         }
 
@@ -371,7 +358,7 @@ namespace RemnantSaveManager
                     eventType = "Item Drop";
                 }
             }
-            else if (textLine.Contains("OverworldPOI"))
+            else if (textLine.Contains("OverworldPOI") || textLine.Contains("OverWorldPOI"))
             {
                 eventType = "Point of Interest";
             }
@@ -452,6 +439,13 @@ namespace RemnantSaveManager
                     }
 
                     rx = new Regex(@"/Quests/[a-zA-Z0-9_]+/[a-zA-Z0-9_]+");
+                    matches = rx.Matches(inventories[i]);
+                    foreach (Match match in matches)
+                    {
+                        saveItems.Add(match.Value);
+                    }
+
+                    rx = new Regex(@"/Player/Emotes/Emote_[a-zA-Z0-9]+");
                     matches = rx.Matches(inventories[i]);
                     foreach (Match match in matches)
                     {

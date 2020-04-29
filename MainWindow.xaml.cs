@@ -444,64 +444,71 @@ namespace RemnantSaveManager
             // Specify what is done when a file is changed, created, or deleted.
             this.Dispatcher.Invoke(() =>
             {
-                //logMessage($"{DateTime.Now.ToString()} File: {e.FullPath} {e.ChangeType}");
-                if (Properties.Settings.Default.AutoBackup)
+                try
                 {
-                    //logMessage($"Save: {File.GetLastWriteTime(e.FullPath)}; Last backup: {File.GetLastWriteTime(listBackups[listBackups.Count - 1].Save.SaveFolderPath + "\\profile.sav")}");
-                    DateTime latestBackupTime;
-                    DateTime newBackupTime;
-                    if (listBackups.Count > 0)
+                    //logMessage($"{DateTime.Now.ToString()} File: {e.FullPath} {e.ChangeType}");
+                    if (Properties.Settings.Default.AutoBackup)
                     {
-                        latestBackupTime = listBackups[listBackups.Count - 1].SaveDate;
-                        newBackupTime = latestBackupTime.AddMinutes(Properties.Settings.Default.BackupMinutes);
-                    }
-                    else
-                    {
-                        latestBackupTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                        newBackupTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
-                    }
-                    if (DateTime.Compare(DateTime.Now, newBackupTime) > 0 || DateTime.Compare(latestBackupTime, File.GetLastWriteTime(e.FullPath)) == 0)
-                    {
-                        doBackup();
-                    }
-                    else
-                    {
-                        lblStatus.Content = "Not Backed Up";
-                        lblStatus.Foreground = Brushes.Red;
-                        btnBackup.IsEnabled = true;
-                        foreach (SaveBackup backup in listBackups)
+                        //logMessage($"Save: {File.GetLastWriteTime(e.FullPath)}; Last backup: {File.GetLastWriteTime(listBackups[listBackups.Count - 1].Save.SaveFolderPath + "\\profile.sav")}");
+                        DateTime latestBackupTime;
+                        DateTime newBackupTime;
+                        if (listBackups.Count > 0)
                         {
-                            if (backup.Active) backup.Active = false;
+                            latestBackupTime = listBackups[listBackups.Count - 1].SaveDate;
+                            newBackupTime = latestBackupTime.AddMinutes(Properties.Settings.Default.BackupMinutes);
                         }
-                        dataBackups.Items.Refresh();
-                        /*if (DateTime.Compare(DateTime.Now, newBackupTime) < 1)
+                        else
                         {
-                            logMessage($"Last backup less than {Properties.Settings.Default.BackupMinutes} minutes ago");
+                            latestBackupTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
+                            newBackupTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                         }
-                        if (DateTime.Compare(latestBackupTime, File.GetLastWriteTime(e.FullPath)) != 0)
+                        if (DateTime.Compare(DateTime.Now, newBackupTime) > 0 || DateTime.Compare(latestBackupTime, File.GetLastWriteTime(e.FullPath)) == 0)
                         {
-                            logMessage("Latest backup and current backup times not equal.");
-                        }*/
-                    }
-                }                
-                //updateActiveCharacterData();
-                updateCurrentWorldAnalyzer();
-
-                if (gameProcess == null || gameProcess.HasExited)
-                {
-                    Process[] processes = Process.GetProcessesByName("Remnant");
-                    if (processes.Length > 0)
-                    {
-                        gameProcess = processes[0];
-                        gameProcess.EnableRaisingEvents = true;
-                        gameProcess.Exited += (s, eargs) =>
+                            doBackup();
+                        }
+                        else
                         {
-                            this.Dispatcher.Invoke(() =>
+                            lblStatus.Content = "Not Backed Up";
+                            lblStatus.Foreground = Brushes.Red;
+                            btnBackup.IsEnabled = true;
+                            foreach (SaveBackup backup in listBackups)
                             {
-                                doBackup();
-                            });
-                        };
+                                if (backup.Active) backup.Active = false;
+                            }
+                            dataBackups.Items.Refresh();
+                            /*if (DateTime.Compare(DateTime.Now, newBackupTime) < 1)
+                            {
+                                logMessage($"Last backup less than {Properties.Settings.Default.BackupMinutes} minutes ago");
+                            }
+                            if (DateTime.Compare(latestBackupTime, File.GetLastWriteTime(e.FullPath)) != 0)
+                            {
+                                logMessage("Latest backup and current backup times not equal.");
+                            }*/
+                        }
                     }
+                    //updateActiveCharacterData();
+                    updateCurrentWorldAnalyzer();
+
+                    if (gameProcess == null || gameProcess.HasExited)
+                    {
+                        Process[] processes = Process.GetProcessesByName("Remnant");
+                        if (processes.Length > 0)
+                        {
+                            gameProcess = processes[0];
+                            gameProcess.EnableRaisingEvents = true;
+                            gameProcess.Exited += (s, eargs) =>
+                            {
+                                this.Dispatcher.Invoke(() =>
+                                {
+                                    doBackup();
+                                });
+                            };
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+                    logMessage(ex.GetType()+" processing save file change: " +ex.Message+"("+ex.StackTrace+")");
                 }
             });
         }

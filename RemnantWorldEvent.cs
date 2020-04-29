@@ -93,8 +93,9 @@ namespace RemnantSaveManager
             if (itemKey.Contains("/Trinkets/")) prefix = "Trinket: ";
             if (itemKey.Contains("/Mods/")) prefix = "Mod: ";
             if (itemKey.Contains("/Traits/")) prefix = "Trait: ";
+            if (itemKey.Contains("/Emotes/")) prefix = "Emote: ";
 
-            name = name.Replace("Weapon_", "").Replace("Root_", "").Replace("Wasteland_", "").Replace("Swamp_", "").Replace("Pan_", "").Replace("Atoll_", "").Replace("Mod_", "").Replace("Trinket_", "").Replace("Trait_", "").Replace("Quest_", "");
+            name = name.Replace("Weapon_", "").Replace("Root_", "").Replace("Wasteland_", "").Replace("Swamp_", "").Replace("Pan_", "").Replace("Atoll_", "").Replace("Mod_", "").Replace("Trinket_", "").Replace("Trait_", "").Replace("Quest_", "").Replace("Emote_", "");
             if (!prefix.Equals("Armor: "))
             {
                 name = Regex.Replace(name, "([a-z])([A-Z])", "$1 $2");
