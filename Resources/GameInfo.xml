@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="12">
+<GameInfo version="13">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -243,6 +243,7 @@
       <Item>/Items/Trinkets/Trinket_PillarOfStone</Item>
     </Event>
     <Event name="QueensTemple">
+      <Item>/Items/Weapons/Boss/PrideOfTheIskal/Weapon_Swamp_PrideOfTheIskal</Item>
       <Item>/Items/Traits/Trait_Footwork</Item>
       <Item>/Items/Mods/Seeker</Item>
     </Event>
@@ -304,7 +305,7 @@
       <Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
       <Item>/Items/Armor/Carapace/Armor_Body_Carapace</Item>
       <Item>/Items/Armor/Carapace/Armor_Legs_Carapace</Item>
-      <Item>/Items/Trinkets/IskalHunterBand</Item>
+      <Item>/Items/Trinkets/Trinket_IskalHunterBand</Item>
       <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item>
       <Item>/Items/Trinkets/RingOfTheMantis</Item>
     </Event>
