@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="10">
+<GameInfo version="11">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -314,6 +314,9 @@
     <Event name="SlimeHulk">
       <Item>/Items/Mods/CorrosiveAura</Item>
       <Item>/Items/Traits/Trait_Catalyst</Item>
+    </Event>
+    <Event name="SoulLink">
+      <Item>/Items/Trinkets/Trinket_SoulLink</Item>
     </Event>
     <Event name="Splitter">
       <Item>/Items/Armor/Leto/Armor_Head_Leto</Item>
