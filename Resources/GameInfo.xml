@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="11">
+<GameInfo version="12">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -139,8 +139,8 @@
     </Event>
     <Event name="FetidPool">
       <Item>/Items/Trinkets/Trinket_RustedAmulet</Item>
-      <Item>/Items/Trinkets/Trinket_HeartOfDarkness</Item>
-      <Item>/Items/Trinkets/Trinket_HerosRing</Item>
+      <Item>/Items/Trinkets/HeartOfDarkness</Item>
+      <Item>/Items/Trinkets/HerosRing</Item>
       <Item>/Items/Traits/Trait_Fortification</Item>
     </Event>
     <Event name="Flautist">
@@ -316,7 +316,7 @@
       <Item>/Items/Traits/Trait_Catalyst</Item>
     </Event>
     <Event name="SoulLink">
-      <Item>/Items/Trinkets/Trinket_SoulLink</Item>
+      <Item>/Items/Trinkets/SoulLink</Item>
     </Event>
     <Event name="Splitter">
       <Item>/Items/Armor/Leto/Armor_Head_Leto</Item>
