@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="14">
+<GameInfo version="15">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -404,8 +404,8 @@
       <Item>/Items/Trinkets/Trinket_CompulsionLoop</Item>
       <Item>/Items/Trinkets/Trinket_BandOfPollux</Item>
       <Item>/Items/Trinkets/Trinket_BandOfCastor</Item>
-      <Item>/Items/Trinkets/Trinket_TailsmanOfPerseverance</Item>
-      <Item>/Items/Trinkets/Trinket_Talisman of Animosity</Item>
+      <Item>/Items/Trinkets/Trinket_TalismanOfPerseverance</Item>
+      <Item>/Items/Trinkets/Trinket_TalismanOfAnimosity</Item>
       <Item>/Items/Trinkets/Trinket_DeceiversBand</Item>
     </Event>
     <Event name="Vyr">
