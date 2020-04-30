@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="15">
+<GameInfo version="16">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -397,16 +397,22 @@
       <Item>/Items/Traits/Trait_WillToLive</Item>
       <Item>/Items/Traits/Trait_WorldWalker</Item>
       <Item>/Player/Emotes/Emote_Wave</Item>
-      <Item>/Items/Armor/Adventurer/Armor_Head_Adventurer</Item>
-      <Item>/Items/Trinkets/Trinket_BlackRose</Item>
-      <Item>/Items/Trinkets/Trinket_DaredevilsCharm</Item>
-      <Item>/Items/Trinkets/Trinket_LoopOfProsperity</Item>
+      <Item notes="survival">/Items/Armor/Adventurer/Armor_Head_Adventurer</Item>
+      <Item notes="survival">/Items/Weapons/Human/Melee/Sword/Weapon_HerosSword</Item>
+      <Item notes="survival">/Items/Trinkets/BlackRose</Item>
+      <Item notes="survival">/Items/Trinkets/DaredevilsCharm</Item>
+      <Item notes="survival">/Items/Trinkets/Trinket_LoopOfProsperity</Item>
       <Item>/Items/Trinkets/Trinket_CompulsionLoop</Item>
       <Item>/Items/Trinkets/Trinket_BandOfPollux</Item>
       <Item>/Items/Trinkets/Trinket_BandOfCastor</Item>
       <Item>/Items/Trinkets/Trinket_TalismanOfPerseverance</Item>
       <Item>/Items/Trinkets/Trinket_TalismanOfAnimosity</Item>
       <Item>/Items/Trinkets/Trinket_DeceiversBand</Item>
+      <Item notes="Hardcore reward for defeating Dreamer">/Items/Trinkets/Trinket_NightmareSpiral</Item>
+      <Item notes="Hardcore reward for defeating Clavinger/Harrow">/Items/Trinkets/Trinket_AkariWarBand</Item>
+      <Item notes="Hardcore reward for defeating Ixillis">/Items/Trinkets/Trinket_EmpoweringLoop</Item>
+      <Item notes="Hardcore reward for defeating Singe/Ent">/Items/Trinkets/Trinket_ProvisionerRing</Item>
+      <Item notes="Hardcore reward for defeating Totem Father/Ravager">/Items/Trinkets/Trinket_RingOfSupremacy</Item>
     </Event>
     <Event name="Vyr">
       <Item>/Items/Mods/VeilOfTheBlackTear</Item>
