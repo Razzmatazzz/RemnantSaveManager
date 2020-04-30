@@ -18,6 +18,7 @@ using System.Data;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Threading;
+using System.Net;
 
 namespace RemnantSaveManager
 {
@@ -127,6 +128,8 @@ namespace RemnantSaveManager
                     logMessage(newGameInfoCheck);
                 });
             }).Start();
+
+            checkForUpdate();
         }
 
         private void loadBackups()
@@ -816,6 +819,53 @@ namespace RemnantSaveManager
                 Console.WriteLine(activeSave.Characters[i]);
             }*/
             activeSaveAnalyzer.LoadData(activeSave.Characters);
+        }
+
+        private void checkForUpdate()
+        {
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+
+                try
+                {
+                    WebClient client = new WebClient();
+                    client.DownloadFile("https://raw.githubusercontent.com/Razzmatazzz/RemnantSaveManager/master/Properties/AssemblyInfo.cs", "versioncheck.txt");
+
+                    string remoteVer = File.ReadLines("versioncheck.txt").Last();
+                    File.Delete("versioncheck.txt");
+                    remoteVer = remoteVer.Replace("[assembly: AssemblyFileVersion(\"", "").Replace("\")]", "");
+                    Version remoteVersion = new Version(remoteVer);
+
+                    Version localVersion = typeof(MainWindow).Assembly.GetName().Version;
+
+
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        //do stuff in here with the interface
+                        if (localVersion.CompareTo(remoteVersion) == -1)
+                        {
+                            var confirmResult = MessageBox.Show("There is a new version available. Would you like to download it?",
+                                     "Update Available", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
+                            if (confirmResult == MessageBoxResult.Yes)
+                            {
+                                Process.Start("https://github.com/Razzmatazzz/RemnantSaveManager/releases");
+                                System.Environment.Exit(1);
+                            }
+                        } else
+                        {
+                            //logMessage("No new version found.");
+                        }
+                    });
+                }
+                catch (Exception ex)
+                {
+                    this.Dispatcher.Invoke(() =>
+                    {
+                        logMessage("Error checking for new version: " + ex.Message);
+                    });
+                }
+            }).Start();
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)

@@ -76,7 +76,6 @@ namespace RemnantSaveManager
                 string advtext = savetext.Substring(0, adventureEnd);
                 string strAdventureStart = String.Format("/Game/World_{0}/Quests/Quest_AdventureMode/Quest_AdventureMode_{0}_0", adventureZone);
                 int adventureStart = advtext.LastIndexOf(strAdventureStart) + strAdventureStart.Length;
-                Console.WriteLine(advtext);
                 //advtext = advtext.Substring(advtext.LastIndexOf("Quest_Campaign_Main_C"));
                 advtext = advtext.Substring(adventureStart);
                 processEvents(advtext, ProcessMode.Adventure);
