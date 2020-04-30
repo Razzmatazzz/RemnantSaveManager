@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="8">
+<GameInfo version="9">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -139,6 +139,9 @@
     </Event>
     <Event name="FetidPool">
       <Item>/Items/Trinkets/Trinket_RustedAmulet</Item>
+      <Item>/Items/Trinkets/Trinket_HeartOfDarkness</Item>
+      <Item>/Items/Trinkets/Trinket_HerosRing</Item>
+      <Item>/Items/Traits/Trait_Fortification</Item>
     </Event>
     <Event name="Flautist">
       <Item>/Items/Trinkets/Trinket_HeartOfTheWolf</Item>
@@ -156,6 +159,7 @@
     </Event>
     <Event name="GraveyardElf">
       <Item>/Items/Trinkets/GrimCoil</Item>
+      <Item>/Items/Trinkets/Trinket_RingOfTheUnclean</Item>
       <Item>/Items/Traits/Trait_Potency</Item>
     </Event>
     <Event name="GravityStone">
