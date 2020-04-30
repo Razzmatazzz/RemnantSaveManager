@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="9">
+<GameInfo version="10">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -306,7 +306,7 @@
       <Item>/Items/Armor/Carapace/Armor_Legs_Carapace</Item>
       <Item>/Items/Trinkets/IskalHunterBand</Item>
       <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item>
-      <Item>/Items/Trinkets/MantisRing</Item>
+      <Item>/Items/Trinkets/RingOfTheMantis</Item>
     </Event>
     <Event name="SlaveRevolt">
       <Item>/Items/Traits/Trait_Triage</Item>
@@ -394,6 +394,9 @@
       <Item>/Items/Traits/Trait_WorldWalker</Item>
       <Item>/Player/Emotes/Emote_Wave</Item>
       <Item>/Items/Armor/Adventurer/Armor_Head_Adventurer</Item>
+      <Item>/Items/Trinkets/Trinket_BlackRose</Item>
+      <Item>/Items/Trinkets/Trinket_DaredevilsCharm</Item>
+      <Item>/Items/Trinkets/Trinket_LoopOfProsperity</Item>
       <Item></Item>
     </Event>
     <Event name="Vyr">
