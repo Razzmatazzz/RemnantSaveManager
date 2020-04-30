@@ -190,26 +190,26 @@ namespace RemnantSaveManager
                                 se.setMissingItems(this);
                                 zoneEvents[zone].Add(se);
 
-                                // rings drop with the Cryptolith
-                                if (eventName.Equals("Cryptolith") && !zone.Equals("Corsus"))
+                                // rings drop with the Cryptolith on Rhom
+                                if (eventName.Equals("Cryptolith") && zone.Equals("Rhom"))
                                 {
                                     RemnantWorldEvent ringdrop = new RemnantWorldEvent();
                                     ringdrop.Location = zone;
-                                    if (zone.Equals("Earth"))
+                                    /*if (zone.Equals("Earth"))
                                     {
                                         ringdrop.setKey("GunslignersRing");
                                         ringdrop.Name = "Gunslinger's Ring";
                                     } 
                                     else if (zone.Equals("Rhom"))
-                                    {
+                                    {*/
                                         ringdrop.setKey("SoulLink");
                                         ringdrop.Name = "Soul Link";
-                                    } 
+                                    /*} 
                                     else if (zone.Equals("Yaesha"))
                                     {
                                         ringdrop.setKey("RingOfShadows");
                                         ringdrop.Name = "Ring Of Shadows";
-                                    }
+                                    }*/
                                     ringdrop.Type = "Item Drop";
                                     ringdrop.setMissingItems(this);
                                     zoneEvents[zone].Add(ringdrop);
