@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="16">
+<GameInfo version="17">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -325,6 +325,9 @@
       <Item>/Items/Armor/Leto/Armor_Legs_Leto</Item>
       <Item>/Items/Mods/FlickerCloak</Item>
     </Event>
+    <Event name="StockpileCirclet">
+      <Item>/Items/Trinkets/Trinket_StockpileCirclet</Item>
+    </Event>
     <Event name="StoneOfBalance">
       <Item>/Items/Trinkets/Trinket_StoneOfBalance</Item>
     </Event>
@@ -396,6 +399,7 @@
       <Item>/Items/Traits/Trait_TriggerHappy</Item>
       <Item>/Items/Traits/Trait_WillToLive</Item>
       <Item>/Items/Traits/Trait_WorldWalker</Item>
+      <Item>/Items/Traits/Trait_Invoker</Item>
       <Item>/Player/Emotes/Emote_Wave</Item>
       <Item notes="survival">/Items/Armor/Adventurer/Armor_Head_Adventurer</Item>
       <Item notes="survival">/Items/Weapons/Human/Melee/Sword/Weapon_HerosSword</Item>
@@ -408,6 +412,8 @@
       <Item>/Items/Trinkets/Trinket_TalismanOfPerseverance</Item>
       <Item>/Items/Trinkets/Trinket_TalismanOfAnimosity</Item>
       <Item>/Items/Trinkets/Trinket_DeceiversBand</Item>
+      <Item>/Items/Trinkets/Trinket_AggressorsBane</Item>
+      <Item>/Items/Trinkets/Trinket_RingOfElusion</Item>
       <Item notes="Hardcore reward for defeating Dreamer">/Items/Trinkets/Trinket_NightmareSpiral</Item>
       <Item notes="Hardcore reward for defeating Clavinger/Harrow">/Items/Trinkets/Trinket_AkariWarBand</Item>
       <Item notes="Hardcore reward for defeating Ixillis">/Items/Trinkets/Trinket_EmpoweringLoop</Item>
