@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="18">
+<GameInfo version="19">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -418,7 +418,7 @@
       <Item notes="Hardcore reward for defeating Clavinger/Harrow">/Items/Trinkets/AkariWarBand</Item>
       <Item notes="Hardcore reward for defeating Ixillis">/Items/Trinkets/Trinket_EmpoweringLoop</Item>
       <Item notes="Hardcore reward for defeating Singe/Ent">/Items/Trinkets/Trinket_ProvisionerRing</Item>
-      <Item notes="Hardcore reward for defeating Totem Father/Ravager">/Items/Trinkets/RingOfSupremacy</Item>
+      <Item notes="Hardcore reward for defeating Totem Father/Ravager">/Items/Trinkets/RingOfSumpremacy</Item>
     </Event>
     <Event name="Vyr">
       <Item>/Items/Mods/VeilOfTheBlackTear</Item>
