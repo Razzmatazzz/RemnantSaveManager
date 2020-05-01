@@ -11,6 +11,7 @@ namespace RemnantSaveManager
 {
     class GameInfo
     {
+        public static event EventHandler<GameInfoUpdateEventArgs> GameInfoUpdate;
         private static List<string> zones = new List<string>();
         private static Dictionary<string, string[]> eventItem = new Dictionary<string, string[]>();
         private static Dictionary<string, string> subLocations = new Dictionary<string, string>();
@@ -117,14 +118,14 @@ namespace RemnantSaveManager
             reader.Close();
         }
 
-        public static string CheckForNewGameInfo()
+        public static void CheckForNewGameInfo()
         {
-            string message = "No new game info found.";
+            GameInfoUpdateEventArgs args = new GameInfoUpdateEventArgs();
             try
             {
                 WebClient client = new WebClient();
                 client.DownloadFile("https://raw.githubusercontent.com/Razzmatazzz/RemnantSaveManager/master/Resources/GameInfo.xml", "TempGameInfo.xml");
-                
+
                 XmlTextReader reader = new XmlTextReader("TempGameInfo.xml");
                 reader.WhitespaceHandling = WhitespaceHandling.None;
                 int remoteversion = 0;
@@ -140,6 +141,7 @@ namespace RemnantSaveManager
                         }
                     }
                 }
+                args.RemoteVersion = remoteversion;
                 reader.Close();
                 if (File.Exists("GameInfo.xml"))
                 {
@@ -156,13 +158,15 @@ namespace RemnantSaveManager
                         }
                     }
                     reader.Close();
+                    args.LocalVersion = localversion;
 
                     if (remoteversion > localversion)
                     {
                         File.Delete("GameInfo.xml");
                         File.Move("TempGameInfo.xml", "GameInfo.xml");
                         RefreshGameInfo();
-                        message = "Game info updated!";
+                        args.Result = GameInfoUpdateResult.Updated;
+                        args.Message = "Game info updated from v"+localversion+" to v"+remoteversion+".";
                     }
                     else
                     {
@@ -172,14 +176,44 @@ namespace RemnantSaveManager
                 {
                     File.Move("TempGameInfo.xml", "GameInfo.xml");
                     RefreshGameInfo();
-                    message = "Game info updated!";
+                    args.Result = GameInfoUpdateResult.Updated;
+                    args.Message = "No local game info found; updated to v"+remoteversion+".";
                 }
             } catch (Exception ex)
             {
-                message = "Error checking for new game info: " + ex.Message;
+                args.Result = GameInfoUpdateResult.Failed;
+                args.Message = "Error checking for new game info: " + ex.Message;
             }
 
-            return message;
+            OnGameInfoUpdate(args);
         }
+
+        protected static void OnGameInfoUpdate(GameInfoUpdateEventArgs e)
+        {
+            EventHandler<GameInfoUpdateEventArgs> handler = GameInfoUpdate;
+            handler?.Invoke(typeof(GameInfo), e);
+        }
+    }
+    public class GameInfoUpdateEventArgs : EventArgs
+    {
+        public int LocalVersion { get; set; }
+        public int RemoteVersion { get; set; }
+        public string Message { get; set; }
+        public GameInfoUpdateResult Result { get; set; }
+
+        public GameInfoUpdateEventArgs()
+        {
+            this.LocalVersion = 0;
+            this.RemoteVersion = 0;
+            this.Message = "No new game info found.";
+            this.Result = GameInfoUpdateResult.NoUpdate;
+        }
+    }
+
+    public enum GameInfoUpdateResult
+    {
+        Updated,
+        Failed,
+        NoUpdate
     }
 }

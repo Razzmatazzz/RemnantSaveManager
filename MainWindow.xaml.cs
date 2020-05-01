@@ -94,6 +94,8 @@ namespace RemnantSaveManager
             backupSaveAnalyzers = new List<SaveAnalyzer>();
 
             ((MenuItem)dataBackups.ContextMenu.Items[0]).Click += analyzeMenuItem_Click;
+
+            GameInfo.GameInfoUpdate += OnGameInfoUpdate;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -122,11 +124,11 @@ namespace RemnantSaveManager
             {
                 Thread.CurrentThread.IsBackground = true;
 
-                string newGameInfoCheck = GameInfo.CheckForNewGameInfo();
-                this.Dispatcher.Invoke(() =>
+                GameInfo.CheckForNewGameInfo();
+                /*this.Dispatcher.Invoke(() =>
                 {
                     logMessage(newGameInfoCheck);
-                });
+                });*/
             }).Start();
 
             checkForUpdate();
@@ -278,7 +280,7 @@ namespace RemnantSaveManager
         {
             if (!suppressLog)
             {
-                txtLog.Text = txtLog.Text + Environment.NewLine + msg;
+                txtLog.Text = txtLog.Text + Environment.NewLine + DateTime.Now.ToString() +": " + msg;
                 lblLastMessage.Content = msg;
             }
             StreamWriter writer = System.IO.File.AppendText("log.txt");
@@ -821,6 +823,18 @@ namespace RemnantSaveManager
             activeSaveAnalyzer.LoadData(activeSave.Characters);
         }
 
+        private void OnGameInfoUpdate(object source, GameInfoUpdateEventArgs e)
+        {
+            this.Dispatcher.Invoke(() =>
+            {
+                logMessage(e.Message);
+                if (e.Result == GameInfoUpdateResult.Updated)
+                {
+                    updateCurrentWorldAnalyzer();
+                }
+            });
+        }
+
         private void checkForUpdate()
         {
             new Thread(() =>
@@ -933,6 +947,15 @@ namespace RemnantSaveManager
             if (e.Column.Header.Equals("Save")) {
                 e.Cancel = true;
             }
+        }
+
+        private void btnGameInfoUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
+                GameInfo.CheckForNewGameInfo();
+            }).Start();
         }
     }
 }
