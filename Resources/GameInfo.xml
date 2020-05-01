@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="17">
+<GameInfo version="18">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -415,10 +415,10 @@
       <Item>/Items/Trinkets/Trinket_AggressorsBane</Item>
       <Item>/Items/Trinkets/Trinket_RingOfElusion</Item>
       <Item notes="Hardcore reward for defeating Dreamer">/Items/Trinkets/Trinket_NightmareSpiral</Item>
-      <Item notes="Hardcore reward for defeating Clavinger/Harrow">/Items/Trinkets/Trinket_AkariWarBand</Item>
+      <Item notes="Hardcore reward for defeating Clavinger/Harrow">/Items/Trinkets/AkariWarBand</Item>
       <Item notes="Hardcore reward for defeating Ixillis">/Items/Trinkets/Trinket_EmpoweringLoop</Item>
       <Item notes="Hardcore reward for defeating Singe/Ent">/Items/Trinkets/Trinket_ProvisionerRing</Item>
-      <Item notes="Hardcore reward for defeating Totem Father/Ravager">/Items/Trinkets/Trinket_RingOfSupremacy</Item>
+      <Item notes="Hardcore reward for defeating Totem Father/Ravager">/Items/Trinkets/RingOfSupremacy</Item>
     </Event>
     <Event name="Vyr">
       <Item>/Items/Mods/VeilOfTheBlackTear</Item>
