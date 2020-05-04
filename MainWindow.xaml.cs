@@ -47,20 +47,24 @@ namespace RemnantSaveManager
 
             System.IO.File.WriteAllText("log.txt", DateTime.Now.ToString()+": Loading...\r\n");
 
+            if (Properties.Settings.Default.UpgradeRequired)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.UpgradeRequired = false;
+                Properties.Settings.Default.Save();
+            }
+
             if (Properties.Settings.Default.BackupFolder.Length == 0)
             {
                 Properties.Settings.Default.BackupFolder = defaultBackupFolder;
                 Properties.Settings.Default.Save();
-                backupDirPath = Properties.Settings.Default.BackupFolder;
-            } else if (!Directory.Exists(Properties.Settings.Default.BackupFolder))
+            } 
+            else if (!Directory.Exists(Properties.Settings.Default.BackupFolder))
             {
                 Properties.Settings.Default.BackupFolder = defaultBackupFolder;
                 Properties.Settings.Default.Save();
-                backupDirPath = Properties.Settings.Default.BackupFolder;
-            } else
-            {
-                backupDirPath = Properties.Settings.Default.BackupFolder;
-            }
+            } 
+            backupDirPath = Properties.Settings.Default.BackupFolder;
             txtBackupFolder.Text = backupDirPath;
 
             saveWatcher = new FileSystemWatcher();
@@ -930,6 +934,8 @@ namespace RemnantSaveManager
                             {
                                 string subFolderName = file.Substring(file.LastIndexOf(@"\"));
                                 Directory.CreateDirectory(folderName + subFolderName);
+                                Directory.SetCreationTime(folderName + subFolderName, Directory.GetCreationTime(file));
+                                Directory.SetLastWriteTime(folderName + subFolderName, Directory.GetCreationTime(file));
                                 foreach (string filename in Directory.GetFiles(file))
                                 {
                                     File.Copy(filename, filename.Replace(backupDirPath, folderName));
