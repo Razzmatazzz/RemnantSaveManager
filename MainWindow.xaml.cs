@@ -929,7 +929,13 @@ namespace RemnantSaveManager
                             if (File.Exists(file+@"\profile.sav"))
                             {
                                 string subFolderName = file.Substring(file.LastIndexOf(@"\"));
-                                Directory.Move(file, folderName + subFolderName);
+                                Directory.CreateDirectory(folderName + subFolderName);
+                                foreach (string filename in Directory.GetFiles(file))
+                                {
+                                    File.Copy(filename, filename.Replace(backupDirPath, folderName));
+                                }
+                                Directory.Delete(file, true);
+                                //Directory.Move(file, folderName + subFolderName);
                             }
                         }
                     }
