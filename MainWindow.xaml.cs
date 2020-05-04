@@ -632,7 +632,7 @@ namespace RemnantSaveManager
 
         private void BtnOpenFolder_Click(object sender, RoutedEventArgs e)
         {
-            Process.Start(@backupDirPath);
+            Process.Start(backupDirPath+"\\");
         }
 
         private Dictionary<long, string> getSavedBackupNames()
