@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="20">
+<GameInfo version="21">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -68,10 +68,19 @@
     <Event name="AcesCoin">
       <Item>/Items/Weapons/Basic/HandGuns/Revolver/Weapon_Revolver</Item>
     </Event>
+    <Event name="AggressorsBane">
+      <Item>/Items/Trinkets/AggressorsBane</Item>
+    </Event>
     <Event name="ArmorVault">
       <Item>/Items/Armor/Akari/Armor_Head_Akari</Item>
       <Item>/Items/Armor/Akari/Armor_Body_Akari</Item>
       <Item>/Items/Armor/Akari/Armor_Legs_Akari</Item>
+    </Event>
+    <Event name="BandOfCastor">
+      <Item>/Items/Trinkets/BandsOfCastorAndPollux/Trinket_BandOfCastor</Item>
+    </Event>
+    <Event name="BandOfPollux">
+      <Item>/Items/Trinkets/BandsOfCastorAndPollux/Trinket_BandOfPollux</Item>
     </Event>
     <Event name="BandOfStrength">
       <Item>/Items/Trinkets/BandOfStrength</Item>
@@ -112,12 +121,18 @@
     <Event name="CleansingJewel">
       <Item>/Items/Trinkets/CleansingJewel</Item>
     </Event>
+    <Event name="CompulsionLoop">
+      <Item>/Items/Trinkets/CompulsionLoop</Item>
+    </Event>
     <Event name="Cryptolith">
       <Item>/Items/Traits/Trait_Concentration</Item>
       <Item>/Items/Traits/Trait_BloodBond</Item>
       <Item>/Items/Armor/Armor_Head_Labyrinth</Item>
       <Item>/Items/Armor/Armor_Body_Labyrinth</Item>
       <Item>/Items/Armor/Armor_Legs_Labyrinth</Item>
+    </Event>
+    <Event name="DeceiversBand">
+      <Item>/Items/Trinkets/DeceiversBand</Item>
     </Event>
     <Event name="DevouringLoop">
       <Item>/Items/Trinkets/DevouringLoop</Item>
@@ -237,6 +252,9 @@
       <Item>/Items/Armor/Osseous/Armor_Legs_Osseous</Item>
       <Item>/Items/Mods/IronSentinel</Item>
     </Event>
+    <Event name="PearlOfLuminescence">
+      <Item>/Items/Trinkets/Trinket_PearlOfLuminescence</Item>
+    </Event>
     <Event name="Penitent">
       <Item>/Items/Trinkets/Trinket_LetosAmulet</Item>
     </Event>
@@ -253,6 +271,9 @@
     </Event>
     <Event name="ReggiesRing">
       <Item>/Items/Traits/Trait_Scavenger</Item>
+    </Event>
+    <Event name="RingOfElusion">
+      <Item>/Items/Trinkets/RingOfElusion</Item>
     </Event>
     <Event name="RingOfEvasion">
       <Item>/Items/Trinkets/Trinket_RingOfEvasion</Item>
@@ -355,6 +376,9 @@
     <Event name="SwarmMaster">
       <Item>/Items/Mods/BreathOfDesert</Item>
     </Event>
+    <Event name="TalismanOfAnimosity">
+      <Item>/Items/Trinkets/TalismanOfAnimosity</Item>
+    </Event>
     <Event name="TheCleanRoom">
       <Item>/Items/Weapons/Basic/Wasteland_Flail/Weapon_Wasteland_Flail</Item>
     </Event>
@@ -415,14 +439,7 @@
       <Item notes="survival">/Items/Trinkets/BlackRose</Item>
       <Item notes="survival">/Items/Trinkets/DaredevilsCharm</Item>
       <Item notes="survival">/Items/Trinkets/Trinket_LoopOfProsperity</Item>
-      <Item>/Items/Trinkets/Trinket_CompulsionLoop</Item>
-      <Item>/Items/Trinkets/Trinket_BandOfPollux</Item>
-      <Item>/Items/Trinkets/Trinket_BandOfCastor</Item>
-      <Item>/Items/Trinkets/Trinket_TalismanOfPerseverance</Item>
-      <Item>/Items/Trinkets/Trinket_TalismanOfAnimosity</Item>
-      <Item>/Items/Trinkets/Trinket_DeceiversBand</Item>
-      <Item>/Items/Trinkets/Trinket_AggressorsBane</Item>
-      <Item>/Items/Trinkets/Trinket_RingOfElusion</Item>
+      <Item notes="survival">/Items/Trinkets/TalismanOfPerseverance</Item>
       <Item notes="Hardcore reward for defeating Dreamer">/Items/Trinkets/Trinket_NightmareSpiral</Item>
       <Item notes="Hardcore reward for defeating Clavinger/Harrow">/Items/Trinkets/AkariWarBand</Item>
       <Item notes="Hardcore reward for defeating Ixillis">/Items/Trinkets/Trinket_EmpoweringLoop</Item>

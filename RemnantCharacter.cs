@@ -448,7 +448,7 @@ namespace RemnantSaveManager
                         saveItems.Add(match.Value);
                     }
 
-                    rx = new Regex(@"/Items/Trinkets/[a-zA-Z0-9_]+");
+                    rx = new Regex(@"/Items/Trinkets/(BandsOfCastorAndPollux/)?[a-zA-Z0-9_]+");
                     matches = rx.Matches(inventories[i]);
                     foreach (Match match in matches)
                     {
