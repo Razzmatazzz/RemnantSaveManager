@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="19">
+<GameInfo version="20">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -15,7 +15,7 @@
     <SubLocation eventName="BrainBug" location="StrangePass"></SubLocation>
     <SubLocation eventName="DoeShrine" location="Widow'sVestry"></SubLocation>
     <SubLocation eventName="Fatty" location="TheFetidGlade"></SubLocation>
-    <SubLocation eventName="FlickeringHorror" location="CorruptedSanctum"></SubLocation>
+    <SubLocation eventName="FlickeringHorror" location="HallOfWhispers"></SubLocation>
     <SubLocation eventName="HoundMaster" location="TheBurrows"></SubLocation>
     <SubLocation eventName="HuntersHideout" location="HiddenGrotto"></SubLocation>
     <SubLocation eventName="ImmolatorAndZephyr" location="WitheringVillage"></SubLocation>
@@ -47,6 +47,7 @@
     <SubLocation eventName="UndyingKing" location="UndyingThrone"></SubLocation>
     <SubLocation eventName="Vyr" location="TheArdentTemple"></SubLocation>
     <SubLocation eventName="WastelandGuardian" location="LoomOfTheBlackSun"></SubLocation>
+    <SubLocation eventName="Wisp" location="CircletHatchery"></SubLocation>
     <SubLocation eventName="Wolf" location="TheRavager'sHaunt"></SubLocation>
     <SubLocation eventName="WolfShrine" location="Martyr'sSanctuary"></SubLocation>
   </SubLocations>
@@ -302,12 +303,12 @@
       <Item>/Items/Mods/Beckon</Item>
     </Event>
     <Event name="Sketterling">
-      <Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
+      <!--Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
       <Item>/Items/Armor/Carapace/Armor_Body_Carapace</Item>
       <Item>/Items/Armor/Carapace/Armor_Legs_Carapace</Item>
       <Item>/Items/Trinkets/Trinket_IskalHunterBand</Item>
       <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item>
-      <Item>/Items/Trinkets/RingOfTheMantis</Item>
+      <Item>/Items/Trinkets/RingOfTheMantis</Item-->
     </Event>
     <Event name="SlaveRevolt">
       <Item>/Items/Traits/Trait_Triage</Item>
@@ -367,6 +368,14 @@
     </Event>
     <Event name="TheRisen">
       <Item>/Items/Trinkets/SoulAnchor</Item>
+    </Event>
+    <Event name="TimidBeetle">
+      <Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
+      <Item>/Items/Armor/Carapace/Armor_Body_Carapace</Item>
+      <Item>/Items/Armor/Carapace/Armor_Legs_Carapace</Item>
+      <Item>/Items/Trinkets/Trinket_IskalHunterBand</Item>
+      <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item>
+      <Item>/Items/Trinkets/RingOfTheMantis</Item>
     </Event>
     <Event name="TotemFather">
       <Item>/Items/Traits/Trait_ArcaneStrike</Item>

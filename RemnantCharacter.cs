@@ -143,7 +143,7 @@ namespace RemnantSaveManager
                     else if (eventType != null)
                     {
                         eventName = textLine.Split('/')[4].Split('_')[2];
-                        if (textLine.Contains("OverworldPOI"))
+                        if (textLine.Contains("OverworldPOI") || textLine.Contains("Sketterling"))
                         {
                             currentSublocation = null;
                         } else if (!textLine.Contains("Quest_Event"))
@@ -194,24 +194,29 @@ namespace RemnantSaveManager
                                 {
                                     RemnantWorldEvent ringdrop = new RemnantWorldEvent();
                                     ringdrop.Location = zone;
-                                    /*if (zone.Equals("Earth"))
-                                    {
-                                        ringdrop.setKey("GunslignersRing");
-                                        ringdrop.Name = "Gunslinger's Ring";
-                                    } 
-                                    else if (zone.Equals("Rhom"))
-                                    {*/
-                                        ringdrop.setKey("SoulLink");
-                                        ringdrop.Name = "Soul Link";
-                                    /*} 
-                                    else if (zone.Equals("Yaesha"))
-                                    {
-                                        ringdrop.setKey("RingOfShadows");
-                                        ringdrop.Name = "Ring Of Shadows";
-                                    }*/
+                                    ringdrop.setKey("SoulLink");
+                                    ringdrop.Name = "Soul Link";
                                     ringdrop.Type = "Item Drop";
                                     ringdrop.setMissingItems(this);
                                     zoneEvents[zone].Add(ringdrop);
+                                }
+                                // beetles spawn in Strange Pass
+                                else if (eventName.Equals("BrainBug") || eventName.Equals("FlickeringHorror") ||eventName.Equals("BarbTerror") || eventName.Equals("Wisp"))
+                                {
+                                    RemnantWorldEvent beetle = new RemnantWorldEvent();
+                                    beetle.Location = se.Location;
+                                    beetle.setKey("TimidBeetle");
+                                    beetle.Name = "Timid Beetle";
+                                    if (eventName.Equals("BrainBug"))
+                                    {
+                                        beetle.Type = "Event";
+                                    }
+                                    else
+                                    {
+                                        beetle.Type = "Potential Event";
+                                    }
+                                    beetle.setMissingItems(this);
+                                    zoneEvents[zone].Add(beetle);
                                 }
                             }
                         }
@@ -381,7 +386,11 @@ namespace RemnantSaveManager
                 if (textLine.Contains("Nexus"))
                 {
                     eventType = "Siege";
-                } else
+                } else if (textLine.Contains("Sketterling"))
+                {
+                    eventType = "Quest Event";
+                }
+                else
                 {
                     eventType = "Item Drop";
                 }
