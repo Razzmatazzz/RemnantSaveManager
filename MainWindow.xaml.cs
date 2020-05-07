@@ -41,12 +41,15 @@ namespace RemnantSaveManager
         private SaveAnalyzer activeSaveAnalyzer;
         private List<SaveAnalyzer> backupSaveAnalyzers;
 
+        private System.Timers.Timer saveTimer;
+
         public MainWindow()
         {
             InitializeComponent();
-
-            System.IO.File.WriteAllText("log.txt", DateTime.Now.ToString()+": Loading...\r\n");
-
+            suppressLog = false;
+            txtLog.Text = "Version " + typeof(MainWindow).Assembly.GetName().Version;
+            System.IO.File.WriteAllText("log.txt", DateTime.Now.ToString()+ ": Version " + typeof(MainWindow).Assembly.GetName().Version+"\r\n");
+            logMessage("Loading...");
             if (Properties.Settings.Default.UpgradeRequired)
             {
                 Properties.Settings.Default.Upgrade();
@@ -56,16 +59,23 @@ namespace RemnantSaveManager
 
             if (Properties.Settings.Default.BackupFolder.Length == 0)
             {
+                logMessage("Backup folder not set; reverting to default.");
                 Properties.Settings.Default.BackupFolder = defaultBackupFolder;
                 Properties.Settings.Default.Save();
             } 
-            else if (!Directory.Exists(Properties.Settings.Default.BackupFolder))
+            else if (!Directory.Exists(Properties.Settings.Default.BackupFolder) && !Properties.Settings.Default.BackupFolder.Equals(defaultBackupFolder))
             {
+                logMessage("Backup folder ("+ Properties.Settings.Default.BackupFolder + ") not found; reverting to default.");
                 Properties.Settings.Default.BackupFolder = defaultBackupFolder;
                 Properties.Settings.Default.Save();
             } 
             backupDirPath = Properties.Settings.Default.BackupFolder;
             txtBackupFolder.Text = backupDirPath;
+
+            saveTimer = new System.Timers.Timer();
+            saveTimer.Interval = 2000;
+            saveTimer.AutoReset = false;
+            saveTimer.Elapsed += OnSaveTimerElapsed;
 
             saveWatcher = new FileSystemWatcher();
             saveWatcher.Path = saveDirPath;
@@ -84,7 +94,6 @@ namespace RemnantSaveManager
 
             listBackups = new List<SaveBackup>();
 
-            suppressLog = false;
             ((MenuItem)dataBackups.ContextMenu.Items[1]).Click += deleteMenuItem_Click;
             //((MenuItem)dataBackups.ContextMenu.Items[2]).Click += infoMenuItem_Click;
 
@@ -105,8 +114,6 @@ namespace RemnantSaveManager
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             txtLog.IsReadOnly = true;
-            txtLog.Text = "Version " + typeof(MainWindow).Assembly.GetName().Version;
-            logMessage("Loading...");
             logMessage("Current save date: " + File.GetLastWriteTime(saveDirPath + "\\profile.sav").ToString());
             //logMessage("Backups folder: " + backupDirPath);
             //logMessage("Save folder: " + saveDirPath);
@@ -115,12 +122,8 @@ namespace RemnantSaveManager
             chkAutoBackup.IsChecked = autoBackup;
             txtBackupMins.Text = Properties.Settings.Default.BackupMinutes.ToString();
             txtBackupLimit.Text = Properties.Settings.Default.BackupLimit.ToString();
-            /*if (autoBackup)
-            {
-                saveWatcher.EnableRaisingEvents = true;
-            }*/
+
             saveWatcher.EnableRaisingEvents = true;
-            //updateActiveCharacterData();
             activeSave = new RemnantSave(saveDirPath);
             updateCurrentWorldAnalyzer();
 
@@ -129,10 +132,6 @@ namespace RemnantSaveManager
                 Thread.CurrentThread.IsBackground = true;
 
                 GameInfo.CheckForNewGameInfo();
-                /*this.Dispatcher.Invoke(() =>
-                {
-                    logMessage(newGameInfoCheck);
-                });*/
             }).Start();
 
             checkForUpdate();
@@ -165,12 +164,8 @@ namespace RemnantSaveManager
             dataBackups.Columns.Add(col3);*/
             for (int i = 0; i < files.Length; i++)
             {
-                //string folder = files[i].Replace(backupDirPath + "\\", "");
                 if (RemnantSave.ValidSaveFolder(files[i]))
                 {
-                    //DateTime backupDate = getBackupDateTime(folder);
-                    //logMessage("Found save backup dated " + backupDate.ToString());
-                    //SaveBackup backup = new SaveBackup(backupDate);
                     SaveBackup backup = new SaveBackup(files[i]);
                     if (backupNames.ContainsKey(backup.SaveDate.Ticks))
                     {
@@ -186,8 +181,6 @@ namespace RemnantSaveManager
                         backup.Active = true;
                         activeBackup = backup;
                     }
-
-                    //backup.Save.LoadCharacterData(files[i]);
 
                     backup.Updated += saveUpdated;
 
@@ -243,15 +236,6 @@ namespace RemnantSaveManager
             suppressLog = oldVal;
         }
 
-        /*private Boolean validBackup(String folder)
-        {
-            if (!File.Exists(backupDirPath + "\\" + folder + "\\profile.sav"))
-            {
-                return false;
-            }
-            return true;
-        }*/
-
         private Boolean backupActive(SaveBackup saveBackup)
         {
             if (DateTime.Compare(saveBackup.SaveDate, File.GetLastWriteTime(saveDirPath + "\\profile.sav")) == 0)
@@ -301,14 +285,12 @@ namespace RemnantSaveManager
         {
             try
             {
-                bool dirExisted = true;
                 int existingSaveIndex = -1;
                 DateTime saveDate = File.GetLastWriteTime(saveDirPath + "\\profile.sav");
                 string backupFolder = backupDirPath + "\\" + saveDate.Ticks;
                 if (!Directory.Exists(backupFolder))
                 {
                     Directory.CreateDirectory(backupFolder);
-                    dirExisted = false;
                 } else if (RemnantSave.ValidSaveFolder(backupFolder))
                 {
                     for (int i=listBackups.Count-1; i >= 0; i--)
@@ -340,7 +322,6 @@ namespace RemnantSaveManager
                         saveBackup.Active = false;
                     }
                     backup.Active = true;
-                    //activeSave = backup.Save;
                     backup.Updated += saveUpdated;
                     if (existingSaveIndex > -1)
                     {
@@ -354,13 +335,7 @@ namespace RemnantSaveManager
                 dataBackups.Items.Refresh();
                 SetActiveSaveIsBackedup(true);
                 btnBackup.IsEnabled = false;
-                //loadBackups(false);
                 logMessage($"Backup completed ({saveDate.ToString()})!");
-                /*}
-                else
-                {
-                    logMessage("This save is already backed up.");
-                }*/
             }
             catch (IOException ex)
             {
@@ -372,11 +347,6 @@ namespace RemnantSaveManager
                 }
             }
         }
-
-        /*private void doBackup()
-        {
-            doBackup(false);
-        }*/
 
         private Boolean isRemnantRunning()
         {
@@ -413,16 +383,13 @@ namespace RemnantSaveManager
                 SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
                 foreach (var file in Directory.GetFiles(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks))
                     File.Copy(file, saveDirPath + "\\" + System.IO.Path.GetFileName(file));
-                //loadBackups(false);
                 foreach (SaveBackup saveBackup in listBackups)
                 {
                     saveBackup.Active = false;
                 }
                 selectedBackup.Active = true;
-                //activeSave = selectedBackup.Save;
                 updateCurrentWorldAnalyzer();
                 dataBackups.Items.Refresh();
-                //SetActiveSaveIsBackedup(true);
                 btnRestore.IsEnabled = false;
                 logMessage("Backup restored!");
                 saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
@@ -438,19 +405,32 @@ namespace RemnantSaveManager
             bool autoBackup = chkAutoBackup.IsChecked.HasValue ? chkAutoBackup.IsChecked.Value : false;
             Properties.Settings.Default.AutoBackup = autoBackup;
             Properties.Settings.Default.Save();
-            /*if (autoBackup)
-            {
-                saveWatcher.EnableRaisingEvents = true;
-            }
-            else
-            {
-                saveWatcher.EnableRaisingEvents = false;
-            }*/
         }
 
         private void OnSaveFileChanged(object source, FileSystemEventArgs e)
         {
             // Specify what is done when a file is changed, created, or deleted.
+            this.Dispatcher.Invoke(() =>
+            {
+                try
+                {
+                    //When the save files are modified, they are modified
+                    //four times in relatively rapid succession.
+                    //This timer is refreshed each time the save is modified,
+                    //and a backup only occurs after the timer expires.
+                    saveTimer.Interval = 10000;
+                    saveTimer.Enabled = true;
+                    updateCurrentWorldAnalyzer();
+                }
+                catch (Exception ex)
+                {
+                    logMessage(ex.GetType()+" setting save file timer: " +ex.Message+"("+ex.StackTrace+")");
+                }
+            });
+        }
+
+        private void OnSaveTimerElapsed(Object source, System.Timers.ElapsedEventArgs e)
+        {
             this.Dispatcher.Invoke(() =>
             {
                 try
@@ -471,7 +451,7 @@ namespace RemnantSaveManager
                             latestBackupTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                             newBackupTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                         }
-                        if (DateTime.Compare(DateTime.Now, newBackupTime) > 0 || DateTime.Compare(latestBackupTime, File.GetLastWriteTime(e.FullPath)) == 0)
+                        if (DateTime.Compare(DateTime.Now, newBackupTime) > 0)
                         {
                             doBackup();
                         }
@@ -495,8 +475,7 @@ namespace RemnantSaveManager
                             }*/
                         }
                     }
-                    //updateActiveCharacterData();
-                    updateCurrentWorldAnalyzer();
+                    //updateCurrentWorldAnalyzer();
 
                     if (gameProcess == null || gameProcess.HasExited)
                     {
@@ -517,7 +496,7 @@ namespace RemnantSaveManager
                 }
                 catch (Exception ex)
                 {
-                    logMessage(ex.GetType()+" processing save file change: " +ex.Message+"("+ex.StackTrace+")");
+                    logMessage(ex.GetType() + " processing save file change: " + ex.Message + "(" + ex.StackTrace + ")");
                 }
             });
         }
@@ -612,7 +591,7 @@ namespace RemnantSaveManager
 
         private void checkBackupLimit()
         {
-            if (listBackups.Count > Properties.Settings.Default.BackupLimit)
+            if (listBackups.Count > Properties.Settings.Default.BackupLimit && Properties.Settings.Default.BackupLimit > 0)
             {
                 List<SaveBackup> removeBackups = new List<SaveBackup>();
                 int delNum = listBackups.Count - Properties.Settings.Default.BackupLimit;
@@ -636,6 +615,11 @@ namespace RemnantSaveManager
 
         private void BtnOpenFolder_Click(object sender, RoutedEventArgs e)
         {
+            if (!Directory.Exists(backupDirPath))
+            {
+                logMessage("Backups folder not found, creating...");
+                Directory.CreateDirectory(backupDirPath);
+            }
             Process.Start(backupDirPath+"\\");
         }
 
@@ -732,7 +716,6 @@ namespace RemnantSaveManager
         {
             MenuItem analyzeMenu = ((MenuItem)dataBackups.ContextMenu.Items[0]);
             MenuItem deleteMenu = ((MenuItem)dataBackups.ContextMenu.Items[1]);
-            //MenuItem infoMenu = ((MenuItem)dataBackups.ContextMenu.Items[2]);
             if (e.AddedItems.Count > 0)
             {
                 SaveBackup selectedBackup = (SaveBackup)(dataBackups.SelectedItem);
@@ -747,16 +730,11 @@ namespace RemnantSaveManager
 
                 analyzeMenu.IsEnabled = true;
                 deleteMenu.IsEnabled = true;
-                //analyzeMenu.Items.Clear();
-                //analyzeMenu.Click -= analyzeMenuItem_Click;
-                //analyzeMenu.ToolTip = null;
-                //infoMenu.IsEnabled = true;
             }
             else
             {
                 analyzeMenu.IsEnabled = false;
                 deleteMenu.IsEnabled = false;
-                //infoMenu.IsEnabled = true;
                 btnRestore.IsEnabled = false;
             }
         }
@@ -818,7 +796,6 @@ namespace RemnantSaveManager
 
         private void updateCurrentWorldAnalyzer()
         {
-            //activeCharacters = RemnantCharacter.GetCharactersFromSave(saveDirPath);//getAllSaveData(saveDirPath);
             activeSave.UpdateCharacters();
             /*for (int i = 0; i < activeSave.Characters.Count; i++)
             {
@@ -847,16 +824,20 @@ namespace RemnantSaveManager
 
                 try
                 {
-                    WebClient client = new WebClient();
+                    /*WebClient client = new WebClient();
                     client.DownloadFile("https://raw.githubusercontent.com/Razzmatazzz/RemnantSaveManager/master/Properties/AssemblyInfo.cs", "versioncheck.txt");
 
                     string remoteVer = File.ReadLines("versioncheck.txt").Last();
                     File.Delete("versioncheck.txt");
-                    remoteVer = remoteVer.Replace("[assembly: AssemblyFileVersion(\"", "").Replace("\")]", "");
+                    remoteVer = remoteVer.Replace("[assembly: AssemblyFileVersion(\"", "").Replace("\")]", "");*/
+
+                    WebClient client = new WebClient();
+                    string source = client.DownloadString("https://github.com/Razzmatazzz/RemnantSaveManager/releases/latest");
+                    string title = Regex.Match(source, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>", RegexOptions.IgnoreCase).Groups["Title"].Value;
+                    string remoteVer = Regex.Match(source, @"Remnant Save Manager (?<Version>([\d.]+)?)", RegexOptions.IgnoreCase).Groups["Version"].Value;
+
                     Version remoteVersion = new Version(remoteVer);
-
                     Version localVersion = typeof(MainWindow).Assembly.GetName().Version;
-
 
                     this.Dispatcher.Invoke(() =>
                     {
@@ -867,7 +848,7 @@ namespace RemnantSaveManager
                                      "Update Available", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                             if (confirmResult == MessageBoxResult.Yes)
                             {
-                                Process.Start("https://github.com/Razzmatazzz/RemnantSaveManager/releases");
+                                Process.Start("https://github.com/Razzmatazzz/RemnantSaveManager/releases/latest");
                                 System.Environment.Exit(1);
                             }
                         } else
