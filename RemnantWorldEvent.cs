@@ -59,11 +59,6 @@ namespace RemnantSaveManager
                     missingItems.Add(GetCleanItemName(item));
                 }
             }
-            if (this.eventKey.Equals("Sketterling"))
-            {
-                missingItems.Add("Unknown. May indicate 100% chance spawn");
-                missingItems.Add("of Timid Beetle in previous dungeon.");
-            }
             mItems = missingItems;
         }
 

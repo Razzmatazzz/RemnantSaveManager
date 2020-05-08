@@ -31,6 +31,10 @@
                 </Grid>
             </TabItem>
         </TabControl>
+        <Slider x:Name="sliderSize" HorizontalAlignment="Right" Margin="0,20,31,0" VerticalAlignment="Top" Width="164" Value="18" Maximum="30" Minimum="6" ValueChanged="sliderSize_ValueChanged" SmallChange="6" TickPlacement="BottomRight" LargeChange="6" TickFrequency="6" IsSnapToTickEnabled="True"/>
+        <Label Content="Zoom" HorizontalAlignment="Right" Margin="0,18,221,0" VerticalAlignment="Top" Foreground="#FFF8F9FA"/>
+        <Image HorizontalAlignment="Right" Height="16" Margin="0,20,200,0" VerticalAlignment="Top" Width="16" Source="Resources/ZoomOut_16x.png"/>
+        <Image HorizontalAlignment="Right" Height="16" Margin="0,20,10,0" VerticalAlignment="Top" Width="16" Source="Resources/ZoomIn_16x.png"/>
 
     </Grid>
 </Window>

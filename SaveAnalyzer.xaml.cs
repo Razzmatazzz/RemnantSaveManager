@@ -26,8 +26,10 @@ namespace RemnantSaveManager
         private List<RemnantCharacter> listCharacters;
         private AnalyzerColor analyzerColor;
         private Dictionary<string,Dictionary<string,double>> columnWidths;
+        private bool initialized;
         public SaveAnalyzer(MainWindow mw)
         {
+            initialized = false;
             InitializeComponent();
 
             mainWindow = mw;
@@ -65,6 +67,9 @@ namespace RemnantSaveManager
             columnWidths = new Dictionary<string, Dictionary<string, double>>();
             columnWidths.Add(dgCampaign.Name, new Dictionary<string, double>());
             columnWidths.Add(dgAdventure.Name, new Dictionary<string, double>());
+
+            sliderSize.Value = Properties.Settings.Default.AnalyzerFontSize;
+            initialized = true;
         }
 
         public void LoadData(List<RemnantCharacter> chars)
@@ -128,11 +133,12 @@ namespace RemnantSaveManager
         }
         private void autoGeneratingColumn(object sender, DataGridAutoGeneratingColumnEventArgs e)
         {
+            double fontSize = sliderSize.Value;
             e.Column.HeaderStyle = new Style(typeof(DataGridColumnHeader));
             e.Column.HeaderStyle.Setters.Add(new Setter(DataGridColumnHeader.BackgroundProperty, new SolidColorBrush(analyzerColor.headerBackgroundColor)));
             e.Column.HeaderStyle.Setters.Add(new Setter(DataGridColumnHeader.ForegroundProperty, new SolidColorBrush(Colors.White)));
-            e.Column.HeaderStyle.Setters.Add(new Setter(DataGridColumnHeader.PaddingProperty, new Thickness(12,8,12,8)));
-            e.Column.HeaderStyle.Setters.Add(new Setter(DataGridColumnHeader.FontSizeProperty, 21.0));
+            e.Column.HeaderStyle.Setters.Add(new Setter(DataGridColumnHeader.PaddingProperty, new Thickness(8,4,8,4)));
+            e.Column.HeaderStyle.Setters.Add(new Setter(DataGridColumnHeader.FontSizeProperty, fontSize));
             e.Column.HeaderStyle.Setters.Add(new Setter(DataGridColumnHeader.FontWeightProperty, FontWeights.Bold));
             e.Column.HeaderStyle.Setters.Add(new Setter(DataGridColumnHeader.BorderBrushProperty, new SolidColorBrush(analyzerColor.borderColor)));
             e.Column.HeaderStyle.Setters.Add(new Setter(DataGridColumnHeader.BorderThicknessProperty, new Thickness(1)));
@@ -145,10 +151,11 @@ namespace RemnantSaveManager
             if (e.Column.Header.Equals("MissingItems"))
             {
                 e.Column.Header = "Missing Items";
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.FontSizeProperty, ((fontSize / 3) * 2)));
                 e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, new SolidColorBrush(Colors.Red)));
             } else
             {
-                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.FontSizeProperty, 18.0));
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.FontSizeProperty, fontSize));
                 e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, new SolidColorBrush(analyzerColor.textColor)));
             }
 
@@ -207,6 +214,20 @@ namespace RemnantSaveManager
                     }
                 }
             } */
+        }
+
+        private void sliderSize_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            if (initialized)
+            {
+                Properties.Settings.Default.AnalyzerFontSize = sliderSize.Value;
+                Properties.Settings.Default.Save();
+
+                dgCampaign.ItemsSource = null;
+                dgAdventure.ItemsSource = null;
+                CmbCharacter_SelectionChanged(null, null);
+            }
+
         }
     }
 }

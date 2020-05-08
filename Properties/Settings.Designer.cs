@@ -106,5 +106,17 @@ namespace RemnantSaveManager.Properties {
                 this["UpgradeRequired"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("18")]
+        public double AnalyzerFontSize {
+            get {
+                return ((double)(this["AnalyzerFontSize"]));
+            }
+            set {
+                this["AnalyzerFontSize"] = value;
+            }
+        }
     }
 }

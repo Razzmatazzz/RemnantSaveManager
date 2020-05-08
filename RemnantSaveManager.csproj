@@ -149,6 +149,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\ZoomOut_16x.png" />
+    <Resource Include="Resources\ZoomIn_16x.png" />
     <Resource Include="Resources\Copy_32x.png" />
     <Content Include="Resources\GameInfo.xml" />
   </ItemGroup>
