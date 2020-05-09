@@ -42,6 +42,7 @@ namespace RemnantSaveManager
         private List<SaveAnalyzer> backupSaveAnalyzers;
 
         private System.Timers.Timer saveTimer;
+        private DateTime lastUpdateCheck;
 
         public MainWindow()
         {
@@ -126,13 +127,6 @@ namespace RemnantSaveManager
             saveWatcher.EnableRaisingEvents = true;
             activeSave = new RemnantSave(saveDirPath);
             updateCurrentWorldAnalyzer();
-
-            new Thread(() =>
-            {
-                Thread.CurrentThread.IsBackground = true;
-
-                GameInfo.CheckForNewGameInfo();
-            }).Start();
 
             checkForUpdate();
         }
@@ -821,6 +815,11 @@ namespace RemnantSaveManager
             new Thread(() =>
             {
                 Thread.CurrentThread.IsBackground = true;
+                GameInfo.CheckForNewGameInfo();
+            }).Start();
+            new Thread(() =>
+            {
+                Thread.CurrentThread.IsBackground = true;
 
                 try
                 {
@@ -844,7 +843,7 @@ namespace RemnantSaveManager
                         //do stuff in here with the interface
                         if (localVersion.CompareTo(remoteVersion) == -1)
                         {
-                            var confirmResult = MessageBox.Show("There is a new version available. Would you like to download it?",
+                            var confirmResult = MessageBox.Show("There is a new version available. Would you like to open the download page?",
                                      "Update Available", MessageBoxButton.YesNo, MessageBoxImage.Question, MessageBoxResult.No);
                             if (confirmResult == MessageBoxResult.Yes)
                             {
@@ -865,6 +864,7 @@ namespace RemnantSaveManager
                     });
                 }
             }).Start();
+            lastUpdateCheck = DateTime.Now;
         }
 
         private void Window_Closing(object sender, System.ComponentModel.CancelEventArgs e)
@@ -944,11 +944,15 @@ namespace RemnantSaveManager
 
         private void btnGameInfoUpdate_Click(object sender, RoutedEventArgs e)
         {
-            new Thread(() =>
+            if (lastUpdateCheck.AddMinutes(10) < DateTime.Now)
             {
-                Thread.CurrentThread.IsBackground = true;
-                GameInfo.CheckForNewGameInfo();
-            }).Start();
+                checkForUpdate();
+            }
+            else
+            {
+                TimeSpan span = (lastUpdateCheck.AddMinutes(10) - DateTime.Now);
+                logMessage("Please wait " + span.Minutes+" minutes, "+span.Seconds+" seconds before checking for update.");
+            }
         }
     }
 }

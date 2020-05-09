@@ -35,8 +35,8 @@
                     <Label Content="Backups to keep (0 for unlimited)" HorizontalAlignment="Left" Margin="80,66,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2" Width="264"/>
                     <Label Content="Backup Folder" HorizontalAlignment="Left" Margin="10,97,0,0" VerticalAlignment="Top" Grid.ColumnSpan="2"/>
                     <TextBox x:Name="txtBackupFolder" Height="23" Margin="103,101,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True" Grid.Column="1"/>
-                    <Button x:Name="btnBackupFolder" Content="Choose" HorizontalAlignment="Left" Margin="18,100,0,0" VerticalAlignment="Top" Width="75" Click="BtnBackupFolder_Click" Grid.Column="1"/>
-                    <Button x:Name="btnGameInfoUpdate" Content="Update Game Info" HorizontalAlignment="Left" Margin="20,168,0,0" VerticalAlignment="Top" Width="124" Click="btnGameInfoUpdate_Click" Grid.ColumnSpan="2"/>
+                    <Button x:Name="btnBackupFolder" Content="Choose" HorizontalAlignment="Left" Margin="18,100,0,0" VerticalAlignment="Top" Click="BtnBackupFolder_Click" Grid.Column="1" MinWidth="75" MinHeight="20"/>
+                    <Button x:Name="btnGameInfoUpdate" Content="Check for update" HorizontalAlignment="Left" Margin="20,168,0,0" VerticalAlignment="Top" Click="btnGameInfoUpdate_Click" Grid.ColumnSpan="2" MinWidth="113" MinHeight="20"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Log">

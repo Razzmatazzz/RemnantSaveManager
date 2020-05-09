@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="21">
+<GameInfo version="22">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -49,7 +49,7 @@
     <SubLocation eventName="WastelandGuardian" location="LoomOfTheBlackSun"></SubLocation>
     <SubLocation eventName="Wisp" location="CircletHatchery"></SubLocation>
     <SubLocation eventName="Wolf" location="TheRavager'sHaunt"></SubLocation>
-    <SubLocation eventName="WolfShrine" location="Martyr'sSanctuary"></SubLocation>
+    <SubLocation eventName="WolfShrine" location="TempleOfTheRavager"></SubLocation>
   </SubLocations>
   <MainLocations>
     <MainLocation key="City Overworld Zone1" name="Fairview"></MainLocation>
@@ -378,6 +378,9 @@
     </Event>
     <Event name="TalismanOfAnimosity">
       <Item>/Items/Trinkets/TalismanOfAnimosity</Item>
+    </Event>
+    <Event name="TalismanOfPerseverance">
+      <Item>/Items/Trinkets/TalismanOfPerseverance</Item>
     </Event>
     <Event name="TheCleanRoom">
       <Item>/Items/Weapons/Basic/Wasteland_Flail/Weapon_Wasteland_Flail</Item>

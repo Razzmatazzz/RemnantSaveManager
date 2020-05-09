@@ -88,7 +88,10 @@ namespace RemnantSaveManager
                 {
                     if (!this.Inventory.Contains(item))
                     {
-                        missingItems.Add(RemnantWorldEvent.GetCleanItemName(item));
+                        if (!missingItems.Contains(RemnantWorldEvent.GetCleanItemName(item)))
+                        {
+                            missingItems.Add(RemnantWorldEvent.GetCleanItemName(item));
+                        }
                     }
                 }
             }
