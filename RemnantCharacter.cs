@@ -435,7 +435,10 @@ namespace RemnantSaveManager
                         continue;
                     }
                     List<string> saveItems = new List<string>();
-                    inventories[i] = inventories[i].Substring(inventories[i].IndexOf("/Game/Characters/Player/Base/Character_Master_Player.Character_Master_Player_C"));
+                    string charStart = "/Game/Characters/Player/Base/Character_Master_Player.Character_Master_Player_C";
+                    string charEnd = "Character_Master_Player_C";
+                    inventories[i] = inventories[i].Substring(inventories[i].IndexOf(charStart)+charStart.Length);
+                    inventories[i] = inventories[i].Substring(0, inventories[i].IndexOf(charEnd));
                     Regex rx = new Regex(@"/Items/Weapons(/[a-zA-Z0-9_]+)+/[a-zA-Z0-9_]+");
                     MatchCollection matches = rx.Matches(inventories[i]);
                     foreach (Match match in matches)
