@@ -110,6 +110,7 @@ namespace RemnantSaveManager
             ((MenuItem)dataBackups.ContextMenu.Items[0]).Click += analyzeMenuItem_Click;
 
             GameInfo.GameInfoUpdate += OnGameInfoUpdate;
+            dataBackups.CanUserDeleteRows = false;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -775,7 +776,10 @@ namespace RemnantSaveManager
                 {
                     SetActiveSaveIsBackedup(false);
                 }
-                Directory.Delete(backupDirPath + "\\" + save.SaveDate.Ticks, true);
+                if (Directory.Exists(backupDirPath + "\\" + save.SaveDate.Ticks))
+                {
+                    Directory.Delete(backupDirPath + "\\" + save.SaveDate.Ticks, true);
+                }
                 listBackups.Remove(save);
                 dataBackups.Items.Refresh();
                 logMessage("Backup \"" + save.Name + "\" (" + save.SaveDate + ") deleted.");
