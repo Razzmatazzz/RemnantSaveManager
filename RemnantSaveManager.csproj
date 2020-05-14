@@ -97,6 +97,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="GameInfo.cs" />
+    <Compile Include="RemnantItem.cs" />
     <Compile Include="RemnantSave.cs" />
     <Compile Include="SaveAnalyzer.xaml.cs">
       <DependentUpon>SaveAnalyzer.xaml</DependentUpon>

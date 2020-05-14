@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="22">
+<GameInfo version="23">
   <Zones>
     <Zone name="Earth"></Zone>
     <Zone name="Rhom"></Zone>
@@ -437,17 +437,18 @@
       <Item>/Items/Traits/Trait_WorldWalker</Item>
       <Item>/Items/Traits/Trait_Invoker</Item>
       <Item>/Player/Emotes/Emote_Wave</Item>
-      <Item notes="survival">/Items/Armor/Adventurer/Armor_Head_Adventurer</Item>
-      <Item notes="survival">/Items/Weapons/Human/Melee/Sword/Weapon_HerosSword</Item>
-      <Item notes="survival">/Items/Trinkets/BlackRose</Item>
-      <Item notes="survival">/Items/Trinkets/DaredevilsCharm</Item>
-      <Item notes="survival">/Items/Trinkets/Trinket_LoopOfProsperity</Item>
-      <Item notes="survival">/Items/Trinkets/TalismanOfPerseverance</Item>
-      <Item notes="Hardcore reward for defeating Dreamer">/Items/Trinkets/Trinket_NightmareSpiral</Item>
-      <Item notes="Hardcore reward for defeating Clavinger/Harrow">/Items/Trinkets/AkariWarBand</Item>
-      <Item notes="Hardcore reward for defeating Ixillis">/Items/Trinkets/Trinket_EmpoweringLoop</Item>
-      <Item notes="Hardcore reward for defeating Singe/Ent">/Items/Trinkets/Trinket_ProvisionerRing</Item>
-      <Item notes="Hardcore reward for defeating Totem Father/Ravager">/Items/Trinkets/RingOfSumpremacy</Item>
+      <Item mode="survival" notes="Reward for 5 consecutive boss kills">/Items/Armor/Adventurer/Armor_Head_Adventurer</Item>
+      <Item mode="survival" notes="Reward for 10 consecutive boss kills">/Items/Weapons/Human/Melee/Sword/Weapon_HerosSword</Item>
+      <Item mode="survival" notes="Reward for 100 total boss kills">/Items/Trinkets/BlackRose</Item>
+      <Item mode="survival" notes="Reward for 75 total boss kills">/Items/Trinkets/DaredevilsCharm</Item>
+      <Item mode="survival" notes="Reward for 25 total boss kills">/Items/Trinkets/Trinket_LoopOfProsperity</Item>
+      <Item mode="survival" notes="Reward for 50 total boss kills">/Items/Trinkets/TalismanOfPerseverance</Item>
+      <Item mode="hardcore" notes="Reward for defeating Clavinger/Harrow">/Items/Trinkets/AkariWarBand</Item>
+      <Item mode="hardcore" notes="Reward for defeating Ixillis">/Items/Trinkets/Trinket_EmpoweringLoop</Item>
+      <Item mode="hardcore" notes="Reward for defeating Singe/Ent">/Items/Trinkets/Trinket_ProvisionerRing</Item>
+      <Item mode="hardcore" notes="Reward for defeating Totem Father/Ravager">/Items/Trinkets/RingOfSumpremacy</Item>
+      <Item mode="hardcore" notes="Reward for defeating Dreamer">/Items/Trinkets/Trinket_NightmareSpiral</Item>
+      <Item mode="hardcore" notes="Reward for defeating Dreamer">/Player/Emotes/Emote_HighFive</Item>
     </Event>
     <Event name="Vyr">
       <Item>/Items/Mods/VeilOfTheBlackTear</Item>
@@ -479,7 +480,6 @@
     <Event name="Ward17">
       <Item>/Items/Weapons/Boss/Guns/LongGuns/Repulsor/Weapon_Atoll_Repulsor</Item>
       <Item>/Items/Traits/Trait_MindsEye</Item>
-      <Item>/Player/Emotes/Emote_HighFive</Item>
       <Item>/Player/Emotes/Emote_PraiseTheGun</Item>
     </Event>
     <Event name="Wisp">

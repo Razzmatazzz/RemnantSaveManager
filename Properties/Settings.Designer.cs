@@ -118,5 +118,41 @@ namespace RemnantSaveManager.Properties {
                 this["AnalyzerFontSize"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool NormalExpanded {
+            get {
+                return ((bool)(this["NormalExpanded"]));
+            }
+            set {
+                this["NormalExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool HardcoreExpanded {
+            get {
+                return ((bool)(this["HardcoreExpanded"]));
+            }
+            set {
+                this["HardcoreExpanded"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("True")]
+        public bool SurvivalExpanded {
+            get {
+                return ((bool)(this["SurvivalExpanded"]));
+            }
+            set {
+                this["SurvivalExpanded"] = value;
+            }
+        }
     }
 }

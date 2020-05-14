@@ -69,7 +69,47 @@ namespace RemnantSaveManager
             columnWidths.Add(dgAdventure.Name, new Dictionary<string, double>());
 
             sliderSize.Value = Properties.Settings.Default.AnalyzerFontSize;
+            treeMissingItems.FontSize = sliderSize.Value - 4;
+            lblCredits.FontSize = sliderSize.Value;
             initialized = true;
+            TreeViewItem nodeNormal = new TreeViewItem();
+            nodeNormal.Header = "Normal";
+            nodeNormal.Foreground = treeMissingItems.Foreground;
+            nodeNormal.IsExpanded = Properties.Settings.Default.NormalExpanded;
+            nodeNormal.Expanded += GameType_CollapsedExpanded;
+            nodeNormal.Collapsed += GameType_CollapsedExpanded;
+            TreeViewItem nodeHardcore = new TreeViewItem();
+            nodeHardcore.Header = "Hardcore";
+            nodeHardcore.Foreground = treeMissingItems.Foreground;
+            nodeHardcore.IsExpanded = Properties.Settings.Default.HardcoreExpanded;
+            nodeHardcore.Expanded += GameType_CollapsedExpanded;
+            nodeHardcore.Collapsed += GameType_CollapsedExpanded;
+            TreeViewItem nodeSurvival = new TreeViewItem();
+            nodeSurvival.Header = "Survival";
+            nodeSurvival.Foreground = treeMissingItems.Foreground;
+            nodeSurvival.IsExpanded = Properties.Settings.Default.SurvivalExpanded;
+            nodeSurvival.Expanded += GameType_CollapsedExpanded;
+            nodeSurvival.Collapsed += GameType_CollapsedExpanded;
+            treeMissingItems.Items.Add(nodeNormal);
+            treeMissingItems.Items.Add(nodeHardcore);
+            treeMissingItems.Items.Add(nodeSurvival);
+        }
+
+        private void GameType_CollapsedExpanded(object sender, RoutedEventArgs e)
+        {
+            TreeViewItem modeItem = (TreeViewItem)sender;
+            if (modeItem.Header.ToString().Contains("Normal")) {
+                Properties.Settings.Default.NormalExpanded = modeItem.IsExpanded;
+            }
+            else if (modeItem.Header.ToString().Contains("Hardcore"))
+            {
+                Properties.Settings.Default.HardcoreExpanded = modeItem.IsExpanded;
+            }
+            else if (modeItem.Header.ToString().Contains("Survival"))
+            {
+                Properties.Settings.Default.SurvivalExpanded = modeItem.IsExpanded;
+            }
+            Properties.Settings.Default.Save();
         }
 
         public void LoadData(List<RemnantCharacter> chars)
@@ -108,10 +148,42 @@ namespace RemnantSaveManager
                 } else
                 {
                     ((TabItem)tabAnalyzer.Items[1]).IsEnabled = false;
-                    tabAnalyzer.SelectedIndex = 0;
+                    if (tabAnalyzer.SelectedIndex == 1) tabAnalyzer.SelectedIndex = 0;
                 }
                 //Console.WriteLine(listCharacters[cmbCharacter.SelectedIndex].ToFullString());
                 txtMissingItems.Text = string.Join("\n", listCharacters[cmbCharacter.SelectedIndex].GetMissingItems());
+
+                foreach (TreeViewItem item in treeMissingItems.Items)
+                {
+                    item.Items.Clear();
+                }
+                foreach (RemnantItem rItem in listCharacters[cmbCharacter.SelectedIndex].GetMissingItems())
+                {
+                    TreeViewItem item = new TreeViewItem();
+                    item.Header = rItem.ItemName;
+                    if (!rItem.ItemNotes.Equals("")) item.ToolTip = rItem.ItemNotes;
+                    item.Foreground = treeMissingItems.Foreground;
+                    //((TreeViewItem)treeMissingItems.Items[(int)rItem.ItemMode]).Items.Add(item);
+                    TreeViewItem modeNode = ((TreeViewItem)treeMissingItems.Items[(int)rItem.ItemMode]);
+                    TreeViewItem itemTypeNode = null;
+                    foreach (TreeViewItem typeNode in modeNode.Items)
+                    {
+                        if (typeNode.Header.ToString().Equals(rItem.ItemType))
+                        {
+                            itemTypeNode = typeNode;
+                            break;
+                        }
+                    }
+                    if (itemTypeNode == null)
+                    {
+                        itemTypeNode = new TreeViewItem();
+                        itemTypeNode.Header = rItem.ItemType;
+                        itemTypeNode.Foreground = treeMissingItems.Foreground;
+                        itemTypeNode.IsExpanded = true;
+                        ((TreeViewItem)treeMissingItems.Items[(int)rItem.ItemMode]).Items.Add(itemTypeNode);
+                    }
+                    itemTypeNode.Items.Add(item);
+                }
             }
         }
 
@@ -226,6 +298,8 @@ namespace RemnantSaveManager
                 dgCampaign.ItemsSource = null;
                 dgAdventure.ItemsSource = null;
                 CmbCharacter_SelectionChanged(null, null);
+                treeMissingItems.FontSize = sliderSize.Value - 4;
+                lblCredits.FontSize = sliderSize.Value;
             }
 
         }

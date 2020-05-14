@@ -26,5 +26,14 @@
     <Setting Name="AnalyzerFontSize" Type="System.Double" Scope="User">
       <Value Profile="(Default)">18</Value>
     </Setting>
+    <Setting Name="NormalExpanded" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="HardcoreExpanded" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
+    <Setting Name="SurvivalExpanded" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">True</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

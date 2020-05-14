@@ -13,10 +13,10 @@ namespace RemnantSaveManager
     {
         public static event EventHandler<GameInfoUpdateEventArgs> GameInfoUpdate;
         private static List<string> zones = new List<string>();
-        private static Dictionary<string, string[]> eventItem = new Dictionary<string, string[]>();
+        private static Dictionary<string, RemnantItem[]> eventItem = new Dictionary<string, RemnantItem[]>();
         private static Dictionary<string, string> subLocations = new Dictionary<string, string>();
         private static Dictionary<string, string> mainLocations = new Dictionary<string, string>();
-        public static Dictionary<string, string[]> EventItem
+        public static Dictionary<string, RemnantItem[]> EventItem
         {
             get
             {
@@ -71,7 +71,9 @@ namespace RemnantSaveManager
             subLocations.Clear();
             mainLocations.Clear();
             string eventName = null;
-            List<string> eventItems = new List<string>();
+            string itemMode = null;
+            string itemNotes = null;
+            List<RemnantItem> eventItems = new List<RemnantItem>();
             XmlTextReader reader = new XmlTextReader("GameInfo.xml");
             reader.WhitespaceHandling = WhitespaceHandling.None;
             while (reader.Read())
@@ -85,7 +87,8 @@ namespace RemnantSaveManager
                         }
                         else if (reader.Name.Equals("Item"))
                         {
-                            //do anything?
+                            itemMode = reader.GetAttribute("mode");
+                            itemNotes = reader.GetAttribute("notes");
                         } else if (reader.Name.Equals("Zone"))
                         {
                             zones.Add(reader.GetAttribute("name"));
@@ -102,7 +105,24 @@ namespace RemnantSaveManager
                     case XmlNodeType.Text:
                         if (eventName != null)
                         {
-                            eventItems.Add(reader.Value);
+                            RemnantItem rItem = new RemnantItem(reader.Value);
+                            if (itemMode != null)
+                            {
+                                if (itemMode.Equals("hardcore"))
+                                {
+                                    rItem.ItemMode = RemnantItem.RemnantItemMode.Hardcore;
+                                } else if (itemMode.Equals("survival"))
+                                {
+                                    rItem.ItemMode = RemnantItem.RemnantItemMode.Survival;
+                                }
+                            }
+                            if (itemNotes != null)
+                            {
+                                rItem.ItemNotes = itemNotes;
+                            }
+                            eventItems.Add(rItem);
+                            itemMode = null;
+                            itemNotes = null;
                         }
                         break;
                     case XmlNodeType.EndElement:
