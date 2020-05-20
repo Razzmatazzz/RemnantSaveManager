@@ -43,6 +43,7 @@ namespace RemnantSaveManager
 
         private System.Timers.Timer saveTimer;
         private DateTime lastUpdateCheck;
+        private int saveCount;
 
         public MainWindow()
         {
@@ -111,6 +112,7 @@ namespace RemnantSaveManager
 
             GameInfo.GameInfoUpdate += OnGameInfoUpdate;
             dataBackups.CanUserDeleteRows = false;
+            saveCount = 0;
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -397,8 +399,7 @@ namespace RemnantSaveManager
 
         private void ChkAutoBackup_Click(object sender, RoutedEventArgs e)
         {
-            bool autoBackup = chkAutoBackup.IsChecked.HasValue ? chkAutoBackup.IsChecked.Value : false;
-            Properties.Settings.Default.AutoBackup = autoBackup;
+            Properties.Settings.Default.AutoBackup = chkAutoBackup.IsChecked.HasValue ? chkAutoBackup.IsChecked.Value : false;
             Properties.Settings.Default.Save();
         }
 
@@ -415,7 +416,12 @@ namespace RemnantSaveManager
                     //and a backup only occurs after the timer expires.
                     saveTimer.Interval = 10000;
                     saveTimer.Enabled = true;
-                    updateCurrentWorldAnalyzer();
+                    saveCount++;
+                    if (saveCount == 4)
+                    {
+                        updateCurrentWorldAnalyzer();
+                        saveCount = 0;
+                    }
                 }
                 catch (Exception ex)
                 {
@@ -470,7 +476,11 @@ namespace RemnantSaveManager
                             }*/
                         }
                     }
-                    //updateCurrentWorldAnalyzer();
+                    if (saveCount != 0)
+                    {
+                        updateCurrentWorldAnalyzer();
+                        saveCount = 0;
+                    }
 
                     if (gameProcess == null || gameProcess.HasExited)
                     {

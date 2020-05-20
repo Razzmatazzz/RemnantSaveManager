@@ -138,6 +138,8 @@ namespace RemnantSaveManager
 
         private void CmbCharacter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            if (cmbCharacter.SelectedIndex == -1 && listCharacters.Count > 0) return;
+            Console.WriteLine("Selection changed: " + cmbCharacter.SelectedIndex);
             if (cmbCharacter.Items.Count > 0 && cmbCharacter.SelectedIndex > -1)
             {
                 dgCampaign.ItemsSource = listCharacters[cmbCharacter.SelectedIndex].CampaignEvents;
@@ -145,12 +147,12 @@ namespace RemnantSaveManager
                 {
                     ((TabItem)tabAnalyzer.Items[1]).IsEnabled = true;
                     dgAdventure.ItemsSource = listCharacters[cmbCharacter.SelectedIndex].AdventureEvents;
+
                 } else
                 {
                     ((TabItem)tabAnalyzer.Items[1]).IsEnabled = false;
                     if (tabAnalyzer.SelectedIndex == 1) tabAnalyzer.SelectedIndex = 0;
                 }
-                //Console.WriteLine(listCharacters[cmbCharacter.SelectedIndex].ToFullString());
                 txtMissingItems.Text = string.Join("\n", listCharacters[cmbCharacter.SelectedIndex].GetMissingItems());
 
                 foreach (TreeViewItem item in treeMissingItems.Items)
@@ -163,7 +165,6 @@ namespace RemnantSaveManager
                     item.Header = rItem.ItemName;
                     if (!rItem.ItemNotes.Equals("")) item.ToolTip = rItem.ItemNotes;
                     item.Foreground = treeMissingItems.Foreground;
-                    //((TreeViewItem)treeMissingItems.Items[(int)rItem.ItemMode]).Items.Add(item);
                     TreeViewItem modeNode = ((TreeViewItem)treeMissingItems.Items[(int)rItem.ItemMode]);
                     TreeViewItem itemTypeNode = null;
                     foreach (TreeViewItem typeNode in modeNode.Items)

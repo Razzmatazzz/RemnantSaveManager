@@ -67,21 +67,21 @@ namespace RemnantSaveManager
         {
             Dictionary<string, Dictionary<string, string>> zones = new Dictionary<string, Dictionary<string, string>>();
             Dictionary<string, List<RemnantWorldEvent>> zoneEvents = new Dictionary<string, List<RemnantWorldEvent>>();
+            List<RemnantWorldEvent> churchEvents = new List<RemnantWorldEvent>();
             foreach (string z in GameInfo.Zones)
             {
                 zones.Add(z, new Dictionary<string, string>());
                 zoneEvents.Add(z, new List<RemnantWorldEvent>());
             }
 
+            string zone = null;
             string currentMainLocation = "Fairview";
             string currentSublocation = null;
 
             string eventName = null;
-            MatchCollection matches = Regex.Matches(eventsText, "(?:/[a-zA-Z0-9_]+){3}/([a-zA-Z0-9]+_[a-zA-Z0-9]+_[a-zA-Z0-9_]+)");
+            MatchCollection matches = Regex.Matches(eventsText, "(?:/[a-zA-Z0-9_]+){3}/(([a-zA-Z0-9]+_[a-zA-Z0-9]+_[a-zA-Z0-9_]+)|Quest_Church)");
             foreach (Match match in matches)
             {
-                RemnantWorldEvent se = new RemnantWorldEvent();
-                string zone = null;
                 string eventType = null;
                 string lastEventname = eventName;
                 eventName = null;
@@ -98,6 +98,7 @@ namespace RemnantSaveManager
                     eventType = getEventType(textLine);
                     if (textLine.Contains("Overworld_Zone"))
                     {
+                        //process overworld zone marker
                         currentMainLocation = textLine.Split('/')[4].Split('_')[1] + " " + textLine.Split('/')[4].Split('_')[2] + " " + textLine.Split('/')[4].Split('_')[3];
                         if (GameInfo.MainLocations.ContainsKey(currentMainLocation))
                         {
@@ -107,9 +108,18 @@ namespace RemnantSaveManager
                         {
                             currentMainLocation = null;
                         }
+                        continue;
+                    }
+                    else if (textLine.Contains("Quest_Church"))
+                    {
+                        //process Root Mother event
+                        currentMainLocation = "Chapel Station";
+                        eventName = "RootMother";
+                        currentSublocation = "Church of the Harbinger";
                     }
                     else if (eventType != null)
                     {
+                        //process other events, if they're recognized by getEventType
                         eventName = textLine.Split('/')[4].Split('_')[2];
                         if (textLine.Contains("OverworldPOI") || textLine.Contains("Sketterling"))
                         {
@@ -126,12 +136,23 @@ namespace RemnantSaveManager
                                 currentSublocation = null;
                             }
                         }
+                        if ("Chapel Station".Equals(currentMainLocation))
+                        {
+                            if (textLine.Contains("Quest_Boss"))
+                            {
+                                currentMainLocation = "Westcourt";
+                            } else
+                            {
+                                currentSublocation = null;
+                            }
+                        }
                     }
 
                     if (mode == ProcessMode.Adventure) currentMainLocation = null;
 
                     if (eventName != lastEventname)
                     {
+                        RemnantWorldEvent se = new RemnantWorldEvent();
                         // Replacements
                         if (eventName != null)
                         {
@@ -156,7 +177,13 @@ namespace RemnantSaveManager
                                 se.Location = string.Join(": ", locationList);
                                 se.Type = eventType;
                                 se.setMissingItems(character);
-                                zoneEvents[zone].Add(se);
+                                if (!"Chapel Station".Equals(currentMainLocation)) {
+                                    zoneEvents[zone].Add(se);
+                                }
+                                else
+                                {
+                                    churchEvents.Insert(0, se);
+                                }
 
                                 // rings drop with the Cryptolith on Rhom
                                 if (eventName.Equals("Cryptolith") && zone.Equals("Rhom"))
@@ -207,7 +234,6 @@ namespace RemnantSaveManager
             bool navunAdded = false;
             RemnantWorldEvent ward13 = new RemnantWorldEvent();
             RemnantWorldEvent hideout = new RemnantWorldEvent();
-            RemnantWorldEvent church = new RemnantWorldEvent();
             RemnantWorldEvent undying = new RemnantWorldEvent();
             RemnantWorldEvent queen = new RemnantWorldEvent();
             RemnantWorldEvent navun = new RemnantWorldEvent();
@@ -227,12 +253,6 @@ namespace RemnantSaveManager
                 hideout.Type = "Point of Interest";
                 hideout.setMissingItems(character);
                 if (hideout.MissingItems.Length > 0) orderedEvents.Add(hideout);
-
-                church.setKey("RootMother");
-                church.Name = "Root Mother";
-                church.Location = "Earth: Church of the Harbinger";
-                church.Type = "Siege";
-                church.setMissingItems(character);
 
                 undying.setKey("UndyingKing");
                 undying.Name = "Undying King";
@@ -263,7 +283,10 @@ namespace RemnantSaveManager
             {
                 if (mode == ProcessMode.Campaign && !churchAdded && zoneEvents["Earth"][i].Location.Contains("Westcourt"))
                 {
-                    if (church.MissingItems.Length > 0) orderedEvents.Add(church);
+                    foreach (RemnantWorldEvent rwe in churchEvents)
+                    {
+                        orderedEvents.Add(rwe);
+                    }
                     churchAdded = true;
                 }
                 orderedEvents.Add(zoneEvents["Earth"][i]);
@@ -313,7 +336,7 @@ namespace RemnantSaveManager
         static private string getZone(string textLine)
         {
             string zone = null;
-            if (textLine.Contains("World_City"))
+            if (textLine.Contains("World_City") || textLine.Contains("Quest_Church"))
             {
                 zone = "Earth";
             }
@@ -343,7 +366,7 @@ namespace RemnantSaveManager
             {
                 eventType = "World Boss";
             }
-            else if (textLine.Contains("Siege"))
+            else if (textLine.Contains("Siege")|| textLine.Contains("Quest_Church"))
             {
                 eventType = "Siege";
             }

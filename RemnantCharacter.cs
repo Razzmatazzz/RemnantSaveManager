@@ -51,13 +51,18 @@ namespace RemnantSaveManager
         public void processSaveData(string savetext)
         {
             //get campaign info
-            string campaigntext = savetext.Split(new string[] { "/Game/Campaign_Main/Quest_Campaign_Ward13.Quest_Campaign_Ward13" }, StringSplitOptions.None)[0];
-            string[] campaign = campaigntext.Split(new string[] { "/Game/Campaign_Main/Quest_Campaign_City.Quest_Campaign_City" }, StringSplitOptions.None);
-            if (campaign.Length > 1)
+            string strCmpaignEnd = "/Game/Campaign_Main/Quest_Campaign_Main.Quest_Campaign_Main_C";
+            string strCampaignStart = "/Game/Campaign_Main/Quest_Campaign_City.Quest_Campaign_City";
+            int campaignEnd = savetext.IndexOf(strCmpaignEnd);
+            int campaignStart = savetext.IndexOf(strCampaignStart);
+            if (campaignStart != -1 && campaignEnd != -1)
             {
-                campaigntext = campaign[1];
+                string campaigntext = savetext.Substring(0, campaignEnd);
+                campaignStart = campaigntext.LastIndexOf(strCampaignStart);
+                campaigntext = campaigntext.Substring(campaignStart);
                 RemnantWorldEvent.ProcessEvents(this, campaigntext, RemnantWorldEvent.ProcessMode.Campaign);
-            } else
+            }
+            else
             {
                 Console.WriteLine("Campaign not found; likely in tutorial mission.");
             }
