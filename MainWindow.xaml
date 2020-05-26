@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:RemnantSaveManager"
         mc:Ignorable="d"
-        Title="Remnant Save Manager" Height="450" Width="800" Loaded="Window_Loaded" Icon="Resources/Copy_32x.png" Closing="Window_Closing" Closed="Window_Closed">
+        Title="Remnant Save Manager" Height="450" Width="800" Loaded="Window_Loaded" Icon="Resources/Copy_32x.png" Closing="Window_Closing" Closed="Window_Closed" Deactivated="Window_Deactivated">
     <Grid Background="#FF4B4B4B">
         <Label Content="Active save status:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Label x:Name="lblStatus" Content="Not Backed Up" HorizontalAlignment="Left" Margin="128,10,0,0" VerticalAlignment="Top" Width="103" Background="#00000000" Foreground="Red" FontWeight="Bold"/>

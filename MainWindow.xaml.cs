@@ -667,7 +667,14 @@ namespace RemnantSaveManager
 
         private void DataBackups_CellEditEnding(object sender, DataGridCellEditEndingEventArgs e)
         {
-
+            if (e.Column.Header.ToString().Equals("Name") && e.EditAction == DataGridEditAction.Commit)
+            {
+                SaveBackup sb = (SaveBackup)e.Row.Item;
+                if (sb.Name.Equals(""))
+                {
+                    sb.Name = sb.SaveDate.Ticks.ToString();
+                }
+            }
         }
 
         private void updateSavedNames()
@@ -967,6 +974,13 @@ namespace RemnantSaveManager
                 TimeSpan span = (lastUpdateCheck.AddMinutes(10) - DateTime.Now);
                 logMessage("Please wait " + span.Minutes+" minutes, "+span.Seconds+" seconds before checking for update.");
             }
+        }
+
+        private void Window_Deactivated(object sender, EventArgs e)
+        {
+            //need to call twice for some reason
+            dataBackups.CancelEdit();
+            dataBackups.CancelEdit();
         }
     }
 }

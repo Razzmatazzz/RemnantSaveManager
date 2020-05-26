@@ -139,7 +139,6 @@ namespace RemnantSaveManager
         private void CmbCharacter_SelectionChanged(object sender, SelectionChangedEventArgs e)
         {
             if (cmbCharacter.SelectedIndex == -1 && listCharacters.Count > 0) return;
-            Console.WriteLine("Selection changed: " + cmbCharacter.SelectedIndex);
             if (cmbCharacter.Items.Count > 0 && cmbCharacter.SelectedIndex > -1)
             {
                 dgCampaign.ItemsSource = listCharacters[cmbCharacter.SelectedIndex].CampaignEvents;
