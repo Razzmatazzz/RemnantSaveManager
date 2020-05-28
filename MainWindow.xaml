@@ -10,14 +10,32 @@
         <Label Content="Active save status:" HorizontalAlignment="Left" Margin="10,10,0,0" VerticalAlignment="Top" Foreground="White"/>
         <Label x:Name="lblStatus" Content="Not Backed Up" HorizontalAlignment="Left" Margin="128,10,0,0" VerticalAlignment="Top" Width="103" Background="#00000000" Foreground="Red" FontWeight="Bold"/>
         <Button x:Name="btnBackup" Content="Backup" HorizontalAlignment="Left" Margin="236,13,0,0" VerticalAlignment="Top" Width="75" Click="BtnBackup_Click"/>
-        <Button x:Name="btnRestore" Content="Restore" HorizontalAlignment="Left" Margin="332,13,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="BtnRestore_Click"/>
+        <Button x:Name="btnRestore" Content="Restore" HorizontalAlignment="Left" Margin="332,13,0,0" VerticalAlignment="Top" Width="75" IsEnabled="False" Click="BtnRestore_Click">
+            <Button.ContextMenu>
+                <ContextMenu x:Name="menuRestore">
+                    <MenuItem x:Name="menuRestoreWorlds" Header="Restore Worlds (experimental)" Click="menuRestoreWorlds_Click" ToolTip="Keep current character data and restore the world data from this backup">
+                        <MenuItem.Icon>
+                            <Image Source="Resources/StatusSecurityWarning_32x.png"/>
+                        </MenuItem.Icon>
+                    </MenuItem>
+                </ContextMenu>
+            </Button.ContextMenu>
+        </Button>
         <TabControl Margin="0,54,0,28" Background="#FFB9B9B9" Grid.ColumnSpan="2">
             <TabItem Header="Backups">
                 <DataGrid x:Name="dataBackups" BeginningEdit="DataBackups_BeginningEdit" SelectionMode="Single" CellEditEnding="DataBackups_CellEditEnding" SelectionChanged="DataBackups_SelectionChanged" AutoGeneratingColumn="DataBackups_AutoGeneratingColumn">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Analyze World"/>
-                            <MenuItem Header="Delete"/>
+                            <MenuItem Header="Analyze World">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/SearchMember_32x.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
+                            <MenuItem Header="Delete">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Trash_32x.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                         </ContextMenu>
                     </DataGrid.ContextMenu>
                 </DataGrid>

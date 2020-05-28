@@ -150,6 +150,8 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Resource Include="Resources\Trash_32x.png" />
+    <Resource Include="Resources\StatusSecurityWarning_32x.png" />
     <Resource Include="Resources\ZoomOut_16x.png" />
     <Resource Include="Resources\ZoomIn_16x.png" />
     <Resource Include="Resources\Copy_32x.png" />

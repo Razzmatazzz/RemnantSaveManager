@@ -97,9 +97,6 @@ namespace RemnantSaveManager
             listBackups = new List<SaveBackup>();
 
             ((MenuItem)dataBackups.ContextMenu.Items[1]).Click += deleteMenuItem_Click;
-            //((MenuItem)dataBackups.ContextMenu.Items[2]).Click += infoMenuItem_Click;
-
-            //activeCharacters = new List<RemnantCharacter>();
 
             activeSaveAnalyzer = new SaveAnalyzer(this)
             {
@@ -299,7 +296,7 @@ namespace RemnantSaveManager
                         }
                     }
                 }
-                foreach (var file in Directory.GetFiles(saveDirPath))
+                foreach (string file in Directory.GetFiles(saveDirPath))
                     File.Copy(file, backupFolder + "\\" + System.IO.Path.GetFileName(file), true);
                 if (RemnantSave.ValidSaveFolder(backupFolder))
                 {
@@ -981,6 +978,50 @@ namespace RemnantSaveManager
             //need to call twice for some reason
             dataBackups.CancelEdit();
             dataBackups.CancelEdit();
+        }
+        private void menuRestoreWorlds_Click(object sender, RoutedEventArgs e)
+        {
+            if (isRemnantRunning())
+            {
+                logMessage("Exit the game before restoring a save backup.");
+                return;
+            }
+
+            if (dataBackups.SelectedItem == null)
+            {
+                logMessage("Choose a backup to restore from the list!");
+                return;
+            }
+
+            if (alreadyBackedUp())
+            {
+                saveWatcher.EnableRaisingEvents = false;
+                System.IO.DirectoryInfo di = new DirectoryInfo(saveDirPath);
+                foreach (FileInfo file in di.GetFiles("save_?.sav"))
+                {
+                    file.Delete();
+                }
+                SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
+                di = new DirectoryInfo(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks);
+                foreach (FileInfo file in di.GetFiles("save_?.sav"))
+                    File.Copy(file.FullName, saveDirPath + "\\" + file.Name);
+                foreach (SaveBackup saveBackup in listBackups)
+                {
+                    saveBackup.Active = false;
+                }
+                //selectedBackup.Active = true;
+                updateCurrentWorldAnalyzer();
+                dataBackups.Items.Refresh();
+                //btnRestore.IsEnabled = false;
+                //btnSplitRestore.IsEnabled = false;
+                btnBackup.IsEnabled = false;
+                logMessage("Backup world data restored!");
+                saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
+            }
+            else
+            {
+                logMessage("Backup your current save before restoring another!");
+            }
         }
     }
 }

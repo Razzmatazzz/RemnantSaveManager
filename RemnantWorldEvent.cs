@@ -91,7 +91,8 @@ namespace RemnantSaveManager
                 {
                     if (currentSublocation != null)
                     {
-                        if (currentSublocation.Equals("TheRavagersHaunt") || currentSublocation.Equals("TheTempestCourt")) currentSublocation = null;
+                        //Some world bosses don't have a preceding dungeon; subsequent items therefore spawn in the overworld
+                        if (currentSublocation.Equals("TheRavager'sHaunt") || currentSublocation.Equals("TheTempestCourt")) currentSublocation = null;
                     }
                     zone = getZone(textLine);
 
