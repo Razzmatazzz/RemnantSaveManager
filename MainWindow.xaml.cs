@@ -19,6 +19,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Threading;
 using System.Net;
+using RemnantSaveManager.Properties;
 
 namespace RemnantSaveManager
 {
@@ -50,7 +51,10 @@ namespace RemnantSaveManager
             InitializeComponent();
             suppressLog = false;
             txtLog.Text = "Version " + typeof(MainWindow).Assembly.GetName().Version;
-            System.IO.File.WriteAllText("log.txt", DateTime.Now.ToString()+ ": Version " + typeof(MainWindow).Assembly.GetName().Version+"\r\n");
+            if (Properties.Settings.Default.CreateLogFile)
+            {
+                System.IO.File.WriteAllText("log.txt", DateTime.Now.ToString() + ": Version " + typeof(MainWindow).Assembly.GetName().Version + "\r\n");
+            }
             logMessage("Loading...");
             if (Properties.Settings.Default.UpgradeRequired)
             {
@@ -73,6 +77,8 @@ namespace RemnantSaveManager
             } 
             backupDirPath = Properties.Settings.Default.BackupFolder;
             txtBackupFolder.Text = backupDirPath;
+
+            chkCreateLogFile.IsChecked = Properties.Settings.Default.CreateLogFile;
 
             saveTimer = new System.Timers.Timer();
             saveTimer.Interval = 2000;
@@ -144,18 +150,6 @@ namespace RemnantSaveManager
             Dictionary<long, bool> backupKeeps = getSavedBackupKeeps();
             string[] files = Directory.GetDirectories(backupDirPath);
             SaveBackup activeBackup = null;
-            /*DataGridTextColumn col1 = new DataGridTextColumn();
-            col1.Header = "Name";
-            col1.Binding = new Binding("Name");
-            dataBackups.Columns.Add(col1);
-            DataGridTextColumn col2 = new DataGridTextColumn();
-            col2.Header = "Date";
-            col2.Binding = new Binding("SaveDate");
-            dataBackups.Columns.Add(col2);
-            DataGridCheckBoxColumn col3 = new DataGridCheckBoxColumn();
-            col3.Header = "Keep";
-            col3.Binding = new Binding("Keep");
-            dataBackups.Columns.Add(col3);*/
             for (int i = 0; i < files.Length; i++)
             {
                 if (RemnantSave.ValidSaveFolder(files[i]))
@@ -198,15 +192,17 @@ namespace RemnantSaveManager
         {
             if (backedUp)
             {
-                lblStatus.Content = "Backed Up";
-                lblStatus.Foreground = Brushes.Green;
+                lblStatus.ToolTip = "Backed Up";
+                lblStatus.Content = FindResource("StatusOK");
                 btnBackup.IsEnabled = false;
+                btnBackup.Content = FindResource("SaveGrey");
             }
             else
             {
-                lblStatus.Content = "Not Backed Up";
-                lblStatus.Foreground = Brushes.Red;
+                lblStatus.ToolTip = "Not Backed Up";
+                lblStatus.Content = FindResource("StatusNo");
                 btnBackup.IsEnabled = true;
+                btnBackup.Content = FindResource("Save");
             }
         }
 
@@ -265,9 +261,12 @@ namespace RemnantSaveManager
                 txtLog.Text = txtLog.Text + Environment.NewLine + DateTime.Now.ToString() +": " + msg;
                 lblLastMessage.Content = msg;
             }
-            StreamWriter writer = System.IO.File.AppendText("log.txt");
-            writer.WriteLine(DateTime.Now.ToString() + ": " + msg);
-            writer.Close();
+            if (Properties.Settings.Default.CreateLogFile)
+            {
+                StreamWriter writer = System.IO.File.AppendText("log.txt");
+                writer.WriteLine(DateTime.Now.ToString() + ": " + msg);
+                writer.Close();
+            }
         }
 
         private void BtnBackup_Click(object sender, RoutedEventArgs e)
@@ -328,7 +327,6 @@ namespace RemnantSaveManager
                 checkBackupLimit();
                 dataBackups.Items.Refresh();
                 SetActiveSaveIsBackedup(true);
-                btnBackup.IsEnabled = false;
                 logMessage($"Backup completed ({saveDate.ToString()})!");
             }
             catch (IOException ex)
@@ -385,6 +383,7 @@ namespace RemnantSaveManager
                 updateCurrentWorldAnalyzer();
                 dataBackups.Items.Refresh();
                 btnRestore.IsEnabled = false;
+                btnRestore.Content = FindResource("RestoreGrey");
                 logMessage("Backup restored!");
                 saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
             }
@@ -449,28 +448,20 @@ namespace RemnantSaveManager
                             latestBackupTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                             newBackupTime = new DateTime(1970, 1, 1, 0, 0, 0, 0);
                         }
-                        if (DateTime.Compare(DateTime.Now, newBackupTime) > 0)
+                        if (DateTime.Compare(DateTime.Now, newBackupTime) >= 0)
                         {
                             doBackup();
                         }
                         else
                         {
-                            lblStatus.Content = "Not Backed Up";
-                            lblStatus.Foreground = Brushes.Red;
-                            btnBackup.IsEnabled = true;
+                            SetActiveSaveIsBackedup(false);
                             foreach (SaveBackup backup in listBackups)
                             {
                                 if (backup.Active) backup.Active = false;
                             }
                             dataBackups.Items.Refresh();
-                            /*if (DateTime.Compare(DateTime.Now, newBackupTime) < 1)
-                            {
-                                logMessage($"Last backup less than {Properties.Settings.Default.BackupMinutes} minutes ago");
-                            }
-                            if (DateTime.Compare(latestBackupTime, File.GetLastWriteTime(e.FullPath)) != 0)
-                            {
-                                logMessage("Latest backup and current backup times not equal.");
-                            }*/
+                            TimeSpan span = (newBackupTime - DateTime.Now);
+                            logMessage($"Save change detected, but {span.Minutes + Math.Round(span.Seconds / 60.0, 2)} minutes, left until next backup");
                         }
                     }
                     if (saveCount != 0)
@@ -731,10 +722,12 @@ namespace RemnantSaveManager
                 if (backupActive(selectedBackup))
                 {
                     btnRestore.IsEnabled = false;
+                    btnRestore.Content = FindResource("RestoreGrey");
                 }
                 else
                 {
                     btnRestore.IsEnabled = true;
+                    btnRestore.Content = FindResource("Restore");
                 }
 
                 analyzeMenu.IsEnabled = true;
@@ -745,6 +738,7 @@ namespace RemnantSaveManager
                 analyzeMenu.IsEnabled = false;
                 deleteMenu.IsEnabled = false;
                 btnRestore.IsEnabled = false;
+                btnRestore.Content = FindResource("RestoreGrey");
             }
         }
 
@@ -993,6 +987,19 @@ namespace RemnantSaveManager
                 return;
             }
 
+            SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
+            if (selectedBackup.Save.Characters.Count != activeSave.Characters.Count)
+            {
+                logMessage("Backup character count does not match current character count.");
+                MessageBoxResult confirmResult = MessageBox.Show("The active save has a different number of characters than the backup worlds you are restoring. This may result in unexpected behavior. Proceed?",
+                                     "Character Mismatch", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
+                if (confirmResult == MessageBoxResult.No)
+                {
+                    logMessage("Canceling world restore.");
+                    return;
+                }
+            }
+
             if (alreadyBackedUp())
             {
                 saveWatcher.EnableRaisingEvents = false;
@@ -1001,7 +1008,6 @@ namespace RemnantSaveManager
                 {
                     file.Delete();
                 }
-                SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
                 di = new DirectoryInfo(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks);
                 foreach (FileInfo file in di.GetFiles("save_?.sav"))
                     File.Copy(file.FullName, saveDirPath + "\\" + file.Name);
@@ -1009,12 +1015,11 @@ namespace RemnantSaveManager
                 {
                     saveBackup.Active = false;
                 }
-                //selectedBackup.Active = true;
                 updateCurrentWorldAnalyzer();
                 dataBackups.Items.Refresh();
-                //btnRestore.IsEnabled = false;
-                //btnSplitRestore.IsEnabled = false;
+                SetActiveSaveIsBackedup(false);
                 btnBackup.IsEnabled = false;
+                btnBackup.Content = FindResource("SaveGrey");
                 logMessage("Backup world data restored!");
                 saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
             }
@@ -1022,6 +1027,17 @@ namespace RemnantSaveManager
             {
                 logMessage("Backup your current save before restoring another!");
             }
+        }
+
+        private void chkCreateLogFile_Click(object sender, RoutedEventArgs e)
+        {
+            bool newValue = chkCreateLogFile.IsChecked.HasValue ? chkCreateLogFile.IsChecked.Value : false;
+            if (newValue & !Properties.Settings.Default.CreateLogFile)
+            {
+                System.IO.File.WriteAllText("log.txt", DateTime.Now.ToString() + ": Version " + typeof(MainWindow).Assembly.GetName().Version + "\r\n");
+            }
+            Properties.Settings.Default.CreateLogFile = newValue;
+            Properties.Settings.Default.Save();
         }
     }
 }

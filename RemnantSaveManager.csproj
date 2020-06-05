@@ -66,7 +66,7 @@
     <SignManifests>false</SignManifests>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Resources\Copy_32x.ico</ApplicationIcon>
+    <ApplicationIcon>SaveAll_32x.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
     <StartupObject>RemnantBackupManager.App</StartupObject>
@@ -150,11 +150,19 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Resources\SaveAll_32x.ico" />
+    <Resource Include="SaveAll_32x.ico" />
+    <Resource Include="Resources\SaveAll_32x.png" />
+    <Resource Include="Resources\StatusNo_32x.png" />
+    <Resource Include="Resources\StatusOK_32x.png" />
+    <Resource Include="Resources\Undo_grey_32x.png" />
+    <Resource Include="Resources\Undo_32x.png" />
+    <Resource Include="Resources\Save_grey_32x.png" />
+    <Resource Include="Resources\Save_32x.png" />
     <Resource Include="Resources\Trash_32x.png" />
     <Resource Include="Resources\StatusSecurityWarning_32x.png" />
     <Resource Include="Resources\ZoomOut_16x.png" />
     <Resource Include="Resources\ZoomIn_16x.png" />
-    <Resource Include="Resources\Copy_32x.png" />
     <Content Include="Resources\GameInfo.xml" />
   </ItemGroup>
   <ItemGroup>
@@ -173,7 +181,6 @@
     <Resource Include="Resources\OpenFolder_32x.png" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="Resources\Copy_32x.ico" />
     <Resource Include="Resources\SearchMember_32x.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
