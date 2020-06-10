@@ -122,7 +122,7 @@ namespace RemnantSaveManager
                     {
                         //process other events, if they're recognized by getEventType
                         eventName = textLine.Split('/')[4].Split('_')[2];
-                        if (textLine.Contains("OverworldPOI") || textLine.Contains("Sketterling"))
+                        if (textLine.Contains("OverworldPOI"))
                         {
                             currentSublocation = null;
                         }
@@ -197,21 +197,14 @@ namespace RemnantSaveManager
                                     ringdrop.setMissingItems(character);
                                     zoneEvents[zone].Add(ringdrop);
                                 }
-                                // beetles spawn in Strange Pass
-                                else if (eventName.Equals("BrainBug") || eventName.Equals("FlickeringHorror") || eventName.Equals("BarbTerror") || eventName.Equals("Wisp"))
+                                // beetle always spawns in Strange Pass
+                                else if (eventName.Equals("BrainBug"))
                                 {
                                     RemnantWorldEvent beetle = new RemnantWorldEvent();
                                     beetle.Location = se.Location;
-                                    beetle.setKey("TimidBeetle");
-                                    beetle.Name = "Timid Beetle";
-                                    if (eventName.Equals("BrainBug"))
-                                    {
-                                        beetle.Type = "Event";
-                                    }
-                                    else
-                                    {
-                                        beetle.Type = "Potential Event";
-                                    }
+                                    beetle.setKey("Sketterling");
+                                    beetle.Name = "Sketterling";
+                                    beetle.Type = "Loot Beetle";
                                     beetle.setMissingItems(character);
                                     zoneEvents[zone].Add(beetle);
                                 }
@@ -383,7 +376,7 @@ namespace RemnantSaveManager
                 }
                 else if (textLine.Contains("Sketterling"))
                 {
-                    eventType = "Quest Event";
+                    eventType = "Loot Beetle";
                 }
                 else
                 {

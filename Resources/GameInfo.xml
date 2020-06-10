@@ -1,65 +1,65 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="23">
+<GameInfo version="24">
   <Zones>
-    <Zone name="Earth"></Zone>
-    <Zone name="Rhom"></Zone>
-    <Zone name="Corsus"></Zone>
-    <Zone name="Yaesha"></Zone>
+    <Zone name="Earth"/>
+    <Zone name="Rhom"/>
+    <Zone name="Corsus"/>
+    <Zone name="Yaesha"/>
   </Zones>
   <SubLocations>
-    <SubLocation eventName="ArmorVault" location="VaultOfTheHeralds"></SubLocation>
-    <SubLocation eventName="BarbTerror" location="NeedleLair"></SubLocation>
-    <SubLocation eventName="BlinkFiend" location="Widow'sPass"></SubLocation>
-    <SubLocation eventName="BlinkThief" location="ForgottenUndercroft"></SubLocation>
-    <SubLocation eventName="Brabus" location="CutthroatChannel"></SubLocation>
-    <SubLocation eventName="BrainBug" location="StrangePass"></SubLocation>
-    <SubLocation eventName="DoeShrine" location="Widow'sVestry"></SubLocation>
-    <SubLocation eventName="Fatty" location="TheFetidGlade"></SubLocation>
-    <SubLocation eventName="FlickeringHorror" location="HallOfWhispers"></SubLocation>
-    <SubLocation eventName="HoundMaster" location="TheBurrows"></SubLocation>
-    <SubLocation eventName="HuntersHideout" location="HiddenGrotto"></SubLocation>
-    <SubLocation eventName="ImmolatorAndZephyr" location="WitheringVillage"></SubLocation>
-    <SubLocation eventName="KinCaller" location="TheHallOfJudgement"></SubLocation>
-    <SubLocation eventName="LastWill" location="Sorrow'sField"></SubLocation>
-    <SubLocation eventName="LizAndLiz" location="TheWarren"></SubLocation>
-    <SubLocation eventName="MadMerchant" location="Junktown"></SubLocation>
-    <SubLocation eventName="RootBrute" location="SunkenPassage"></SubLocation>
-    <SubLocation eventName="RootCultist" location="MarrowPass"></SubLocation>
-    <SubLocation eventName="RootDragon" location="TheAshYard"></SubLocation>
-    <SubLocation eventName="RootEnt" location="TheChokingHollow"></SubLocation>
-    <SubLocation eventName="RootMother" location="ChurchOfTheHarbinger"></SubLocation>
-    <SubLocation eventName="RootShrine" location="TheGallows"></SubLocation>
-    <SubLocation eventName="RootTumbleweed" location="TheTangledPass"></SubLocation>
-    <SubLocation eventName="RootWraith" location="TheHiddenSanctum"></SubLocation>
-    <SubLocation eventName="Sentinel" location="ShackledCanyon"></SubLocation>
-    <SubLocation eventName="SlimeHulk" location="TheDrownedTrench"></SubLocation>
-    <SubLocation eventName="Splitter" location="ResearchStationAlpha"></SubLocation>
-    <SubLocation eventName="StormCaller" location="Heretic'sNest"></SubLocation>
-    <SubLocation eventName="StuckMerchant" location="MerchantDungeon"></SubLocation>
-    <SubLocation eventName="SwampGuardian" location="TheGrotto"></SubLocation>
-    <SubLocation eventName="SwarmMaster" location="TheIronRift"></SubLocation>
-    <SubLocation eventName="TheCleanRoom" location="ThePurgeHall"></SubLocation>
-    <SubLocation eventName="TheHarrow" location="TheBunker"></SubLocation>
-    <SubLocation eventName="TheLostGantry" location="ConcourseOfTheSun"></SubLocation>
-    <SubLocation eventName="TheRisen" location="Ahanae'sLament"></SubLocation>
-    <SubLocation eventName="TotemFather" location="TheTempestCourt"></SubLocation>
-    <SubLocation eventName="Tyrant" location="TheCapillary"></SubLocation>
-    <SubLocation eventName="UndyingKing" location="UndyingThrone"></SubLocation>
-    <SubLocation eventName="Vyr" location="TheArdentTemple"></SubLocation>
-    <SubLocation eventName="WastelandGuardian" location="LoomOfTheBlackSun"></SubLocation>
-    <SubLocation eventName="Wisp" location="CircletHatchery"></SubLocation>
-    <SubLocation eventName="Wolf" location="TheRavager'sHaunt"></SubLocation>
-    <SubLocation eventName="WolfShrine" location="TempleOfTheRavager"></SubLocation>
+    <SubLocation eventName="ArmorVault" location="VaultOfTheHeralds"/>
+    <SubLocation eventName="BarbTerror" location="NeedleLair"/>
+    <SubLocation eventName="BlinkFiend" location="Widow'sPass"/>
+    <SubLocation eventName="BlinkThief" location="ForgottenUndercroft"/>
+    <SubLocation eventName="Brabus" location="CutthroatChannel"/>
+    <SubLocation eventName="BrainBug" location="StrangePass"/>
+    <SubLocation eventName="DoeShrine" location="Widow'sVestry"/>
+    <SubLocation eventName="Fatty" location="TheFetidGlade"/>
+    <SubLocation eventName="FlickeringHorror" location="HallOfWhispers"/>
+    <SubLocation eventName="HoundMaster" location="TheBurrows"/>
+    <SubLocation eventName="HuntersHideout" location="HiddenGrotto"/>
+    <SubLocation eventName="ImmolatorAndZephyr" location="WitheringVillage"/>
+    <SubLocation eventName="KinCaller" location="TheHallOfJudgement"/>
+    <SubLocation eventName="LastWill" location="Sorrow'sField"/>
+    <SubLocation eventName="LizAndLiz" location="TheWarren"/>
+    <SubLocation eventName="MadMerchant" location="Junktown"/>
+    <SubLocation eventName="RootBrute" location="SunkenPassage"/>
+    <SubLocation eventName="RootCultist" location="MarrowPass"/>
+    <SubLocation eventName="RootDragon" location="TheAshYard"/>
+    <SubLocation eventName="RootEnt" location="TheChokingHollow"/>
+    <SubLocation eventName="RootMother" location="ChurchOfTheHarbinger"/>
+    <SubLocation eventName="RootShrine" location="TheGallows"/>
+    <SubLocation eventName="RootTumbleweed" location="TheTangledPass"/>
+    <SubLocation eventName="RootWraith" location="TheHiddenSanctum"/>
+    <SubLocation eventName="Sentinel" location="ShackledCanyon"/>
+    <SubLocation eventName="SlimeHulk" location="TheDrownedTrench"/>
+    <SubLocation eventName="Splitter" location="ResearchStationAlpha"/>
+    <SubLocation eventName="StormCaller" location="Heretic'sNest"/>
+    <SubLocation eventName="StuckMerchant" location="MerchantDungeon"/>
+    <SubLocation eventName="SwampGuardian" location="TheGrotto"/>
+    <SubLocation eventName="SwarmMaster" location="TheIronRift"/>
+    <SubLocation eventName="TheCleanRoom" location="ThePurgeHall"/>
+    <SubLocation eventName="TheHarrow" location="TheBunker"/>
+    <SubLocation eventName="TheLostGantry" location="ConcourseOfTheSun"/>
+    <SubLocation eventName="TheRisen" location="Ahanae'sLament"/>
+    <SubLocation eventName="TotemFather" location="TheTempestCourt"/>
+    <SubLocation eventName="Tyrant" location="TheCapillary"/>
+    <SubLocation eventName="UndyingKing" location="UndyingThrone"/>
+    <SubLocation eventName="Vyr" location="TheArdentTemple"/>
+    <SubLocation eventName="WastelandGuardian" location="LoomOfTheBlackSun"/>
+    <SubLocation eventName="Wisp" location="CircletHatchery"/>
+    <SubLocation eventName="Wolf" location="TheRavager'sHaunt"/>
+    <SubLocation eventName="WolfShrine" location="TempleOfTheRavager"/>
   </SubLocations>
   <MainLocations>
-    <MainLocation key="City Overworld Zone1" name="Fairview"></MainLocation>
-    <MainLocation key="City Overworld Zone2" name="Westcourt"></MainLocation>
-    <MainLocation key="Wasteland Overworld Zone1" name="TheEasternWind"></MainLocation>
-    <MainLocation key="Wasteland Overworld Zone2" name="TheScouringWaste"></MainLocation>
-    <MainLocation key="Swamp Overworld Zone1" name="TheFetidGlade"></MainLocation>
-    <MainLocation key="Swamp Overworld Zone2" name="TheMistFen"></MainLocation>
-    <MainLocation key="Jungle Overworld Zone1" name="TheVerdantStrand"></MainLocation>
-    <MainLocation key="Jungle Overworld Zone2" name="TheScaldingGlade"></MainLocation>
+    <MainLocation key="City Overworld Zone1" name="Fairview"/>
+    <MainLocation key="City Overworld Zone2" name="Westcourt"/>
+    <MainLocation key="Wasteland Overworld Zone1" name="TheEasternWind"/>
+    <MainLocation key="Wasteland Overworld Zone2" name="TheScouringWaste"/>
+    <MainLocation key="Swamp Overworld Zone1" name="TheFetidGlade"/>
+    <MainLocation key="Swamp Overworld Zone2" name="TheMistFen"/>
+    <MainLocation key="Jungle Overworld Zone1" name="TheVerdantStrand"/>
+    <MainLocation key="Jungle Overworld Zone2" name="TheScaldingGlade"/>
   </MainLocations>
   <EventItems>
     <Event name="AbandonedThrone">
@@ -324,12 +324,12 @@
       <Item>/Items/Mods/Beckon</Item>
     </Event>
     <Event name="Sketterling">
-      <!--Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
+      <Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
       <Item>/Items/Armor/Carapace/Armor_Body_Carapace</Item>
       <Item>/Items/Armor/Carapace/Armor_Legs_Carapace</Item>
       <Item>/Items/Trinkets/Trinket_IskalHunterBand</Item>
       <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item>
-      <Item>/Items/Trinkets/RingOfTheMantis</Item-->
+      <Item>/Items/Trinkets/RingOfTheMantis</Item>
     </Event>
     <Event name="SlaveRevolt">
       <Item>/Items/Traits/Trait_Triage</Item>
@@ -395,14 +395,6 @@
     </Event>
     <Event name="TheRisen">
       <Item>/Items/Trinkets/SoulAnchor</Item>
-    </Event>
-    <Event name="TimidBeetle">
-      <Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
-      <Item>/Items/Armor/Carapace/Armor_Body_Carapace</Item>
-      <Item>/Items/Armor/Carapace/Armor_Legs_Carapace</Item>
-      <Item>/Items/Trinkets/Trinket_IskalHunterBand</Item>
-      <Item>/Items/Trinkets/AmuletOfEpicaricacy</Item>
-      <Item>/Items/Trinkets/RingOfTheMantis</Item>
     </Event>
     <Event name="TotemFather">
       <Item>/Items/Traits/Trait_ArcaneStrike</Item>
