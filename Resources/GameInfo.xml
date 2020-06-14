@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="24">
+<GameInfo version="25">
   <Zones>
     <Zone name="Earth"/>
     <Zone name="Rhom"/>
@@ -441,6 +441,7 @@
       <Item mode="hardcore" notes="Reward for defeating Totem Father/Ravager">/Items/Trinkets/RingOfSumpremacy</Item>
       <Item mode="hardcore" notes="Reward for defeating Dreamer">/Items/Trinkets/Trinket_NightmareSpiral</Item>
       <Item mode="hardcore" notes="Reward for defeating Dreamer">/Player/Emotes/Emote_HighFive</Item>
+      <Item mode="hardcore" notes="High five emote another player">/Items/Trinkets/Trinket_BandOfAccord</Item>
     </Event>
     <Event name="Vyr">
       <Item>/Items/Mods/VeilOfTheBlackTear</Item>
