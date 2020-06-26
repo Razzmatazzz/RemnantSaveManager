@@ -46,6 +46,38 @@ namespace RemnantSaveManager
         private DateTime lastUpdateCheck;
         private int saveCount;
 
+        private bool ActiveSaveIsBackedUp { 
+            get {
+                DateTime saveDate = File.GetLastWriteTime(saveDirPath + "\\profile.sav");
+                for (int i = 0; i < listBackups.Count; i++)
+                {
+                    DateTime backupDate = listBackups.ToArray()[i].SaveDate;
+                    if (saveDate.Equals(backupDate))
+                    {
+                        return true;
+                    }
+                }
+                return false;
+            } 
+            set
+            {
+                if (value)
+                {
+                    lblStatus.ToolTip = "Backed Up";
+                    lblStatus.Content = FindResource("StatusOK");
+                    btnBackup.IsEnabled = false;
+                    btnBackup.Content = FindResource("SaveGrey");
+                }
+                else
+                {
+                    lblStatus.ToolTip = "Not Backed Up";
+                    lblStatus.Content = FindResource("StatusNo");
+                    btnBackup.IsEnabled = true;
+                    btnBackup.Content = FindResource("Save");
+                }
+            }
+        }
+
         public MainWindow()
         {
             InitializeComponent();
@@ -130,6 +162,17 @@ namespace RemnantSaveManager
             txtBackupMins.Text = Properties.Settings.Default.BackupMinutes.ToString();
             txtBackupLimit.Text = Properties.Settings.Default.BackupLimit.ToString();
 
+            cmbMissingItemColor.Items.Add("Red");
+            cmbMissingItemColor.Items.Add("White");
+            if (Properties.Settings.Default.MissingItemColor.ToString().Equals("Red"))
+            {
+                cmbMissingItemColor.SelectedIndex = 0;
+            } else
+            {
+                cmbMissingItemColor.SelectedIndex = 1;
+            }
+            cmbMissingItemColor.SelectionChanged += cmbMissingItemColorSelectionChanged;
+
             saveWatcher.EnableRaisingEvents = true;
             activeSave = new RemnantSave(saveDirPath);
             updateCurrentWorldAnalyzer();
@@ -185,25 +228,7 @@ namespace RemnantSaveManager
             {
                 dataBackups.SelectedItem = activeBackup;
             }
-            SetActiveSaveIsBackedup(activeBackup != null);
-        }
-
-        private void SetActiveSaveIsBackedup(bool backedUp)
-        {
-            if (backedUp)
-            {
-                lblStatus.ToolTip = "Backed Up";
-                lblStatus.Content = FindResource("StatusOK");
-                btnBackup.IsEnabled = false;
-                btnBackup.Content = FindResource("SaveGrey");
-            }
-            else
-            {
-                lblStatus.ToolTip = "Not Backed Up";
-                lblStatus.Content = FindResource("StatusNo");
-                btnBackup.IsEnabled = true;
-                btnBackup.Content = FindResource("Save");
-            }
+            ActiveSaveIsBackedUp = (activeBackup != null);
         }
 
         private void saveUpdated(object sender, UpdatedEventArgs args)
@@ -238,20 +263,6 @@ namespace RemnantSaveManager
         private DateTime getBackupDateTime(string backupFolder)
         {
             return File.GetLastWriteTime(backupDirPath + "\\" + backupFolder + "\\profile.sav");
-        }
-
-        private Boolean alreadyBackedUp()
-        {
-            DateTime saveDate = File.GetLastWriteTime(saveDirPath + "\\profile.sav");
-            for (int i = 0; i < listBackups.Count; i++)
-            {
-                DateTime backupDate = listBackups.ToArray()[i].SaveDate;
-                if (saveDate.Equals(backupDate))
-                {
-                    return true;
-                }
-            }
-            return false;
         }
 
         public void logMessage(string msg)
@@ -326,7 +337,7 @@ namespace RemnantSaveManager
                 }
                 checkBackupLimit();
                 dataBackups.Items.Refresh();
-                SetActiveSaveIsBackedup(true);
+                this.ActiveSaveIsBackedUp = true;
                 logMessage($"Backup completed ({saveDate.ToString()})!");
             }
             catch (IOException ex)
@@ -364,7 +375,7 @@ namespace RemnantSaveManager
                 return;
             }
 
-            if (alreadyBackedUp())
+            if (this.ActiveSaveIsBackedUp)
             {
                 saveWatcher.EnableRaisingEvents = false;
                 System.IO.DirectoryInfo di = new DirectoryInfo(saveDirPath);
@@ -454,7 +465,7 @@ namespace RemnantSaveManager
                         }
                         else
                         {
-                            SetActiveSaveIsBackedup(false);
+                            this.ActiveSaveIsBackedUp = false;
                             foreach (SaveBackup backup in listBackups)
                             {
                                 if (backup.Active) backup.Active = false;
@@ -782,7 +793,7 @@ namespace RemnantSaveManager
                 }
                 if (save.Active)
                 {
-                    SetActiveSaveIsBackedup(false);
+                    this.ActiveSaveIsBackedUp = false;
                 }
                 if (Directory.Exists(backupDirPath + "\\" + save.SaveDate.Ticks))
                 {
@@ -835,13 +846,6 @@ namespace RemnantSaveManager
 
                 try
                 {
-                    /*WebClient client = new WebClient();
-                    client.DownloadFile("https://raw.githubusercontent.com/Razzmatazzz/RemnantSaveManager/master/Properties/AssemblyInfo.cs", "versioncheck.txt");
-
-                    string remoteVer = File.ReadLines("versioncheck.txt").Last();
-                    File.Delete("versioncheck.txt");
-                    remoteVer = remoteVer.Replace("[assembly: AssemblyFileVersion(\"", "").Replace("\")]", "");*/
-
                     WebClient client = new WebClient();
                     string source = client.DownloadString("https://github.com/Razzmatazzz/RemnantSaveManager/releases/latest");
                     string title = Regex.Match(source, @"\<title\b[^>]*\>\s*(?<Title>[\s\S]*?)\</title\>", RegexOptions.IgnoreCase).Groups["Title"].Value;
@@ -898,7 +902,6 @@ namespace RemnantSaveManager
         {
             System.Windows.Forms.FolderBrowserDialog openFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
             openFolderDialog.SelectedPath = backupDirPath;
-            //openFolderDialog.RootFolder = Environment.SpecialFolder.LocalApplicationData;
             openFolderDialog.Description = "Select the folder where you want your backup saves kept.";
             System.Windows.Forms.DialogResult result = openFolderDialog.ShowDialog();
             if (result == System.Windows.Forms.DialogResult.OK)
@@ -1000,7 +1003,7 @@ namespace RemnantSaveManager
                 }
             }
 
-            if (alreadyBackedUp())
+            if (this.ActiveSaveIsBackedUp)
             {
                 saveWatcher.EnableRaisingEvents = false;
                 System.IO.DirectoryInfo di = new DirectoryInfo(saveDirPath);
@@ -1017,7 +1020,7 @@ namespace RemnantSaveManager
                 }
                 updateCurrentWorldAnalyzer();
                 dataBackups.Items.Refresh();
-                SetActiveSaveIsBackedup(false);
+                this.ActiveSaveIsBackedUp = false;
                 btnBackup.IsEnabled = false;
                 btnBackup.Content = FindResource("SaveGrey");
                 logMessage("Backup world data restored!");
@@ -1038,6 +1041,13 @@ namespace RemnantSaveManager
             }
             Properties.Settings.Default.CreateLogFile = newValue;
             Properties.Settings.Default.Save();
+        }
+
+        private void cmbMissingItemColorSelectionChanged(object sender, RoutedEventArgs e)
+        {
+            Properties.Settings.Default.MissingItemColor = cmbMissingItemColor.SelectedItem.ToString();
+            Properties.Settings.Default.Save();
+            updateCurrentWorldAnalyzer();
         }
     }
 }

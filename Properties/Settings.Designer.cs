@@ -166,5 +166,17 @@ namespace RemnantSaveManager.Properties {
                 this["CreateLogFile"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("Red")]
+        public string MissingItemColor {
+            get {
+                return ((string)(this["MissingItemColor"]));
+            }
+            set {
+                this["MissingItemColor"] = value;
+            }
+        }
     }
 }

@@ -21,7 +21,8 @@ namespace RemnantSaveManager
         private string itemName;
         private string ItemKey { 
             get { return itemKey; } 
-            set {
+            set 
+            {
                 try
                 {
                     itemKey = value;
@@ -96,51 +97,6 @@ namespace RemnantSaveManager
 
         public override string ToString()
         {
-            /*string name = itemKey.Substring(itemKey.LastIndexOf('/') + 1);
-            string prefix = "";
-            if (itemKey.Contains("/Weapons/"))
-            {
-                prefix = "Weapon: ";
-                if (name.Contains("Mod_")) name = name.Replace("/Weapons/", "/Mods/");
-                if (name.Contains("Wasteland_Flail")) name = name.Replace("_Flail", "_WastelanderFlail");
-            }
-            if (itemKey.Contains("/Armor/") || itemKey.Contains("TwistedMask"))
-            {
-                prefix = "Armor: ";
-                if (itemKey.Contains("TwistedMask"))
-                {
-                    name = "TwistedMask (Head)";
-                }
-                else
-                {
-                    string[] parts = name.Split('_');
-                    name = parts[2] + " (" + parts[1] + ")";
-                }
-            }
-            if (name.Contains("Sumpremacy"))
-            {
-                name = name.Replace("Sumpremacy", "Supremacy");
-            }
-            if (name.Contains("GIft")) name = name.Replace("GIft", "Gift");
-            if (itemKey.Contains("/Trinkets/")) prefix = "Trinket: ";
-            if (itemKey.Contains("/Mods/")) prefix = "Mod: ";
-            if (itemKey.Contains("/Traits/")) prefix = "Trait: ";
-            if (itemKey.Contains("/Emotes/")) prefix = "Emote: ";
-
-            name = name.Replace("Weapon_", "").Replace("Root_", "").Replace("Wasteland_", "").Replace("Swamp_", "").Replace("Pan_", "").Replace("Atoll_", "").Replace("Mod_", "").Replace("Trinket_", "").Replace("Trait_", "").Replace("Quest_", "").Replace("Emote_", "");
-            if (!prefix.Equals("Armor: "))
-            {
-                name = Regex.Replace(name, "([a-z])([A-Z])", "$1 $2");
-            }
-            if (this.ItemMode == RemnantItemMode.Hardcore)
-            {
-                name += " (HC)";
-            } 
-            else if (this.ItemMode == RemnantItemMode.Survival)
-            {
-                name += " (S)";
-            }
-            return prefix + name;*/
             return itemType + ": " + itemName;
         }
 
