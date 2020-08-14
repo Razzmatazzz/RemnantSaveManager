@@ -65,6 +65,9 @@
     <Event name="AbandonedThrone">
       <Item>/Items/Traits/Trait_Luminescent</Item>
     </Event>
+    <Event name="AbrasiveAmulet">
+      <Item notes="Random drop on Corsus">/Items/Trinkets/Trinket_AbrasiveAmulet</Item>
+    </Event>
     <Event name="AcesCoin">
       <Item>/Items/Weapons/Basic/HandGuns/Revolver/Weapon_Revolver</Item>
     </Event>
@@ -114,6 +117,18 @@
     </Event>
     <Event name="BrutalMark">
       <Item>/Items/Trinkets/BrutalMark</Item>
+    </Event>
+    <Event name="BurdenOfTheReckless">
+      <Item notes="Random drop on Rhom">/Items/Trinkets/BurdenOfTheReckless</Item>
+    </Event>
+    <Event name="BurdenOfTheGambler">
+      <Item notes="Random drop on Earth">/Items/Trinkets/BurdenOfTheGambler</Item>
+    </Event>
+    <Event name="BurdenOfTheDevoted">
+      <Item notes="Random drop on Corsus">/Items/Trinkets/BurdenOfTheDevoted</Item>
+    </Event>
+    <Event name="BurdenOfTheFollower">
+      <Item notes="Random drop on Yaesha">/Items/Trinkets/Trinket_BurdenOfTheFollower</Item>
     </Event>
     <Event name="ButchersFetish">
       <Item>/Items/Trinkets/ButchersFetish</Item>
@@ -251,6 +266,7 @@
       <Item>/Items/Armor/Osseous/Armor_Body_Osseous</Item>
       <Item>/Items/Armor/Osseous/Armor_Legs_Osseous</Item>
       <Item>/Items/Mods/IronSentinel</Item>
+      <Item notes="Pet Wud's dog on Rhom">/Items/Mods/VeryGoodBoy</Item>
     </Event>
     <Event name="PearlOfLuminescence">
       <Item>/Items/Trinkets/Trinket_PearlOfLuminescence</Item>
@@ -266,11 +282,17 @@
       <Item>/Items/Traits/Trait_Footwork</Item>
       <Item>/Items/Mods/Seeker</Item>
     </Event>
+    <Event name="RadioactiveEmber">
+      <Item notes="Random drop on Rhom">/Items/Trinkets/RadioactiveEmber</Item>
+    </Event>
     <Event name="RazorStone">
       <Item>/Items/Trinkets/Razorstone</Item>
     </Event>
     <Event name="ReggiesRing">
       <Item>/Items/Traits/Trait_Scavenger</Item>
+    </Event>
+    <Event name="RestrictionCord">
+      <Item notes="Random drop on Yaesha">/Items/Trinkets/RestrictionCord</Item>
     </Event>
     <Event name="RingOfElusion">
       <Item>/Items/Trinkets/RingOfElusion</Item>
@@ -341,11 +363,17 @@
     <Event name="SoulLink">
       <Item>/Items/Trinkets/SoulLink</Item>
     </Event>
+    <Event name="SpiritStone">
+      <Item notes="Random drop on Yaesha">/Items/Trinkets/Trinket_SpiritStone</Item>
+    </Event>
     <Event name="Splitter">
       <Item>/Items/Armor/Leto/Armor_Head_Leto</Item>
       <Item>/Items/Armor/Leto/Armor_Body_Leto</Item>
       <Item>/Items/Armor/Leto/Armor_Legs_Leto</Item>
       <Item>/Items/Mods/FlickerCloak</Item>
+    </Event>
+    <Event name="StalkersBrand">
+      <Item notes="Random drop on Yaesha">/Items/Trinkets/Trinket_StalkersBrand</Item>
     </Event>
     <Event name="StockpileCirclet">
       <Item>/Items/Trinkets/Trinket_StockpileCirclet</Item>
@@ -428,6 +456,11 @@
       <Item>/Items/Traits/Trait_WillToLive</Item>
       <Item>/Items/Traits/Trait_WorldWalker</Item>
       <Item>/Items/Traits/Trait_Invoker</Item>
+      <Item notes="Vault over 50 ledges">/Items/Traits/Trait_Climber</Item>
+      <Item notes="Deal 5,000 damage to armored points on enemies">/Items/Traits/Trait_ArmorPiercer</Item>
+      <Item notes="Get 100 kills using explosion damage">/Items/Traits/Trait_Demolitionist</Item>
+      <Item notes="Inflict 100 status effects on enemies">/Items/Traits/Trait_Tormentor</Item>
+      <!--Item notes="Unknown how to acquire">/Items/Traits/Trait_Vaccine</Item-->
       <Item>/Player/Emotes/Emote_Wave</Item>
       <Item mode="survival" notes="Reward for 5 consecutive boss kills">/Items/Armor/Adventurer/Armor_Head_Adventurer</Item>
       <Item mode="survival" notes="Reward for 10 consecutive boss kills">/Items/Weapons/Human/Melee/Sword/Weapon_HerosSword</Item>
