@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="26">
+<GameInfo version="27">
   <Zones>
     <Zone name="Earth"/>
     <Zone name="Rhom"/>
@@ -460,7 +460,7 @@
       <Item notes="Deal 5,000 damage to armored points on enemies">/Items/Traits/Trait_ArmorPiercer</Item>
       <Item notes="Get 100 kills using explosion damage">/Items/Traits/Trait_Demolitionist</Item>
       <Item notes="Inflict 100 status effects on enemies">/Items/Traits/Trait_Tormentor</Item>
-      <!--Item notes="Unknown how to acquire">/Items/Traits/Trait_Vaccine</Item-->
+      <Item notes="Cure 25 full status effects using consumables">/Items/Traits/Trait_Vaccine</Item>
       <Item>/Player/Emotes/Emote_Wave</Item>
       <Item mode="survival" notes="Reward for 5 consecutive boss kills">/Items/Armor/Adventurer/Armor_Head_Adventurer</Item>
       <Item mode="survival" notes="Reward for 10 consecutive boss kills">/Items/Weapons/Human/Melee/Sword/Weapon_HerosSword</Item>
