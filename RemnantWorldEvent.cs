@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Text.RegularExpressions;
 using System.Xml;
 using System.Net;
+using System.Diagnostics;
 
 namespace RemnantSaveManager
 {
@@ -21,7 +22,7 @@ namespace RemnantSaveManager
                 return string.Join("\n", mItems);
             }
         }
-        public enum ProcessMode { Campaign, Adventure };
+        public enum ProcessMode { Campaign, Adventure, Subject2923 };
 
         public string getKey()
         {
@@ -95,9 +96,10 @@ namespace RemnantSaveManager
                         if (currentSublocation.Equals("TheRavager'sHaunt") || currentSublocation.Equals("TheTempestCourt")) currentSublocation = null;
                     }
                     zone = getZone(textLine);
-
+                    
                     eventType = getEventType(textLine);
-                    if (textLine.Contains("Overworld_Zone"))
+                    
+                    if (textLine.Contains("Overworld_Zone") || textLine.Contains("_Overworld_"))
                     {
                         //process overworld zone marker
                         currentMainLocation = textLine.Split('/')[4].Split('_')[1] + " " + textLine.Split('/')[4].Split('_')[2] + " " + textLine.Split('/')[4].Split('_')[3];
@@ -110,7 +112,20 @@ namespace RemnantSaveManager
                             currentMainLocation = null;
                         }
                         continue;
-                    }
+                    } /*else if (textLine.Contains("_Overworld_"))
+                    {
+                        //process overworld zone marker
+                        currentMainLocation = textLine.Split('/')[4].Split('_')[1] + " " + textLine.Split('/')[4].Split('_')[2] + " " + textLine.Split('/')[4].Split('_')[3];
+                        if (GameInfo.MainLocations.ContainsKey(currentMainLocation))
+                        {
+                            currentMainLocation = GameInfo.MainLocations[currentMainLocation];
+                        }
+                        else
+                        {
+                            currentMainLocation = null;
+                        }
+                        continue;
+                    }*/
                     else if (textLine.Contains("Quest_Church"))
                     {
                         //process Root Mother event
@@ -121,7 +136,13 @@ namespace RemnantSaveManager
                     else if (eventType != null)
                     {
                         //process other events, if they're recognized by getEventType
-                        eventName = textLine.Split('/')[4].Split('_')[2];
+                        if (textLine.Contains("TheGiant"))
+                        {
+                            eventName = "The Giant";
+                        } else
+                        {
+                            eventName = textLine.Split('/')[4].Split('_')[2];
+                        }
                         if (textLine.Contains("OverworldPOI"))
                         {
                             currentSublocation = null;
@@ -208,6 +229,16 @@ namespace RemnantSaveManager
                                     beetle.setMissingItems(character);
                                     zoneEvents[zone].Add(beetle);
                                 }
+                                else if (eventName.Equals("BarnSiege"))
+                                {
+                                    RemnantWorldEvent wardPrime = new RemnantWorldEvent();
+                                    wardPrime.setKey("WardPrime");
+                                    wardPrime.Name = "Ward Prime";
+                                    wardPrime.Location = "Earth: Ward Prime";
+                                    wardPrime.Type = "Quest Event";
+                                    wardPrime.setMissingItems(character);
+                                    zoneEvents[zone].Add(wardPrime);
+                                }
                             }
                         }
 
@@ -275,6 +306,7 @@ namespace RemnantSaveManager
 
             for (int i = 0; i < zoneEvents["Earth"].Count; i++)
             {
+                //if (mode == ProcessMode.Subject2923) Console.WriteLine(zoneEvents["Earth"][i].eventKey);
                 if (mode == ProcessMode.Campaign && !churchAdded && zoneEvents["Earth"][i].Location.Contains("Westcourt"))
                 {
                     foreach (RemnantWorldEvent rwe in churchEvents)
@@ -308,6 +340,15 @@ namespace RemnantSaveManager
                 }
                 orderedEvents.Add(zoneEvents["Yaesha"][i]);
             }
+            for (int i = 0; i < zoneEvents["Reisum"].Count; i++)
+            {
+                /*if (mode == ProcessMode.Campaign && !navunAdded && zoneEvents["Yaesha"][i].Location.Contains("The Scalding Glade"))
+                {
+                    if (navun.MissingItems.Length > 0) orderedEvents.Add(navun);
+                    navunAdded = true;
+                }*/
+                orderedEvents.Add(zoneEvents["Reisum"][i]);
+            }
 
             if (mode == ProcessMode.Campaign)
             {
@@ -316,7 +357,7 @@ namespace RemnantSaveManager
 
             for (int i = 0; i < orderedEvents.Count; i++)
             {
-                if (mode == ProcessMode.Campaign)
+                if (mode == ProcessMode.Campaign || mode == ProcessMode.Subject2923)
                 {
                     character.CampaignEvents.Add(orderedEvents[i]);
                 }
@@ -330,7 +371,7 @@ namespace RemnantSaveManager
         static private string getZone(string textLine)
         {
             string zone = null;
-            if (textLine.Contains("World_City") || textLine.Contains("Quest_Church"))
+            if (textLine.Contains("World_City") || textLine.Contains("Quest_Church") || textLine.Contains("World_Rural"))
             {
                 zone = "Earth";
             }
@@ -345,6 +386,10 @@ namespace RemnantSaveManager
             else if (textLine.Contains("World_Swamp"))
             {
                 zone = "Corsus";
+            }
+            else if (textLine.Contains("World_Snow") || textLine.Contains("Campaign_Clementine"))
+            {
+                zone = "Reisum";
             }
             return zone;
         }
@@ -386,6 +431,10 @@ namespace RemnantSaveManager
             else if (textLine.Contains("OverworldPOI") || textLine.Contains("OverWorldPOI"))
             {
                 eventType = "Point of Interest";
+            }
+            else if (textLine.Contains("/Campaign_Clementine/Quests/SnowMid/Snow_Forest_End_Transition_TheGiant_01"))
+            {
+                eventType = "Quest Event";
             }
             return eventType;
         }

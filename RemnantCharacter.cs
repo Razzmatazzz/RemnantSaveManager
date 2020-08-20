@@ -51,9 +51,9 @@ namespace RemnantSaveManager
         public void processSaveData(string savetext)
         {
             //get campaign info
-            string strCmpaignEnd = "/Game/Campaign_Main/Quest_Campaign_Main.Quest_Campaign_Main_C";
+            string strCampaignEnd = "/Game/Campaign_Main/Quest_Campaign_Main.Quest_Campaign_Main_C";
             string strCampaignStart = "/Game/Campaign_Main/Quest_Campaign_City.Quest_Campaign_City";
-            int campaignEnd = savetext.IndexOf(strCmpaignEnd);
+            int campaignEnd = savetext.IndexOf(strCampaignEnd);
             int campaignStart = savetext.IndexOf(strCampaignStart);
             if (campaignStart != -1 && campaignEnd != -1)
             {
@@ -64,7 +64,20 @@ namespace RemnantSaveManager
             }
             else
             {
-                Console.WriteLine("Campaign not found; likely in tutorial mission.");
+                strCampaignEnd = "/Game/Campaign_Clementine/Quest_Campaign_Clementine.Quest_Campaign_Clementine_C";
+                strCampaignStart = "/Game/World_Rural/Templates/Template_Rural_Overworld_01.Template_Rural_Overworld_01";
+                campaignEnd = savetext.IndexOf(strCampaignEnd);
+                campaignStart = savetext.IndexOf(strCampaignStart);
+                if (campaignStart != -1 && campaignEnd != -1)
+                {
+                    string campaigntext = savetext.Substring(0, campaignEnd);
+                    campaignStart = campaigntext.LastIndexOf(strCampaignStart);
+                    campaigntext = campaigntext.Substring(campaignStart);
+                    RemnantWorldEvent.ProcessEvents(this, campaigntext, RemnantWorldEvent.ProcessMode.Subject2923);
+                } else
+                {
+                    Console.WriteLine("Campaign not found; likely in tutorial mission.");
+                }
             }
 
             //get adventure info
@@ -75,6 +88,7 @@ namespace RemnantSaveManager
                 if (savetext.Contains("Quest_AdventureMode_Wasteland_C")) adventureZone = "Wasteland";
                 if (savetext.Contains("Quest_AdventureMode_Swamp_C")) adventureZone = "Swamp";
                 if (savetext.Contains("Quest_AdventureMode_Jungle_C")) adventureZone = "Jungle";
+                if (savetext.Contains("Quest_AdventureMode_Snow_C")) adventureZone = "Snow";
 
                 string strAdventureEnd = String.Format("/Game/World_{0}/Quests/Quest_AdventureMode/Quest_AdventureMode_{0}.Quest_AdventureMode_{0}_C", adventureZone);
                 int adventureEnd = savetext.IndexOf(strAdventureEnd) + strAdventureEnd.Length;

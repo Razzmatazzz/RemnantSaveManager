@@ -1,10 +1,11 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="27">
+<GameInfo version="28">
   <Zones>
     <Zone name="Earth"/>
     <Zone name="Rhom"/>
     <Zone name="Corsus"/>
     <Zone name="Yaesha"/>
+    <Zone name="Reisum"/>
   </Zones>
   <SubLocations>
     <SubLocation eventName="ArmorVault" location="VaultOfTheHeralds"/>
@@ -60,6 +61,9 @@
     <MainLocation key="Swamp Overworld Zone2" name="TheMistFen"/>
     <MainLocation key="Jungle Overworld Zone1" name="TheVerdantStrand"/>
     <MainLocation key="Jungle Overworld Zone2" name="TheScaldingGlade"/>
+    <MainLocation key="Rural Overworld 01" name="Rural"/>
+    <MainLocation key="Snow Overworld Zone1" name="Snow 1"/>
+    <MainLocation key="Snow Overworld Zone2" name="Snow 2"/>
   </MainLocations>
   <EventItems>
     <Event name="AbandonedThrone">
@@ -71,6 +75,9 @@
     <Event name="AcesCoin">
       <Item>/Items/Weapons/Basic/HandGuns/Revolver/Weapon_Revolver</Item>
     </Event>
+    <Event name="Afterbirth">
+      <!--Item dlc="Subject 2923">/Items/Traits/Trait_Luminescent</Item-->
+    </Event>
     <Event name="AggressorsBane">
       <Item>/Items/Trinkets/AggressorsBane</Item>
     </Event>
@@ -78,6 +85,9 @@
       <Item>/Items/Armor/Akari/Armor_Head_Akari</Item>
       <Item>/Items/Armor/Akari/Armor_Body_Akari</Item>
       <Item>/Items/Armor/Akari/Armor_Legs_Akari</Item>
+    </Event>
+    <Event name="BackbreakerRing">
+      <Item dlc="Subject 2923" notes="Random drop on Rural Earth">/Items/Trinkets/BackbreakerRing</Item>
     </Event>
     <Event name="BandOfCastor">
       <Item>/Items/Trinkets/BandsOfCastorAndPollux/Trinket_BandOfCastor</Item>
@@ -90,6 +100,9 @@
     </Event>
     <Event name="BarbTerror">
       <Item>/Items/Mods/UnstableQuills</Item>
+    </Event>
+    <Event name="BarnSiege">
+      <Item dlc="Subject 2923">/Items/Trinkets/HangmansMemento</Item>
     </Event>
     <Event name="BlinkFiend">
       <Item>/Items/Mods/BlinkToken</Item>
@@ -133,11 +146,17 @@
     <Event name="ButchersFetish">
       <Item>/Items/Trinkets/ButchersFetish</Item>
     </Event>
+    <Event name="CharcoalNecklace">
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_CharcoalNecklace</Item>
+    </Event>
     <Event name="CleansingJewel">
       <Item>/Items/Trinkets/CleansingJewel</Item>
     </Event>
     <Event name="CompulsionLoop">
       <Item>/Items/Trinkets/CompulsionLoop</Item>
+    </Event>
+    <Event name="CreepersPeeper">
+      <!--Item dlc="Subject 2923">/Items/Trinkets/CompulsionLoop</Item-->
     </Event>
     <Event name="Cryptolith">
       <Item>/Items/Traits/Trait_Concentration</Item>
@@ -158,6 +177,9 @@
     </Event>
     <Event name="DrifterMask">
       <Item>/Items/Armor/Drifter/Armor_Head_Drifter</Item>
+    </Event>
+    <Event name="Driftstone">
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_Driftstone</Item>
     </Event>
     <Event name="EzlansBand">
       <Item>/Items/Trinkets/Trinket_EzlansBand</Item>
@@ -195,6 +217,9 @@
     </Event>
     <Event name="GravityStone">
       <Item>/Items/Trinkets/GravityStone</Item>
+    </Event>
+    <Event name="Guardian">
+      <!--Item dlc="Subject 2923">/Items/Trinkets/Trinket_GunslingersCharm</Item-->
     </Event>
     <Event name="GunslingersCharm">
       <Item>/Items/Trinkets/Trinket_GunslingersCharm</Item>
@@ -277,6 +302,9 @@
     <Event name="PillarOfStone">
       <Item>/Items/Trinkets/Trinket_PillarOfStone</Item>
     </Event>
+    <Event name="PolishedWhetstone">
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_PolishedWhetstone</Item>
+    </Event>
     <Event name="QueensTemple">
       <Item>/Items/Weapons/Boss/PrideOfTheIskal/Weapon_Swamp_PrideOfTheIskal</Item>
       <Item>/Items/Traits/Trait_Footwork</Item>
@@ -285,8 +313,14 @@
     <Event name="RadioactiveEmber">
       <Item notes="Random drop on Rhom">/Items/Trinkets/RadioactiveEmber</Item>
     </Event>
+    <Event name="RatRider">
+      <!--Item dlc="Subject 2923">/Items/Trinkets/RadioactiveEmber</Item-->
+    </Event>
     <Event name="RazorStone">
       <Item>/Items/Trinkets/Razorstone</Item>
+    </Event>
+    <Event name="RazorwireNecklace">
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_RazorwireNecklace</Item>
     </Event>
     <Event name="ReggiesRing">
       <Item>/Items/Traits/Trait_Scavenger</Item>
@@ -345,6 +379,15 @@
     <Event name="Sentinel">
       <Item>/Items/Mods/Beckon</Item>
     </Event>
+    <Event name="SerpentsFang">
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_SerpentsFang</Item>
+    </Event>
+    <Event name="ShamanFlames">
+      <!--Item dlc="Subject 2923">/Items/Mods/Beckon</Item-->
+    </Event>
+    <Event name="ShieldWarden">
+      <!--Item dlc="Subject 2923">/Items/Mods/Beckon</Item-->
+    </Event>
     <Event name="Sketterling">
       <Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
       <Item>/Items/Armor/Carapace/Armor_Body_Carapace</Item>
@@ -359,6 +402,9 @@
     <Event name="SlimeHulk">
       <Item>/Items/Mods/CorrosiveAura</Item>
       <Item>/Items/Traits/Trait_Catalyst</Item>
+    </Event>
+    <Event name="SnowRuins">
+      <!--Item dlc="Subject 2923">/Items/Traits/Trait_Triage</Item-->
     </Event>
     <Event name="SoulLink">
       <Item>/Items/Trinkets/SoulLink</Item>
@@ -413,10 +459,16 @@
     <Event name="TheCleanRoom">
       <Item>/Items/Weapons/Basic/Wasteland_Flail/Weapon_Wasteland_Flail</Item>
     </Event>
+    <Event name="TheGiant">
+      <!--Item dlc="Subject 2923">/Items/Weapons/Basic/Wasteland_Flail/Weapon_Wasteland_Flail</Item-->
+    </Event>
     <Event name="TheHarrow">
       <Item>/Items/Weapons/Boss/Defiler/Weapon_Wasteland_Defiler</Item>
       <Item>/Items/Weapons/Boss/LostHarpoon/Weapon_Wasteland_LostHarpoon</Item>
       <Item>/Player/Emotes/Emote_Fail</Item>
+    </Event>
+    <Event name="TheJackal">
+      <!--Item dlc="Subject 2923">/Items/Weapons/Basic/Wasteland_Flail/Weapon_Wasteland_Flail</Item-->
     </Event>
     <Event name="TheLostGantry">
       <Item>/Items/Weapons/Basic/Wasteland_BeamRifle/Weapon_Wasteland_BeamRifle</Item>
@@ -476,6 +528,9 @@
       <Item mode="hardcore" notes="Reward for defeating Dreamer">/Player/Emotes/Emote_HighFive</Item>
       <Item mode="hardcore" notes="High five emote another player">/Items/Trinkets/Trinket_BandOfAccord</Item>
     </Event>
+    <Event name="VolatileGem">
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_VolatileGem</Item>
+    </Event>
     <Event name="Vyr">
       <Item>/Items/Mods/VeilOfTheBlackTear</Item>
     </Event>
@@ -507,6 +562,9 @@
       <Item>/Items/Weapons/Boss/Guns/LongGuns/Repulsor/Weapon_Atoll_Repulsor</Item>
       <Item>/Items/Traits/Trait_MindsEye</Item>
       <Item>/Player/Emotes/Emote_PraiseTheGun</Item>
+    </Event>
+    <Event name="WardPrime">
+      <Item dlc="Subject 2923">/Items/Weapons/Basic/HandGuns/MachinePistol/Weapon_MachinePistol</Item>
     </Event>
     <Event name="Wisp">
       <Item>/Items/Trinkets/SoulEmber</Item>

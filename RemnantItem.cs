@@ -33,6 +33,7 @@ namespace RemnantSaveManager
                         itemType = "Weapon";
                         if (itemName.Contains("Mod_")) itemName = itemName.Replace("/Weapons/", "/Mods/");
                         if (itemName.Contains("Wasteland_Flail")) itemName = itemName.Replace("_Flail", "_WastelanderFlail");
+                        if (itemName.Contains("Machinegun")) itemName = "Chicago Typewriter";
                     }
                     if (itemKey.Contains("/Armor/") || itemKey.Contains("TwistedMask"))
                     {
