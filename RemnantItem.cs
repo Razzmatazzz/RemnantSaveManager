@@ -34,6 +34,7 @@ namespace RemnantSaveManager
                         if (itemName.Contains("Mod_")) itemName = itemName.Replace("/Weapons/", "/Mods/");
                         if (itemName.Contains("Wasteland_Flail")) itemName = itemName.Replace("_Flail", "_WastelanderFlail");
                         if (itemName.Contains("Machinegun")) itemName = "Chicago Typewriter";
+                        if (itemName.Contains("MiniCrossbow")) itemName = "Twin Shot";
                     }
                     if (itemKey.Contains("/Armor/") || itemKey.Contains("TwistedMask"))
                     {
@@ -58,7 +59,7 @@ namespace RemnantSaveManager
                     if (itemKey.Contains("/Traits/")) itemType = "Trait";
                     if (itemKey.Contains("/Emotes/")) itemType = "Emote";
 
-                    itemName = itemName.Replace("Weapon_", "").Replace("Root_", "").Replace("Wasteland_", "").Replace("Swamp_", "").Replace("Pan_", "").Replace("Atoll_", "").Replace("Mod_", "").Replace("Trinket_", "").Replace("Trait_", "").Replace("Quest_", "").Replace("Emote_", "");
+                    itemName = itemName.Replace("Weapon_", "").Replace("Root_", "").Replace("Wasteland_", "").Replace("Swamp_", "").Replace("Pan_", "").Replace("Atoll_", "").Replace("Mod_", "").Replace("Trinket_", "").Replace("Trait_", "").Replace("Quest_", "").Replace("Emote_", "").Replace("Rural_", "");
                     if (!itemType.Equals("Armor"))
                     {
                         itemName = Regex.Replace(itemName, "([a-z])([A-Z])", "$1 $2");

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="28">
+<GameInfo version="29">
   <Zones>
     <Zone name="Earth"/>
     <Zone name="Rhom"/>
@@ -12,11 +12,14 @@
     <SubLocation eventName="BarbTerror" location="NeedleLair"/>
     <SubLocation eventName="BlinkFiend" location="Widow'sPass"/>
     <SubLocation eventName="BlinkThief" location="ForgottenUndercroft"/>
+    <SubLocation eventName="BlizzardMage" location="WutheringKeep"/>
     <SubLocation eventName="Brabus" location="CutthroatChannel"/>
     <SubLocation eventName="BrainBug" location="StrangePass"/>
+    <SubLocation eventName="CreepersPeeper" location="Watcher'sHollow"/>
     <SubLocation eventName="DoeShrine" location="Widow'sVestry"/>
     <SubLocation eventName="Fatty" location="TheFetidGlade"/>
     <SubLocation eventName="FlickeringHorror" location="HallOfWhispers"/>
+    <SubLocation eventName="Guardian" location="TheGuardian'sSanctum"/>
     <SubLocation eventName="HoundMaster" location="TheBurrows"/>
     <SubLocation eventName="HuntersHideout" location="HiddenGrotto"/>
     <SubLocation eventName="ImmolatorAndZephyr" location="WitheringVillage"/>
@@ -24,6 +27,7 @@
     <SubLocation eventName="LastWill" location="Sorrow'sField"/>
     <SubLocation eventName="LizAndLiz" location="TheWarren"/>
     <SubLocation eventName="MadMerchant" location="Junktown"/>
+    <SubLocation eventName="RatRider" location="TheCrimsonHold"/>
     <SubLocation eventName="RootBrute" location="SunkenPassage"/>
     <SubLocation eventName="RootCultist" location="MarrowPass"/>
     <SubLocation eventName="RootDragon" location="TheAshYard"/>
@@ -33,6 +37,8 @@
     <SubLocation eventName="RootTumbleweed" location="TheTangledPass"/>
     <SubLocation eventName="RootWraith" location="TheHiddenSanctum"/>
     <SubLocation eventName="Sentinel" location="ShackledCanyon"/>
+    <SubLocation eventName="ShamanFlames" location="GraveOfTheElders"/>
+    <SubLocation eventName="ShieldWarden" location="Exile'sTrench"/>
     <SubLocation eventName="SlimeHulk" location="TheDrownedTrench"/>
     <SubLocation eventName="Splitter" location="ResearchStationAlpha"/>
     <SubLocation eventName="StormCaller" location="Heretic'sNest"/>
@@ -41,12 +47,15 @@
     <SubLocation eventName="SwarmMaster" location="TheIronRift"/>
     <SubLocation eventName="TheCleanRoom" location="ThePurgeHall"/>
     <SubLocation eventName="TheHarrow" location="TheBunker"/>
+    <SubLocation eventName="TheJackal" location="TheWildReach"/>
     <SubLocation eventName="TheLostGantry" location="ConcourseOfTheSun"/>
     <SubLocation eventName="TheRisen" location="Ahanae'sLament"/>
     <SubLocation eventName="TotemFather" location="TheTempestCourt"/>
     <SubLocation eventName="Tyrant" location="TheCapillary"/>
     <SubLocation eventName="UndyingKing" location="UndyingThrone"/>
+    <SubLocation eventName="UrikkiBlademasters" location="ValenhaagMines"/>
     <SubLocation eventName="Vyr" location="TheArdentTemple"/>
+    <SubLocation eventName="WarningTotems" location="Magir'sDirge"/>
     <SubLocation eventName="WastelandGuardian" location="LoomOfTheBlackSun"/>
     <SubLocation eventName="Wisp" location="CircletHatchery"/>
     <SubLocation eventName="Wolf" location="TheRavager'sHaunt"/>
@@ -62,8 +71,8 @@
     <MainLocation key="Jungle Overworld Zone1" name="TheVerdantStrand"/>
     <MainLocation key="Jungle Overworld Zone2" name="TheScaldingGlade"/>
     <MainLocation key="Rural Overworld 01" name="Rural"/>
-    <MainLocation key="Snow Overworld Zone1" name="Snow 1"/>
-    <MainLocation key="Snow Overworld Zone2" name="Snow 2"/>
+    <MainLocation key="Snow Overworld Zone1" name="DrolniirWoods"/>
+    <MainLocation key="Snow Overworld Zone2" name="DeepfrostExpanse"/>
   </MainLocations>
   <EventItems>
     <Event name="AbandonedThrone">
@@ -76,7 +85,7 @@
       <Item>/Items/Weapons/Basic/HandGuns/Revolver/Weapon_Revolver</Item>
     </Event>
     <Event name="Afterbirth">
-      <!--Item dlc="Subject 2923">/Items/Traits/Trait_Luminescent</Item-->
+      <Item dlc="Subject 2923">/Items/Trinkets/ScavengersRing</Item>
     </Event>
     <Event name="AggressorsBane">
       <Item>/Items/Trinkets/AggressorsBane</Item>
@@ -111,6 +120,9 @@
       <Item>/Items/Weapons/Basic/RicochetRifle/Weapon_Pan_RicochetRifle</Item>
       <Item>/Items/Trinkets/Trinket_CelerityStone</Item>
     </Event>
+    <Event name="BlizzardMage">
+      <Item dlc="Subject 2923">/Items/Mods/Blizzard</Item>
+    </Event>
     <Event name="BloodFont">
       <Item>/Items/Trinkets/Trinket_BloodFont</Item>
     </Event>
@@ -143,11 +155,14 @@
     <Event name="BurdenOfTheFollower">
       <Item notes="Random drop on Yaesha">/Items/Trinkets/Trinket_BurdenOfTheFollower</Item>
     </Event>
+    <Event name="BurdenOfTheWarlord">
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_BurdenOfTheWarlord</Item>
+    </Event>
     <Event name="ButchersFetish">
       <Item>/Items/Trinkets/ButchersFetish</Item>
     </Event>
     <Event name="CharcoalNecklace">
-      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_CharcoalNecklace</Item>
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/CharcoalNecklace</Item>
     </Event>
     <Event name="CleansingJewel">
       <Item>/Items/Trinkets/CleansingJewel</Item>
@@ -156,7 +171,8 @@
       <Item>/Items/Trinkets/CompulsionLoop</Item>
     </Event>
     <Event name="CreepersPeeper">
-      <!--Item dlc="Subject 2923">/Items/Trinkets/CompulsionLoop</Item-->
+      <Item dlc="Subject 2923">/Items/Trinkets/SwashbucklersSignet</Item>
+      <Item dlc="Subject 2923">/Items/Weapons/Basic/MiniCrossbow/Weapon_MiniCrossbow</Item>
     </Event>
     <Event name="Cryptolith">
       <Item>/Items/Traits/Trait_Concentration</Item>
@@ -179,7 +195,7 @@
       <Item>/Items/Armor/Drifter/Armor_Head_Drifter</Item>
     </Event>
     <Event name="Driftstone">
-      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_Driftstone</Item>
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/DriftStone</Item>
     </Event>
     <Event name="EzlansBand">
       <Item>/Items/Trinkets/Trinket_EzlansBand</Item>
@@ -273,6 +289,11 @@
     <Event name="MadMerchant">
       <Item>/Items/QuestItems/TwistedMask/Quest_TwistedMask</Item>
     </Event>
+    <Event name="MagirsDirge">
+      <!--Item dlc="Subject 2923">bloodletters</Item-->
+      <!--Item dlc="Subject 2923">juggernaut</Item-->
+      <!--Item dlc="Subject 2923">vulcan</Item-->
+    </Event>
     <Event name="Monolith">
       <Item>/Items/Armor/Void/Armor_Head_Void</Item>
       <Item>/Items/Armor/Void/Armor_Body_Void</Item>
@@ -303,7 +324,7 @@
       <Item>/Items/Trinkets/Trinket_PillarOfStone</Item>
     </Event>
     <Event name="PolishedWhetstone">
-      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_PolishedWhetstone</Item>
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/PolishedWhetstone</Item>
     </Event>
     <Event name="QueensTemple">
       <Item>/Items/Weapons/Boss/PrideOfTheIskal/Weapon_Swamp_PrideOfTheIskal</Item>
@@ -314,13 +335,15 @@
       <Item notes="Random drop on Rhom">/Items/Trinkets/RadioactiveEmber</Item>
     </Event>
     <Event name="RatRider">
-      <!--Item dlc="Subject 2923">/Items/Trinkets/RadioactiveEmber</Item-->
+      <Item dlc="Subject 2923">/Items/Traits/Trait_HardCharger</Item>
+      <Item dlc="Subject 2923">/Items/Weapons/Boss/Alternator/Weapon_Snow_Alternator</Item>
+      <Item dlc="Subject 2923">/Items/Weapons/Boss/ChainBlade/Weapon_Snow_ChainBlade</Item>
     </Event>
     <Event name="RazorStone">
       <Item>/Items/Trinkets/Razorstone</Item>
     </Event>
     <Event name="RazorwireNecklace">
-      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_RazorwireNecklace</Item>
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/RazorwireNecklace</Item>
     </Event>
     <Event name="ReggiesRing">
       <Item>/Items/Traits/Trait_Scavenger</Item>
@@ -380,13 +403,13 @@
       <Item>/Items/Mods/Beckon</Item>
     </Event>
     <Event name="SerpentsFang">
-      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_SerpentsFang</Item>
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/SerpentsFang</Item>
     </Event>
     <Event name="ShamanFlames">
-      <!--Item dlc="Subject 2923">/Items/Mods/Beckon</Item-->
+      <Item dlc="Subject 2923">/Items/Trinkets/Trinket_PrismaticDiamondRing</Item>
     </Event>
     <Event name="ShieldWarden">
-      <!--Item dlc="Subject 2923">/Items/Mods/Beckon</Item-->
+      <Item dlc="Subject 2923">/Items/Mods/FrozenMist</Item>
     </Event>
     <Event name="Sketterling">
       <Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
@@ -468,7 +491,7 @@
       <Item>/Player/Emotes/Emote_Fail</Item>
     </Event>
     <Event name="TheJackal">
-      <!--Item dlc="Subject 2923">/Items/Weapons/Basic/Wasteland_Flail/Weapon_Wasteland_Flail</Item-->
+      <Item dlc="Subject 2923">/Items/Mods/ColdSpear</Item>
     </Event>
     <Event name="TheLostGantry">
       <Item>/Items/Weapons/Basic/Wasteland_BeamRifle/Weapon_Wasteland_BeamRifle</Item>
@@ -491,6 +514,12 @@
       <Item>/Items/Traits/Trait_Kingslayer</Item>
       <Item>/Items/Weapons/Boss/Riven/Weapon_Wasteland_Riven</Item>
       <Item>/Player/Emotes/Emote_Gravedigger</Item>
+    </Event>
+    <Event name="UrikkiBlademasters">
+      <Item dlc="Subject 2923">/Items/Mods/FanOfKnives</Item>
+    </Event>
+    <Event name="VargylBones">
+      <Item dlc="Subject 2923">/Items/Weapons/Boss/Frostborne/Weapon_Frostborne</Item>
     </Event>
     <Event name="VengeanceIdol">
       <Item>/Items/Trinkets/VengeanceIdol</Item>
@@ -529,7 +558,7 @@
       <Item mode="hardcore" notes="High five emote another player">/Items/Trinkets/Trinket_BandOfAccord</Item>
     </Event>
     <Event name="VolatileGem">
-      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/Trinket_VolatileGem</Item>
+      <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/VolatileGem</Item>
     </Event>
     <Event name="Vyr">
       <Item>/Items/Mods/VeilOfTheBlackTear</Item>
@@ -563,8 +592,18 @@
       <Item>/Items/Traits/Trait_MindsEye</Item>
       <Item>/Player/Emotes/Emote_PraiseTheGun</Item>
     </Event>
+    <Event name="Ward17Root">
+      <Item dlc="Subject 2923">/Items/Weapons/Boss/FusionRifle/Weapon_Rural_FusionRifle</Item>
+      <Item dlc="Subject 2923">/Items/Weapons/Boss/WorldsEdge/Weapon_Rural_WorldsEdge</Item>
+      <Item dlc="Subject 2923">/Items/Traits/Trait_LastResort</Item>
+    </Event>
     <Event name="WardPrime">
-      <Item dlc="Subject 2923">/Items/Weapons/Basic/HandGuns/MachinePistol/Weapon_MachinePistol</Item>
+      <Item dlc="Subject 2923">/Items/Weapons/Basic/MachinePistol/Weapon_MachinePistol</Item>
+      <Item dlc="Subject 2923">/Items/Trinkets/Trinket_RingOfHonor</Item>
+      <Item dlc="Subject 2923">/Items/Traits/Trait_Wisdom</Item>
+    </Event>
+    <Event name="WarningTotems">
+      <Item dlc="Subject 2923">/Items/Trinkets/BloodlettersInsignia</Item>
     </Event>
     <Event name="Wisp">
       <Item>/Items/Trinkets/SoulEmber</Item>

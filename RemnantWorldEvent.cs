@@ -179,7 +179,7 @@ namespace RemnantSaveManager
                         if (eventName != null)
                         {
                             se.setKey(eventName);
-                            se.Name = eventName.Replace("LizAndLiz", "TaleOfTwoLiz's").Replace("Fatty", "TheUncleanOne").Replace("WastelandGuardian", "Claviger").Replace("RootEnt", "TheEnt").Replace("Wolf", "TheRavager").Replace("RootDragon", "Singe").Replace("SwarmMaster", "Scourge").Replace("RootWraith", "Shroud").Replace("RootTumbleweed", "TheMangler").Replace("Kincaller", "Warden").Replace("Tyrant", "Thrall").Replace("Vyr", "ShadeAndShatter").Replace("ImmolatorAndZephyr", "ScaldAndSear").Replace("RootBrute", "Gorefist").Replace("SlimeHulk", "Canker").Replace("BlinkFiend", "Onslaught").Replace("Sentinel", "Raze").Replace("Penitent", "Leto'sAmulet").Replace("LastWill", "SupplyRun").Replace("SwampGuardian", "Ixillis").Replace("OldManAndConstruct", "WudAndAncientConstruct").Replace("Splitter", "Riphide").Replace("Nexus", "RootNexus").Replace("FlickeringHorror", "DreamEater").Replace("BarbTerror", "BarbedTerror").Replace("Wisp", "CircletHatchery").Replace("GunslignersRing", "Gunslinger'sRing");
+                            se.Name = eventName.Replace("LizAndLiz", "TaleOfTwoLiz's").Replace("Fatty", "TheUncleanOne").Replace("WastelandGuardian", "Claviger").Replace("RootEnt", "TheEnt").Replace("Wolf", "TheRavager").Replace("RootDragon", "Singe").Replace("SwarmMaster", "Scourge").Replace("RootWraith", "Shroud").Replace("RootTumbleweed", "TheMangler").Replace("Kincaller", "Warden").Replace("Tyrant", "Thrall").Replace("Vyr", "ShadeAndShatter").Replace("ImmolatorAndZephyr", "ScaldAndSear").Replace("RootBrute", "Gorefist").Replace("SlimeHulk", "Canker").Replace("BlinkFiend", "Onslaught").Replace("Sentinel", "Raze").Replace("Penitent", "Leto'sAmulet").Replace("LastWill", "SupplyRun").Replace("SwampGuardian", "Ixillis").Replace("OldManAndConstruct", "WudAndAncientConstruct").Replace("Splitter", "Riphide").Replace("Nexus", "RootNexus").Replace("FlickeringHorror", "DreamEater").Replace("BarbTerror", "BarbedTerror").Replace("Wisp", "CircletHatchery").Replace("GunslignersRing", "Gunslinger'sRing").Replace("Afterbirth", "ChillwindHovel").Replace("UrikkiBlademasters", "TianTheAssassin").Replace("RatRider", "RargrAndBrudvaak");
                             se.Name = Regex.Replace(se.Name, "([a-z])([A-Z])", "$1 $2");
                         }
 
@@ -366,6 +366,16 @@ namespace RemnantSaveManager
                     character.AdventureEvents.Add(orderedEvents[i]);
                 }
             }
+
+            if (mode == ProcessMode.Subject2923)
+            {
+                ward17.setKey("Ward17Root");
+                ward17.Name = "Harsgaard";
+                ward17.Location = "Earth: Ward 17 (Root Dimension)";
+                ward17.Type = "World Boss";
+                ward17.setMissingItems(character);
+                character.CampaignEvents.Add(ward17);
+            }
         }
 
         static private string getZone(string textLine)
@@ -432,10 +442,10 @@ namespace RemnantSaveManager
             {
                 eventType = "Point of Interest";
             }
-            else if (textLine.Contains("/Campaign_Clementine/Quests/SnowMid/Snow_Forest_End_Transition_TheGiant_01"))
+            /*else if (textLine.Contains("/Campaign_Clementine/Quests/SnowMid/Snow_Forest_End_Transition_TheGiant_01"))
             {
                 eventType = "Quest Event";
-            }
+            }*/
             return eventType;
         }
     }
