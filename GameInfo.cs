@@ -13,9 +13,22 @@ namespace RemnantSaveManager
     {
         public static event EventHandler<GameInfoUpdateEventArgs> GameInfoUpdate;
         private static List<string> zones = new List<string>();
+        private static Dictionary<string, string> events = new Dictionary<string, string>();
         private static Dictionary<string, RemnantItem[]> eventItem = new Dictionary<string, RemnantItem[]>();
         private static Dictionary<string, string> subLocations = new Dictionary<string, string>();
         private static Dictionary<string, string> mainLocations = new Dictionary<string, string>();
+        public static Dictionary<string, string> Events
+        {
+            get
+            {
+                if (events.Count == 0)
+                {
+                    RefreshGameInfo();
+                }
+
+                return events;
+            }
+        }
         public static Dictionary<string, RemnantItem[]> EventItem
         {
             get
@@ -67,10 +80,12 @@ namespace RemnantSaveManager
         public static void RefreshGameInfo()
         {
             zones.Clear();
+            events.Clear();
             eventItem.Clear();
             subLocations.Clear();
             mainLocations.Clear();
             string eventName = null;
+            string altEventName = null;
             string itemMode = null;
             string itemNotes = null;
             List<RemnantItem> eventItems = new List<RemnantItem>();
@@ -84,6 +99,12 @@ namespace RemnantSaveManager
                         if (reader.Name.Equals("Event"))
                         {
                             eventName = reader.GetAttribute("name");
+                            altEventName = reader.GetAttribute("altname");
+                            if (altEventName == null)
+                            {
+                                altEventName = eventName;
+                            }
+                            events.Add(eventName, altEventName);
                         }
                         else if (reader.Name.Equals("Item"))
                         {

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="30">
+<GameInfo version="31">
   <Zones>
     <Zone name="Earth"/>
     <Zone name="Rhom"/>
@@ -86,7 +86,7 @@
     <Event name="AcesCoin">
       <Item>/Items/Weapons/Basic/HandGuns/Revolver/Weapon_Revolver</Item>
     </Event>
-    <Event name="Afterbirth">
+    <Event name="Afterbirth" altname="ChillwindHovel">
       <Item dlc="Subject 2923">/Items/Trinkets/ScavengersRing</Item>
     </Event>
     <Event name="AggressorsBane">
@@ -109,13 +109,13 @@
     <Event name="BandOfStrength">
       <Item>/Items/Trinkets/BandOfStrength</Item>
     </Event>
-    <Event name="BarbTerror">
+    <Event name="BarbTerror" altname="BarbedTerror">
       <Item>/Items/Mods/UnstableQuills</Item>
     </Event>
     <Event name="BarnSiege">
       <Item dlc="Subject 2923">/Items/Trinkets/HangmansMemento</Item>
     </Event>
-    <Event name="BlinkFiend">
+    <Event name="BlinkFiend" altname="Onslaught">
       <Item>/Items/Mods/BlinkToken</Item>
     </Event>
     <Event name="BlinkThief">
@@ -135,12 +135,12 @@
       <Item>/Items/Armor/Bandit/Armor_Legs_Bandit</Item>
       <Item>/Items/Traits/Trait_ColdAsIce</Item>
     </Event>
-    <Event name="BrainBug">
-      <Item>/Items/Trinkets/GIftOfTheIskal</Item>
-      <Item>/Items/Armor/Carapace/Armor_Head_Carapace</Item>
-      <Item>/Items/Armor/Carapace/Armor_Body_Carapace</Item>
-      <Item>/Items/Armor/Carapace/Armor_Legs_Carapace</Item>
-      <Item>/Items/Traits/Trait_Luminescent</Item>
+    <Event name="BrainBug" altname="Mar'gosh">
+      <Item dlc="Swamps of Corsus">/Items/Trinkets/GIftOfTheIskal</Item>
+      <Item dlc="Swamps of Corsus">/Items/Armor/Carapace/Armor_Head_Carapace</Item>
+      <Item dlc="Swamps of Corsus">/Items/Armor/Carapace/Armor_Body_Carapace</Item>
+      <Item dlc="Swamps of Corsus">/Items/Armor/Carapace/Armor_Legs_Carapace</Item>
+      <Item dlc="Swamps of Corsus">/Items/Traits/Trait_Luminescent</Item>
     </Event>
     <Event name="BrutalMark">
       <Item>/Items/Trinkets/BrutalMark</Item>
@@ -202,9 +202,9 @@
     <Event name="EzlansBand">
       <Item>/Items/Trinkets/Trinket_EzlansBand</Item>
     </Event>
-    <Event name="Fatty">
+    <Event name="Fatty" altname="TheUncleanOne">
       <Item>/Items/Weapons/Boss/Devastator/Weapon_Swamp_Devastator</Item>
-      <Item>/Items/Weapons/Boss/ButchersFlail/Weapon_Swamp_ButchersFlail</Item>
+      <Item dlc="Swamps of Corsus">/Items/Weapons/Boss/ButchersFlail/Weapon_Swamp_ButchersFlail</Item>
       <Item>/Items/Traits/Trait_Glutton</Item>
       <Item>/Player/Emotes/Emote_Exhausted</Item>
     </Event>
@@ -218,7 +218,7 @@
       <Item>/Items/Trinkets/Trinket_HeartOfTheWolf</Item>
       <Item>/Items/Traits/Trait_Swiftness</Item>
     </Event>
-    <Event name="FlickeringHorror">
+    <Event name="FlickeringHorror" altname="DreamEater">
       <Item>/Items/Mods/RiftWalker</Item>
     </Event>
     <Event name="FoundersHideout">
@@ -247,7 +247,7 @@
     <Event name="GunslingersCharm">
       <Item>/Items/Trinkets/Trinket_GunslingersCharm</Item>
     </Event>
-    <Event name="GunslignersRing">
+    <Event name="GunslignersRing" altname="Gunslinger'sRing">
       <Item>/Items/Trinkets/Trinket_GunslingersRing</Item>
     </Event>
     <Event name="HeartSeeker">
@@ -274,7 +274,7 @@
       <Item dlc="Subject 2923">/Items/Armor/Warlord/Armor_Body_Warlord</Item>
       <Item dlc="Subject 2923">/Items/Armor/Warlord/Armor_Legs_Warlord</Item>
     </Event>
-    <Event name="ImmolatorAndZephyr">
+    <Event name="ImmolatorAndZephyr" altname="ScaldAndSear">
       <Item>/Items/Mods/WildfireShot</Item>
     </Event>
     <Event name="IskalQueen">
@@ -287,20 +287,20 @@
     <Event name="KeepersRing">
       <Item>/Items/Trinkets/Trinket_KeepersRing</Item>
     </Event>
-    <Event name="KinCaller">
+    <Event name="KinCaller" altname="Warden">
       <Item>/Items/Mods/SongOfSwords</Item>
     </Event>
     <Event name="KrallBaby">
       <Item dlc="Subject 2923">/Items/Traits/Trait_Siphoner</Item>
     </Event>
-    <Event name="LastWill">
+    <Event name="LastWill" altname="SupplyRun">
       <Item>/Items/Weapons/Basic/LongGuns/AssaultRifle/Weapon_AssaultRifle</Item>
       <Item>/Items/Traits/Trait_Spirit</Item>
     </Event>
     <Event name="LeechEmber">
       <Item>/Items/Trinkets/Trinket_LeechEmber</Item>
     </Event>
-    <Event name="LizAndLiz">
+    <Event name="LizAndLiz" altname="TaleOfTwoLiz's">
       <Item>/Items/Weapons/Basic/LongGuns/MachineGun/Weapon_Machinegun</Item>
       <Item>/Items/Traits/Trait_Warrior</Item>
     </Event>
@@ -308,9 +308,9 @@
       <Item>/Items/QuestItems/TwistedMask/Quest_TwistedMask</Item>
     </Event>
     <Event name="Monolith">
-      <Item>/Items/Armor/Void/Armor_Head_Void</Item>
-      <Item>/Items/Armor/Void/Armor_Body_Void</Item>
-      <Item>/Items/Armor/Void/Armor_Legs_Void</Item>
+      <Item dlc="Swamps of Corsus">/Items/Armor/Void/Armor_Head_Void</Item>
+      <Item dlc="Swamps of Corsus">/Items/Armor/Void/Armor_Body_Void</Item>
+      <Item dlc="Swamps of Corsus">/Items/Armor/Void/Armor_Legs_Void</Item>
     </Event>
     <Event name="MothersRing">
       <Item>/Items/Trinkets/Trinket_MothersRing</Item>
@@ -318,7 +318,8 @@
     <Event name="MudTooth">
       <Item>/Quests/Quest_OverworldPOI_MudTooth/Quest_BrabusPocketWatch</Item>
     </Event>
-    <Event name="OldManAndConstruct">
+    <Event name="Nexus" altname="RootNexus"></Event>
+    <Event name="OldManAndConstruct" altname="WudAndAncientConstruct">
       <Item>/Items/Trinkets/JewelOfTheBlackSun</Item>
       <Item>/Items/Trinkets/MendersCharm</Item>
       <Item>/Items/Armor/Osseous/Armor_Head_Osseous</Item>
@@ -330,7 +331,7 @@
     <Event name="PearlOfLuminescence">
       <Item>/Items/Trinkets/Trinket_PearlOfLuminescence</Item>
     </Event>
-    <Event name="Penitent">
+    <Event name="Penitent" altname="Leto'sAmulet">
       <Item>/Items/Trinkets/Trinket_LetosAmulet</Item>
     </Event>
     <Event name="PillarOfStone">
@@ -340,14 +341,14 @@
       <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/PolishedWhetstone</Item>
     </Event>
     <Event name="QueensTemple">
-      <Item>/Items/Weapons/Boss/PrideOfTheIskal/Weapon_Swamp_PrideOfTheIskal</Item>
+      <Item dlc="Swamps of Corsus">/Items/Weapons/Boss/PrideOfTheIskal/Weapon_Swamp_PrideOfTheIskal</Item>
       <Item>/Items/Traits/Trait_Footwork</Item>
       <Item>/Items/Mods/Seeker</Item>
     </Event>
     <Event name="RadioactiveEmber">
       <Item notes="Random drop on Rhom">/Items/Trinkets/RadioactiveEmber</Item>
     </Event>
-    <Event name="RatRider">
+    <Event name="RatRider" altname="RargrAndBrudvaak">
       <Item dlc="Subject 2923">/Items/Traits/Trait_HardCharger</Item>
       <Item dlc="Subject 2923">/Items/Weapons/Boss/Alternator/Weapon_Snow_Alternator</Item>
       <Item dlc="Subject 2923">/Items/Weapons/Boss/ChainBlade/Weapon_Snow_ChainBlade</Item>
@@ -376,14 +377,14 @@
     <Event name="RingOfShadows">
       <Item>/Items/Trinkets/Trinket_RingOfShadows</Item>
     </Event>
-    <Event name="RootBrute">
+    <Event name="RootBrute" altname="Gorefist">
       <Item>/Items/Mods/MantleOfThorns</Item>
     </Event>
     <Event name="RootCultist">
       <Item>/Items/Trinkets/BraidedThorns</Item>
       <Item>/Items/Trinkets/Trinket_RootCirclet</Item>
     </Event>
-    <Event name="RootDragon">
+    <Event name="RootDragon" altname="Singe">
       <Item>/Items/Weapons/Boss/Root_Spitfire/Weapon_Root_Spitfire</Item>
       <Item>/Items/Weapons/Boss/Root_Smolder/Weapon_Root_Smolder</Item>
       <Item>/Player/Emotes/Emote_Beckon</Item>
@@ -392,13 +393,13 @@
       <Item>/Items/Traits/Trait_MothersBlessing</Item>
       <Item>/Items/Weapons/Basic/LongGuns/SniperRifle/Weapon_SniperRifle</Item>
     </Event>
-    <Event name="RootTumbleweed">
+    <Event name="RootTumbleweed" altname="TheMangler">
       <Item>/Items/Mods/SeedCaller</Item>
     </Event>
-    <Event name="RootWraith">
+    <Event name="RootWraith" altname="Shroud">
       <Item>/Items/Mods/Rattleweed</Item>
     </Event>
-    <Event name="RootEnt">
+    <Event name="RootEnt" altname="TheEnt">
       <Item>/Items/Weapons/Boss/Root_SporeLauncher/Weapon_Root_SporeLauncher</Item>
       <Item>/Items/Weapons/Boss/Root_PetrifiedMaul/Weapon_Root_PetrifiedMaul</Item>
       <Item>/Items/Traits/Trait_QuickHands</Item>
@@ -412,7 +413,7 @@
     <Event name="Sagestone">
       <Item>/Items/Trinkets/Trinket_Sagestone</Item>
     </Event>
-    <Event name="Sentinel">
+    <Event name="Sentinel" altname="Raze">
       <Item>/Items/Mods/Beckon</Item>
     </Event>
     <Event name="SerpentsFang">
@@ -435,7 +436,7 @@
     <Event name="SlaveRevolt">
       <Item>/Items/Traits/Trait_Triage</Item>
     </Event>
-    <Event name="SlimeHulk">
+    <Event name="SlimeHulk" altname="Canker">
       <Item>/Items/Mods/CorrosiveAura</Item>
       <Item>/Items/Traits/Trait_Catalyst</Item>
     </Event>
@@ -448,7 +449,7 @@
     <Event name="SpiritStone">
       <Item notes="Random drop on Yaesha">/Items/Trinkets/Trinket_SpiritStone</Item>
     </Event>
-    <Event name="Splitter">
+    <Event name="Splitter" altname="Riphide">
       <Item>/Items/Armor/Leto/Armor_Head_Leto</Item>
       <Item>/Items/Armor/Leto/Armor_Body_Leto</Item>
       <Item>/Items/Armor/Leto/Armor_Legs_Leto</Item>
@@ -477,13 +478,13 @@
       <Item>/Items/Trinkets/Trinket_GuardiansRing</Item>
       <Item>/Items/Traits/Trait_GuardiansBlessing</Item>
     </Event>
-    <Event name="SwampGuardian">
+    <Event name="SwampGuardian" altname="Ixillis">
       <Item>/Items/Weapons/Boss/HiveCannon/Weapon_Swamp_HiveCannon</Item>
       <Item>/Items/Weapons/Boss/GuardianAxe/Weapon_Swamp_GuardianAxe</Item>
       <Item>/Items/Traits/Trait_Executioner</Item>
       <Item>/Player/Emotes/Emote_Confused</Item>
     </Event>
-    <Event name="SwarmMaster">
+    <Event name="SwarmMaster" altname="Scourge">
       <Item>/Items/Mods/BreathOfDesert</Item>
     </Event>
     <Event name="TalismanOfAnimosity">
@@ -518,7 +519,7 @@
       <Item>/Items/Weapons/Boss/Pan_VoiceOfTheTempest/Weapon_Pan_VoiceOfTheTempest</Item>
       <Item>/Player/Emotes/Emote_TeaTime</Item>
     </Event>
-    <Event name="Tyrant">
+    <Event name="Tyrant" altname="Thrall">
       <Item>/Items/Mods/Swarm</Item>
       <Item>/Items/Traits/Trait_Catalyst</Item>
     </Event>
@@ -528,7 +529,8 @@
       <Item>/Items/Weapons/Boss/Riven/Weapon_Wasteland_Riven</Item>
       <Item>/Player/Emotes/Emote_Gravedigger</Item>
     </Event>
-    <Event name="UrikkiBlademasters">
+    <Event name="UrikkiBlademasters" altname="TianTheAssassin
+           ">
       <Item dlc="Subject 2923">/Items/Mods/FanOfKnives</Item>
     </Event>
     <Event name="VargylBones">
@@ -573,7 +575,7 @@
     <Event name="VolatileGem">
       <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/VolatileGem</Item>
     </Event>
-    <Event name="Vyr">
+    <Event name="Vyr" altname="ShadeAndShatter">
       <Item>/Items/Mods/VeilOfTheBlackTear</Item>
     </Event>
     <Event name="WailingWood">
@@ -621,17 +623,17 @@
       <Item dlc="Subject 2923" note="Destroy all totems without activating them">/Items/Trinkets/Trinket_EvokersSeal</Item>
       <Item dlc="Subject 2923" note="Destroy all totems after activating them">/Items/Trinkets/VulcansDetonator</Item>
     </Event>
-    <Event name="Wisp">
+    <Event name="Wisp" altname="CircletHatchery">
       <Item>/Items/Trinkets/SoulEmber</Item>
       <Item>/Items/Traits/Trait_Evocation</Item>
     </Event>
-    <Event name="WastelandGuardian">
+    <Event name="WastelandGuardian" altname="Claviger">
       <Item>/Items/Weapons/Boss/WorldBreaker/Weapon_Wasteland_WorldBreaker</Item>
       <Item>/Items/Weapons/Boss/ParticleAccelerator/Weapon_Wasteland_ParticleAccelerator</Item>
       <Item>/Items/Traits/Trait_Recovery</Item>
       <Item>/Player/Emotes/Emote_Laugh</Item>
     </Event>
-    <Event name="Wolf">
+    <Event name="Wolf" altname="TheRavager">
       <Item>/Items/Weapons/Boss/Pan_CurseOfTheJungleGod/Weapon_Pan_CurseOfTheJungleGod</Item>
       <Item>/Items/Weapons/Boss/Pan_ScarOfTheJungleGod/Weapon_Pan_ScarOfTheJungleGod</Item>
       <Item>/Items/Traits/Trait_ArcaneStrike</Item>
