@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="31">
+<GameInfo version="32">
   <Zones>
     <Zone name="Earth"/>
     <Zone name="Rhom"/>
@@ -88,6 +88,7 @@
     </Event>
     <Event name="Afterbirth" altname="ChillwindHovel">
       <Item dlc="Subject 2923">/Items/Trinkets/ScavengersRing</Item>
+      <Item dlc="Subject 2923">/Items/Trinkets/BlessedNecklace</Item>
     </Event>
     <Event name="AggressorsBane">
       <Item>/Items/Trinkets/AggressorsBane</Item>
@@ -122,7 +123,7 @@
       <Item>/Items/Weapons/Basic/RicochetRifle/Weapon_Pan_RicochetRifle</Item>
       <Item>/Items/Trinkets/Trinket_CelerityStone</Item>
     </Event>
-    <Event name="BlizzardMage">
+    <Event name="BlizzardMage" altname="IkroTheIceConjurer">
       <Item dlc="Subject 2923">/Items/Mods/Blizzard</Item>
     </Event>
     <Event name="BloodFont">
@@ -292,6 +293,7 @@
     </Event>
     <Event name="KrallBaby">
       <Item dlc="Subject 2923">/Items/Traits/Trait_Siphoner</Item>
+      <Item dlc="Subject 2923">/Items/Trinkets/BlessedNecklace</Item>
     </Event>
     <Event name="LastWill" altname="SupplyRun">
       <Item>/Items/Weapons/Basic/LongGuns/AssaultRifle/Weapon_AssaultRifle</Item>
@@ -422,7 +424,7 @@
     <Event name="ShamanFlames">
       <Item dlc="Subject 2923">/Items/Trinkets/Trinket_PrismaticDiamondRing</Item>
     </Event>
-    <Event name="ShieldWarden">
+    <Event name="ShieldWarden" altname="ObrykTheShieldWarden">
       <Item dlc="Subject 2923">/Items/Mods/FrozenMist</Item>
     </Event>
     <Event name="Sketterling">
@@ -440,8 +442,8 @@
       <Item>/Items/Mods/CorrosiveAura</Item>
       <Item>/Items/Traits/Trait_Catalyst</Item>
     </Event>
-    <Event name="SnowRuins">
-      <!--Item dlc="Subject 2923">/Items/Traits/Trait_Triage</Item-->
+    <Event name="SnowRuins" altname="TheSilentSnow">
+      <!--Item dlc="Subject 2923"></Item-->
     </Event>
     <Event name="SoulLink">
       <Item>/Items/Trinkets/SoulLink</Item>
@@ -467,7 +469,7 @@
     <Event name="StormAmulet">
       <Item>/Items/Trinkets/Trinket_StormAmulet</Item>
     </Event>
-    <Event name="StormCaller">
+    <Event name="StormCaller" altname="Stormcaller">
       <Item>/Items/Mods/StormCaller</Item>
     </Event>
     <Event name="StuckMerchant">
@@ -496,15 +498,12 @@
     <Event name="TheCleanRoom">
       <Item>/Items/Weapons/Basic/Wasteland_Flail/Weapon_Wasteland_Flail</Item>
     </Event>
-    <Event name="TheGiant">
-      <!--Item dlc="Subject 2923">/Items/Weapons/Basic/Wasteland_Flail/Weapon_Wasteland_Flail</Item-->
-    </Event>
     <Event name="TheHarrow">
       <Item>/Items/Weapons/Boss/Defiler/Weapon_Wasteland_Defiler</Item>
       <Item>/Items/Weapons/Boss/LostHarpoon/Weapon_Wasteland_LostHarpoon</Item>
       <Item>/Player/Emotes/Emote_Fail</Item>
     </Event>
-    <Event name="TheJackal">
+    <Event name="TheJackal" altname="ErforTheJackal">
       <Item dlc="Subject 2923">/Items/Mods/ColdSpear</Item>
     </Event>
     <Event name="TheLostGantry">
@@ -519,7 +518,7 @@
       <Item>/Items/Weapons/Boss/Pan_VoiceOfTheTempest/Weapon_Pan_VoiceOfTheTempest</Item>
       <Item>/Player/Emotes/Emote_TeaTime</Item>
     </Event>
-    <Event name="Tyrant" altname="Thrall">
+    <Event name="Tyrant" altname="TheThrall">
       <Item>/Items/Mods/Swarm</Item>
       <Item>/Items/Traits/Trait_Catalyst</Item>
     </Event>
