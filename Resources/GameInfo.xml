@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="32">
+<GameInfo version="33">
   <Zones>
     <Zone name="Earth"/>
     <Zone name="Rhom"/>
@@ -494,6 +494,9 @@
     </Event>
     <Event name="TalismanOfPerseverance">
       <Item>/Items/Trinkets/TalismanOfPerseverance</Item>
+    </Event>
+    <Event name="TerrorMargin">
+      <Item dlc="Subject 2923" notes="Random drop on Rural Earth">/Items/Trinkets/TerrorMargin</Item>
     </Event>
     <Event name="TheCleanRoom">
       <Item>/Items/Weapons/Basic/Wasteland_Flail/Weapon_Wasteland_Flail</Item>
