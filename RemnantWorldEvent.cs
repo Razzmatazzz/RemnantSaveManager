@@ -112,20 +112,7 @@ namespace RemnantSaveManager
                             currentMainLocation = null;
                         }
                         continue;
-                    } /*else if (textLine.Contains("_Overworld_"))
-                    {
-                        //process overworld zone marker
-                        currentMainLocation = textLine.Split('/')[4].Split('_')[1] + " " + textLine.Split('/')[4].Split('_')[2] + " " + textLine.Split('/')[4].Split('_')[3];
-                        if (GameInfo.MainLocations.ContainsKey(currentMainLocation))
-                        {
-                            currentMainLocation = GameInfo.MainLocations[currentMainLocation];
-                        }
-                        else
-                        {
-                            currentMainLocation = null;
-                        }
-                        continue;
-                    }*/
+                    }
                     else if (textLine.Contains("Quest_Church"))
                     {
                         //process Root Mother event
@@ -136,13 +123,7 @@ namespace RemnantSaveManager
                     else if (eventType != null)
                     {
                         //process other events, if they're recognized by getEventType
-                        if (textLine.Contains("TheGiant"))
-                        {
-                            eventName = "The Giant";
-                        } else
-                        {
-                            eventName = textLine.Split('/')[4].Split('_')[2];
-                        }
+                        eventName = textLine.Split('/')[4].Split('_')[2];
                         if (textLine.Contains("OverworldPOI"))
                         {
                             currentSublocation = null;
@@ -179,7 +160,12 @@ namespace RemnantSaveManager
                         if (eventName != null)
                         {
                             se.setKey(eventName);
-                            se.Name = GameInfo.Events[eventName];
+                            if (GameInfo.Events.ContainsKey(eventName)) {
+                                se.Name = GameInfo.Events[eventName];
+                            } else
+                            {
+                                se.Name = eventName;
+                            }
                             se.Name = Regex.Replace(se.Name, "([a-z])([A-Z])", "$1 $2");
                         }
 
@@ -442,10 +428,6 @@ namespace RemnantSaveManager
             {
                 eventType = "Point of Interest";
             }
-            /*else if (textLine.Contains("/Campaign_Clementine/Quests/SnowMid/Snow_Forest_End_Transition_TheGiant_01"))
-            {
-                eventType = "Quest Event";
-            }*/
             return eventType;
         }
     }

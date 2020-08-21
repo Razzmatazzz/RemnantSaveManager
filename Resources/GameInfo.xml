@@ -88,7 +88,7 @@
     </Event>
     <Event name="Afterbirth" altname="ChillwindHovel">
       <Item dlc="Subject 2923">/Items/Trinkets/ScavengersRing</Item>
-      <Item dlc="Subject 2923">/Items/Trinkets/BlessedNecklace</Item>
+      <Item dlc="Subject 2923" notes="Speak to mother at Chillwind Hovel before freeing Krall Baby">/Items/Trinkets/BlessedNecklace</Item>
     </Event>
     <Event name="AggressorsBane">
       <Item>/Items/Trinkets/AggressorsBane</Item>
@@ -293,7 +293,7 @@
     </Event>
     <Event name="KrallBaby">
       <Item dlc="Subject 2923">/Items/Traits/Trait_Siphoner</Item>
-      <Item dlc="Subject 2923">/Items/Trinkets/BlessedNecklace</Item>
+      <Item dlc="Subject 2923" notes="Speak to mother at Chillwind Hovel before freeing Krall Baby">/Items/Trinkets/BlessedNecklace</Item>
     </Event>
     <Event name="LastWill" altname="SupplyRun">
       <Item>/Items/Weapons/Basic/LongGuns/AssaultRifle/Weapon_AssaultRifle</Item>
