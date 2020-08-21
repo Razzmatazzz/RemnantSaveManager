@@ -19,10 +19,12 @@
     <SubLocation eventName="DoeShrine" location="Widow'sVestry"/>
     <SubLocation eventName="Fatty" location="TheFetidGlade"/>
     <SubLocation eventName="FlickeringHorror" location="HallOfWhispers"/>
+    <SubLocation eventName="FrozenLords" location="Judgment'sSpear"/>
     <SubLocation eventName="Guardian" location="TheGuardian'sSanctum"/>
     <SubLocation eventName="HoundMaster" location="TheBurrows"/>
     <SubLocation eventName="HuntersHideout" location="HiddenGrotto"/>
     <SubLocation eventName="ImmolatorAndZephyr" location="WitheringVillage"/>
+    <SubLocation eventName="IceSkimmer" location="TheFrieranSea"/>
     <SubLocation eventName="KinCaller" location="TheHallOfJudgement"/>
     <SubLocation eventName="LastWill" location="Sorrow'sField"/>
     <SubLocation eventName="LizAndLiz" location="TheWarren"/>
@@ -223,6 +225,11 @@
       <Item>/Items/Armor/Drifter/Armor_Body_Drifter</Item>
       <Item>/Items/Armor/Drifter/Armor_Legs_Drifter</Item>
     </Event>
+    <Event name="FrozenLords">
+      <Item dlc="Subject 2923">/Items/Armor/Scavenger/Armor_Head_Scavenger</Item>
+      <Item dlc="Subject 2923">/Items/Armor/Scavenger/Armor_Body_Scavenger</Item>
+      <Item dlc="Subject 2923">/Items/Armor/Scavenger/Armor_Legs_Scavenger</Item>
+    </Event>
     <Event name="GalenicCharm">
       <Item>/Items/Trinkets/Trinket_GalenicCharm</Item>
     </Event>
@@ -259,6 +266,14 @@
       <Item>/Items/Weapons/Basic/HandGuns/HuntingPistol/Weapon_HuntingPistol</Item>
       <Item>/Items/Traits/Trait_ShadowWalker</Item>
     </Event>
+    <Event name="IceSkimmer">
+      <Item dlc="Subject 2923">/Items/Trinkets/BandOfDiscord</Item>
+      <Item dlc="Subject 2923">/Items/Trinkets/RingOfSynergy</Item>
+      <Item dlc="Subject 2923">/Items/Weapons/Basic/SawedOffShotgun/Weapon_SawedOffShotgun</Item>
+      <Item dlc="Subject 2923">/Items/Armor/Warlord/Armor_Head_Warlord</Item>
+      <Item dlc="Subject 2923">/Items/Armor/Warlord/Armor_Body_Warlord</Item>
+      <Item dlc="Subject 2923">/Items/Armor/Warlord/Armor_Legs_Warlord</Item>
+    </Event>
     <Event name="ImmolatorAndZephyr">
       <Item>/Items/Mods/WildfireShot</Item>
     </Event>
@@ -274,6 +289,9 @@
     </Event>
     <Event name="KinCaller">
       <Item>/Items/Mods/SongOfSwords</Item>
+    </Event>
+    <Event name="KrallBaby">
+      <Item dlc="Subject 2923">/Items/Traits/Trait_Siphoner</Item>
     </Event>
     <Event name="LastWill">
       <Item>/Items/Weapons/Basic/LongGuns/AssaultRifle/Weapon_AssaultRifle</Item>
