@@ -307,11 +307,6 @@
     <Event name="MadMerchant">
       <Item>/Items/QuestItems/TwistedMask/Quest_TwistedMask</Item>
     </Event>
-    <Event name="MagirsDirge">
-      <!--Item dlc="Subject 2923">bloodletters</Item-->
-      <!--Item dlc="Subject 2923">juggernaut</Item-->
-      <!--Item dlc="Subject 2923">vulcan</Item-->
-    </Event>
     <Event name="Monolith">
       <Item>/Items/Armor/Void/Armor_Head_Void</Item>
       <Item>/Items/Armor/Void/Armor_Body_Void</Item>
@@ -622,6 +617,9 @@
     </Event>
     <Event name="WarningTotems">
       <Item dlc="Subject 2923">/Items/Trinkets/BloodlettersInsignia</Item>
+      <Item dlc="Subject 2923" note="Destroy some unactivated and some activated totems">/Items/Trinkets/JuggernautBand</Item>
+      <Item dlc="Subject 2923" note="Destroy all totems without activating them">/Items/Trinkets/Trinket_EvokersSeal</Item>
+      <Item dlc="Subject 2923" note="Destroy all totems after activating them">/Items/Trinkets/VulcansDetonator</Item>
     </Event>
     <Event name="Wisp">
       <Item>/Items/Trinkets/SoulEmber</Item>
@@ -647,11 +645,6 @@
     </Event>
     <!--
       Credit to /u/hlza00 for original locaiton and event names
-      
-      To do:
-      Verify that Brabus has correct Cold As Ice trait name (Earth)
-
-      Note: SoulAnchor was previously /Items/Trinkets/Trinket_SoulAnchor
     -->
   </EventItems>
 </GameInfo>
