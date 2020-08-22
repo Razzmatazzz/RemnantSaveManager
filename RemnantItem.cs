@@ -19,6 +19,7 @@ namespace RemnantSaveManager
         private string itemKey;
         private string itemType;
         private string itemName;
+        private string itemAltName;
         private string ItemKey { 
             get { return itemKey; } 
             set 
@@ -32,9 +33,6 @@ namespace RemnantSaveManager
                     {
                         itemType = "Weapon";
                         if (itemName.Contains("Mod_")) itemName = itemName.Replace("/Weapons/", "/Mods/");
-                        if (itemName.Contains("Wasteland_Flail")) itemName = itemName.Replace("_Flail", "_WastelanderFlail");
-                        if (itemName.Contains("Machinegun")) itemName = "Chicago Typewriter";
-                        if (itemName.Contains("MiniCrossbow")) itemName = "Twin Shot";
                     }
                     if (itemKey.Contains("/Armor/") || itemKey.Contains("TwistedMask"))
                     {
@@ -49,17 +47,12 @@ namespace RemnantSaveManager
                             itemName = parts[2] + " (" + parts[1] + ")";
                         }
                     }
-                    if (itemName.Contains("Sumpremacy"))
-                    {
-                        itemName = itemName.Replace("Sumpremacy", "Supremacy");
-                    }
-                    if (itemName.Contains("GIft")) itemName = itemName.Replace("GIft", "Gift");
                     if (itemKey.Contains("/Trinkets/") || itemKey.Contains("BrabusPocketWatch")) itemType = "Trinket";
                     if (itemKey.Contains("/Mods/")) itemType = "Mod";
                     if (itemKey.Contains("/Traits/")) itemType = "Trait";
                     if (itemKey.Contains("/Emotes/")) itemType = "Emote";
 
-                    itemName = itemName.Replace("Weapon_", "").Replace("Root_", "").Replace("Wasteland_", "").Replace("Swamp_", "").Replace("Pan_", "").Replace("Atoll_", "").Replace("Mod_", "").Replace("Trinket_", "").Replace("Trait_", "").Replace("Quest_", "").Replace("Emote_", "").Replace("Rural_", "");
+                    itemName = itemName.Replace("Weapon_", "").Replace("Root_", "").Replace("Wasteland_", "").Replace("Swamp_", "").Replace("Pan_", "").Replace("Atoll_", "").Replace("Mod_", "").Replace("Trinket_", "").Replace("Trait_", "").Replace("Quest_", "").Replace("Emote_", "").Replace("Rural_", "").Replace("Snow_", "");
                     if (!itemType.Equals("Armor"))
                     {
                         itemName = Regex.Replace(itemName, "([a-z])([A-Z])", "$1 $2");
@@ -73,10 +66,18 @@ namespace RemnantSaveManager
             } 
         }
 
-        public string ItemName { get { return itemName; } }
+        public string ItemName 
+        { 
+            get 
+            {
+                if (itemAltName != null) return itemAltName;
+                return itemName; 
+            } 
+        }
         public string ItemType { get { return itemType; } }
         public RemnantItemMode ItemMode { get; set; }
         public string ItemNotes { get; set; }
+        public string ItemAltName { get { return itemAltName; } set { itemAltName = value; } }
 
         public RemnantItem(string key)
         {
@@ -99,7 +100,7 @@ namespace RemnantSaveManager
 
         public override string ToString()
         {
-            return itemType + ": " + itemName;
+            return itemType + ": " + ItemName;
         }
 
         public override bool Equals(Object obj)

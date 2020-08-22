@@ -88,6 +88,7 @@ namespace RemnantSaveManager
             string altEventName = null;
             string itemMode = null;
             string itemNotes = null;
+            string itemAltName = null;
             List<RemnantItem> eventItems = new List<RemnantItem>();
             XmlTextReader reader = new XmlTextReader("GameInfo.xml");
             reader.WhitespaceHandling = WhitespaceHandling.None;
@@ -110,6 +111,7 @@ namespace RemnantSaveManager
                         {
                             itemMode = reader.GetAttribute("mode");
                             itemNotes = reader.GetAttribute("notes");
+                            itemAltName = reader.GetAttribute("altname");
                         } else if (reader.Name.Equals("Zone"))
                         {
                             zones.Add(reader.GetAttribute("name"));
@@ -140,6 +142,10 @@ namespace RemnantSaveManager
                             if (itemNotes != null)
                             {
                                 rItem.ItemNotes = itemNotes;
+                            }
+                            if (itemAltName != null)
+                            {
+                                rItem.ItemAltName = itemAltName;
                             }
                             eventItems.Add(rItem);
                             itemMode = null;

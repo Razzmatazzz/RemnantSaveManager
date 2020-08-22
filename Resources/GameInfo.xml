@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="34">
+<GameInfo version="35">
   <Zones>
     <Zone name="Earth"/>
     <Zone name="Rhom"/>
@@ -141,7 +141,7 @@
       <Item>/Items/Traits/Trait_ColdAsIce</Item>
     </Event>
     <Event name="BrainBug" altname="Mar'gosh">
-      <Item dlc="Swamps of Corsus">/Items/Trinkets/GIftOfTheIskal</Item>
+      <Item dlc="Swamps of Corsus" altname="Gift of the Iskal">/Items/Trinkets/GIftOfTheIskal</Item>
       <Item dlc="Swamps of Corsus">/Items/Armor/Carapace/Armor_Head_Carapace</Item>
       <Item dlc="Swamps of Corsus">/Items/Armor/Carapace/Armor_Body_Carapace</Item>
       <Item dlc="Swamps of Corsus">/Items/Armor/Carapace/Armor_Legs_Carapace</Item>
@@ -179,7 +179,7 @@
     </Event>
     <Event name="CreepersPeeper">
       <Item dlc="Subject 2923">/Items/Trinkets/SwashbucklersSignet</Item>
-      <Item dlc="Subject 2923">/Items/Weapons/Basic/MiniCrossbow/Weapon_MiniCrossbow</Item>
+      <Item dlc="Subject 2923" altname="Twin Shot">/Items/Weapons/Basic/MiniCrossbow/Weapon_MiniCrossbow</Item>
     </Event>
     <Event name="Cryptolith">
       <Item>/Items/Traits/Trait_Concentration</Item>
@@ -316,7 +316,7 @@
       <Item>/Items/Trinkets/Trinket_LeechEmber</Item>
     </Event>
     <Event name="LizAndLiz" altname="TaleOfTwoLiz's">
-      <Item>/Items/Weapons/Basic/LongGuns/MachineGun/Weapon_Machinegun</Item>
+      <Item altname="Chicago Typewriter">/Items/Weapons/Basic/LongGuns/MachineGun/Weapon_Machinegun</Item>
       <Item>/Items/Traits/Trait_Warrior</Item>
     </Event>
     <Event name="MadMerchant">
@@ -516,7 +516,7 @@
       <Item dlc="Subject 2923" notes="Random drop on Rural Earth">/Items/Trinkets/TerrorMargin</Item>
     </Event>
     <Event name="TheCleanRoom">
-      <Item>/Items/Weapons/Basic/Wasteland_Flail/Weapon_Wasteland_Flail</Item>
+      <Item altname="Wastelander Flail">/Items/Weapons/Basic/Wasteland_Flail/Weapon_Wasteland_Flail</Item>
     </Event>
     <Event name="TheHarrow">
       <Item>/Items/Weapons/Boss/Defiler/Weapon_Wasteland_Defiler</Item>
@@ -591,7 +591,7 @@
       <Item mode="hardcore" notes="Reward for defeating Clavinger/Harrow">/Items/Trinkets/AkariWarBand</Item>
       <Item mode="hardcore" notes="Reward for defeating Ixillis">/Items/Trinkets/Trinket_EmpoweringLoop</Item>
       <Item mode="hardcore" notes="Reward for defeating Singe/Ent">/Items/Trinkets/Trinket_ProvisionerRing</Item>
-      <Item mode="hardcore" notes="Reward for defeating Totem Father/Ravager">/Items/Trinkets/RingOfSumpremacy</Item>
+      <Item mode="hardcore" notes="Reward for defeating Totem Father/Ravager" altname="Ring of Supremacy">/Items/Trinkets/RingOfSumpremacy</Item>
       <Item mode="hardcore" notes="Reward for defeating Dreamer">/Items/Trinkets/Trinket_NightmareSpiral</Item>
       <Item mode="hardcore" notes="Reward for defeating Dreamer">/Player/Emotes/Emote_HighFive</Item>
       <Item mode="hardcore" notes="High five emote another player">/Items/Trinkets/Trinket_BandOfAccord</Item>
