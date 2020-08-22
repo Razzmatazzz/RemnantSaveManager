@@ -161,6 +161,7 @@ namespace RemnantSaveManager
             chkAutoBackup.IsChecked = autoBackup;
             txtBackupMins.Text = Properties.Settings.Default.BackupMinutes.ToString();
             txtBackupLimit.Text = Properties.Settings.Default.BackupLimit.ToString();
+            chkShowPossibleItems.IsChecked = Properties.Settings.Default.ShowPossibleItems;
 
             cmbMissingItemColor.Items.Add("Red");
             cmbMissingItemColor.Items.Add("White");

@@ -437,7 +437,7 @@ namespace RemnantSaveManager
                     eventType = "Item Drop";
                 }
             }
-            else if (textLine.Contains("OverworldPOI") || textLine.Contains("OverworlPOI"))
+            else if (textLine.Contains("OverworldPOI") || textLine.Contains("OverWorldPOI") || textLine.Contains("OverworlPOI"))
             {
                 eventType = "Point of Interest";
             }
