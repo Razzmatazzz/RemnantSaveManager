@@ -65,7 +65,7 @@ namespace RemnantSaveManager
             else
             {
                 strCampaignEnd = "/Game/Campaign_Clementine/Quest_Campaign_Clementine.Quest_Campaign_Clementine_C";
-                strCampaignStart = "/Game/World_Rural/Templates/Template_Rural_Overworld_01.Template_Rural_Overworld_01";
+                strCampaignStart = "/Game/World_Rural/Templates/Template_Rural_Overworld_0";
                 campaignEnd = savetext.IndexOf(strCampaignEnd);
                 campaignStart = savetext.IndexOf(strCampaignStart);
                 if (campaignStart != -1 && campaignEnd != -1)
