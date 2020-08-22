@@ -96,6 +96,7 @@
                     <CheckBox x:Name="chkCreateLogFile" Content="Create log file" ToolTip="Whether a log.txt file should be created" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top" Click="chkCreateLogFile_Click" TabIndex="105"/>
                     <ComboBox x:Name="cmbMissingItemColor" HorizontalAlignment="Left" Margin="10,143,0,0" VerticalAlignment="Top" Width="113"/>
                     <Label Content="World analzyer missing item color" HorizontalAlignment="Left" Margin="128,139,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="chkShowPossibleItems" Content="Show possible items in analyzer" HorizontalAlignment="Left" Margin="322,145,0,0" VerticalAlignment="Top" Click="chkShowPossibleItems_Click"/>
                 </Grid>
             </TabItem>
             <TabItem Header="Log">

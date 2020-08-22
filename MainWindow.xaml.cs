@@ -1049,5 +1049,13 @@ namespace RemnantSaveManager
             Properties.Settings.Default.Save();
             updateCurrentWorldAnalyzer();
         }
+
+        private void chkShowPossibleItems_Click(object sender, RoutedEventArgs e)
+        {
+            bool newValue = chkShowPossibleItems.IsChecked.HasValue ? chkShowPossibleItems.IsChecked.Value : false;
+            Properties.Settings.Default.ShowPossibleItems = newValue;
+            Properties.Settings.Default.Save();
+            updateCurrentWorldAnalyzer();
+        }
     }
 }

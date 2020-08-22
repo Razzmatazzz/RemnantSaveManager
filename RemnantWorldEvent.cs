@@ -22,6 +22,13 @@ namespace RemnantSaveManager
                 return string.Join("\n", mItems);
             }
         }
+        public string PossibleItems
+        {
+            get
+            {
+                return string.Join("\n", this.getPossibleItems());
+            }
+        }
         public enum ProcessMode { Campaign, Adventure, Subject2923 };
 
         public string getKey()
@@ -56,6 +63,12 @@ namespace RemnantSaveManager
                 }
             }
             mItems = missingItems;
+
+            if (possibleItems.Count == 0 && !GameInfo.Events.ContainsKey(this.getKey()) && !this.getKey().Equals("TraitBook") && !this.getKey().Equals("Simulacrum"))
+            {
+                RemnantItem ri = new RemnantItem("/UnknownPotentialLoot");
+                mItems.Add(ri);
+            }
         }
 
         public override string ToString()
@@ -424,7 +437,7 @@ namespace RemnantSaveManager
                     eventType = "Item Drop";
                 }
             }
-            else if (textLine.Contains("OverworldPOI") || textLine.Contains("OverWorldPOI"))
+            else if (textLine.Contains("OverworldPOI") || textLine.Contains("OverworlPOI"))
             {
                 eventType = "Point of Interest";
             }

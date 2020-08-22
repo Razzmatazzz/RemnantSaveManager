@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="33">
+<GameInfo version="34">
   <Zones>
     <Zone name="Earth"/>
     <Zone name="Rhom"/>
@@ -73,6 +73,7 @@
     <MainLocation key="Jungle Overworld Zone1" name="TheVerdantStrand"/>
     <MainLocation key="Jungle Overworld Zone2" name="TheScaldingGlade"/>
     <MainLocation key="Rural Overworld 01" name="Rural"/>
+    <MainLocation key="Rural Overworld 02" name="Rural"/>
     <MainLocation key="Snow Overworld Zone1" name="DrolniirWoods"/>
     <MainLocation key="Snow Overworld Zone2" name="DeepfrostExpanse"/>
   </MainLocations>
@@ -92,6 +93,9 @@
     </Event>
     <Event name="AggressorsBane">
       <Item>/Items/Trinkets/AggressorsBane</Item>
+    </Event>
+    <Event name="AlchemistsJewel" altname="Alchemist'sJewel">
+      <Item dlc="Subject 2923">/Items/Trinkets/Trinket_AlchemistsJewel</Item>
     </Event>
     <Event name="ArmorVault">
       <Item>/Items/Armor/Akari/Armor_Head_Akari</Item>
@@ -215,6 +219,9 @@
       <Item>/Items/Trinkets/HerosRing</Item>
       <Item>/Items/Traits/Trait_Fortification</Item>
     </Event>
+    <Event name="FiveFingeredRing">
+      <Item dlc="Subject 2923" notes="Random drop on rural Earth">/Items/Trinkets/FiveFingeredRing</Item>
+    </Event>
     <Event name="Flautist">
       <Item>/Items/Trinkets/Trinket_HeartOfTheWolf</Item>
       <Item>/Items/Traits/Trait_Swiftness</Item>
@@ -254,6 +261,9 @@
     <Event name="HeartSeeker">
       <Item>/Items/Trinkets/HeartSeeker</Item>
     </Event>
+    <Event name="Homestead">
+      <Item dlc="Subject 2923">/Items/Trinkets/VanguardRing</Item>
+    </Event>
     <Event name="HoundMaster">
       <Item>/Items/Mods/HowlersImmunity</Item>
     </Event>
@@ -284,6 +294,9 @@
       <Item>/Items/Armor/Slayer/Armor_Head_Slayer</Item>
       <Item>/Items/Armor/Slayer/Armor_Body_Slayer</Item>
       <Item>/Items/Armor/Slayer/Armor_Legs_Slayer</Item>
+    </Event>
+    <Event name="JanitorsWatch">
+      <Item dlc="Subject 2923" notes="Give Janitor's Watch to Clementine">/Items/Trinkets/AmberMoonstone</Item>
     </Event>
     <Event name="KeepersRing">
       <Item>/Items/Trinkets/Trinket_KeepersRing</Item>
@@ -412,7 +425,9 @@
       <Item>/Items/Armor/Twisted/Armor_Body_Twisted</Item>
       <Item>/Items/Armor/Twisted/Armor_Legs_Twisted</Item>
     </Event>
-    <Event name="Sagestone">
+    <Event name="Ruins">
+    </Event>
+    <Event name="SageStone">
       <Item>/Items/Trinkets/Trinket_Sagestone</Item>
     </Event>
     <Event name="Sentinel" altname="Raze">
@@ -420,6 +435,8 @@
     </Event>
     <Event name="SerpentsFang">
       <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/SerpentsFang</Item>
+    </Event>
+    <Event name="Settlement">
     </Event>
     <Event name="ShamanFlames">
       <Item dlc="Subject 2923">/Items/Trinkets/Trinket_PrismaticDiamondRing</Item>
@@ -554,6 +571,7 @@
       <Item>/Items/Traits/Trait_WillToLive</Item>
       <Item>/Items/Traits/Trait_WorldWalker</Item>
       <Item>/Items/Traits/Trait_Invoker</Item>
+      <Item notes="Obtain 25 weapon mods">/Items/Traits/Trait_FlashCaster</Item>
       <Item notes="Vault over 50 ledges">/Items/Traits/Trait_Climber</Item>
       <Item notes="Deal 5,000 damage to armored points on enemies">/Items/Traits/Trait_ArmorPiercer</Item>
       <Item notes="Get 100 kills using explosion damage">/Items/Traits/Trait_Demolitionist</Item>
@@ -562,10 +580,14 @@
       <Item>/Player/Emotes/Emote_Wave</Item>
       <Item mode="survival" notes="Reward for 5 consecutive boss kills">/Items/Armor/Adventurer/Armor_Head_Adventurer</Item>
       <Item mode="survival" notes="Reward for 10 consecutive boss kills">/Items/Weapons/Human/Melee/Sword/Weapon_HerosSword</Item>
-      <Item mode="survival" notes="Reward for 100 total boss kills">/Items/Trinkets/BlackRose</Item>
-      <Item mode="survival" notes="Reward for 75 total boss kills">/Items/Trinkets/DaredevilsCharm</Item>
       <Item mode="survival" notes="Reward for 25 total boss kills">/Items/Trinkets/Trinket_LoopOfProsperity</Item>
       <Item mode="survival" notes="Reward for 50 total boss kills">/Items/Trinkets/TalismanOfPerseverance</Item>
+      <Item mode="survival" notes="Reward for 75 total boss kills">/Items/Trinkets/DaredevilsCharm</Item>
+      <Item mode="survival" notes="Reward for 100 total boss kills">/Items/Trinkets/BlackRose</Item>
+      <Item mode="survival" notes="Reward for defeating all minibosses twice(?)">/Items/Trinkets/BlackCatBand</Item>
+      <Item mode="survival" notes="Reward for defeating all world bosses twice(?)">/Items/Trinkets/BrightSteelRing</Item>
+      <Item mode="survival" notes="Reward for defeating all bosses an unknown number of times">/Items/Trinkets/WhiteRose</Item>
+      <Item mode="survival" notes="Purchase 100 items">/Items/Trinkets/RingOfFlawlessBeauty</Item>
       <Item mode="hardcore" notes="Reward for defeating Clavinger/Harrow">/Items/Trinkets/AkariWarBand</Item>
       <Item mode="hardcore" notes="Reward for defeating Ixillis">/Items/Trinkets/Trinket_EmpoweringLoop</Item>
       <Item mode="hardcore" notes="Reward for defeating Singe/Ent">/Items/Trinkets/Trinket_ProvisionerRing</Item>
@@ -573,6 +595,9 @@
       <Item mode="hardcore" notes="Reward for defeating Dreamer">/Items/Trinkets/Trinket_NightmareSpiral</Item>
       <Item mode="hardcore" notes="Reward for defeating Dreamer">/Player/Emotes/Emote_HighFive</Item>
       <Item mode="hardcore" notes="High five emote another player">/Items/Trinkets/Trinket_BandOfAccord</Item>
+      <Item mode="hardcore" notes="Reward for defeating Brudvaak and Vargr" dlc="Subject 2923">/Items/Trinkets/RingOfPunisher</Item>
+      <Item mode="hardcore" notes="Reward for defeating Root Harbinger" dlc="Subject 2923">/Items/Trinkets/Trinket_ShatteredVertebrae</Item>
+      <Item mode="hardcore" notes="Reward for completing both campaigns" dlc="Subject 2923">/Items/Trinkets/Trinket_OnyxPendulum</Item>
     </Event>
     <Event name="VolatileGem">
       <Item dlc="Subject 2923" notes="Random drop on Reisum">/Items/Trinkets/VolatileGem</Item>

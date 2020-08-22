@@ -41,5 +41,8 @@
     <Setting Name="MissingItemColor" Type="System.String" Scope="User">
       <Value Profile="(Default)">Red</Value>
     </Setting>
+    <Setting Name="ShowPossibleItems" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

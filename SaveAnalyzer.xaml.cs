@@ -231,7 +231,25 @@ namespace RemnantSaveManager
                 {
                     e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, new SolidColorBrush(analyzerColor.textColor)));
                 }
-            } else
+            } else if (e.Column.Header.Equals("PossibleItems"))
+            {
+                if (!Properties.Settings.Default.ShowPossibleItems)
+                {
+                    e.Cancel = true;
+                    return;
+                }
+                e.Column.Header = "Possible Items";
+                e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.FontSizeProperty, ((fontSize / 3) * 2)));
+                if (Properties.Settings.Default.MissingItemColor.Equals("Red"))
+                {
+                    e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, new SolidColorBrush(Colors.Red)));
+                }
+                else
+                {
+                    e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, new SolidColorBrush(analyzerColor.textColor)));
+                }
+            }
+            else
             {
                 e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.FontSizeProperty, fontSize));
                 e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.ForegroundProperty, new SolidColorBrush(analyzerColor.textColor)));
