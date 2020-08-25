@@ -20,6 +20,7 @@ using System.Xml;
 using System.Threading;
 using System.Net;
 using RemnantSaveManager.Properties;
+using System.Windows.Markup;
 
 namespace RemnantSaveManager
 {

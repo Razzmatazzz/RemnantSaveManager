@@ -57,7 +57,7 @@
     <ManifestCertificateThumbprint>12BD9B325A4181593E058761B67810606FCB6F4D</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>RemnantBackupManager_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>RemnantSaveManager_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -69,7 +69,7 @@
     <ApplicationIcon>Resources\SaveAll.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>RemnantBackupManager.App</StartupObject>
+    <StartupObject>RemnantSaveManager.App</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -144,7 +144,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="RemnantBackupManager_TemporaryKey.pfx" />
+    <None Include="RemnantSaveManager_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />

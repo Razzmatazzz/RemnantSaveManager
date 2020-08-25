@@ -64,7 +64,7 @@
             </ToolBar>
         </ToolBarTray>
         <TabControl Background="#FFB9B9B9" Grid.Row="1" TabIndex="5">
-            <TabItem Header="Backups">
+            <TabItem x:Name="tabBackups" Header="Backups">
                 <DataGrid x:Name="dataBackups" BeginningEdit="DataBackups_BeginningEdit" SelectionMode="Single" CellEditEnding="DataBackups_CellEditEnding" SelectionChanged="DataBackups_SelectionChanged" AutoGeneratingColumn="DataBackups_AutoGeneratingColumn">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
@@ -82,7 +82,7 @@
                     </DataGrid.ContextMenu>
                 </DataGrid>
             </TabItem>
-            <TabItem Header="Settings">
+            <TabItem x:Name="tabSettings" Header="Settings">
                 <Grid Background="#FFE5E5E5">
                     <CheckBox x:Name="chkAutoBackup" Content="Automatically backup save files" ToolTip="Monitor Remnant save files and back them up when they're changed" HorizontalAlignment="Left" Margin="10,13,0,0" VerticalAlignment="Top" Click="ChkAutoBackup_Click" TabIndex="101"/>
                     <TextBox x:Name="txtBackupMins" HorizontalAlignment="Left" Height="23" Margin="10,33,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" LostFocus="TxtBackupMins_LostFocus" KeyUp="TxtBackupMins_KeyUp" TabIndex="102"/>
@@ -99,7 +99,7 @@
                     <CheckBox x:Name="chkShowPossibleItems" Content="Show possible items in analyzer" HorizontalAlignment="Left" Margin="322,145,0,0" VerticalAlignment="Top" Click="chkShowPossibleItems_Click"/>
                 </Grid>
             </TabItem>
-            <TabItem Header="Log">
+            <TabItem x:Name="tabLog" Header="Log">
                 <Grid>
                     <TextBox x:Name="txtLog" TextWrapping="Wrap" Background="White" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2"/>
                 </Grid>
