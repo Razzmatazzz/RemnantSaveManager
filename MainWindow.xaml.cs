@@ -47,6 +47,13 @@ namespace RemnantSaveManager
         private DateTime lastUpdateCheck;
         private int saveCount;
 
+        public enum LogType
+        {
+            Normal,
+            Success,
+            Error
+        }
+
         private bool ActiveSaveIsBackedUp { 
             get {
                 DateTime saveDate = File.GetLastWriteTime(saveDirPath + "\\profile.sav");
@@ -163,6 +170,7 @@ namespace RemnantSaveManager
             txtBackupMins.Text = Properties.Settings.Default.BackupMinutes.ToString();
             txtBackupLimit.Text = Properties.Settings.Default.BackupLimit.ToString();
             chkShowPossibleItems.IsChecked = Properties.Settings.Default.ShowPossibleItems;
+            chkAutoCheckUpdate.IsChecked = Properties.Settings.Default.AutoCheckUpdate;
 
             cmbMissingItemColor.Items.Add("Red");
             cmbMissingItemColor.Items.Add("White");
@@ -179,7 +187,10 @@ namespace RemnantSaveManager
             activeSave = new RemnantSave(saveDirPath);
             updateCurrentWorldAnalyzer();
 
-            checkForUpdate();
+            if (Properties.Settings.Default.AutoCheckUpdate)
+            {
+                checkForUpdate();
+            }
         }
 
         private void loadBackups()
@@ -269,10 +280,38 @@ namespace RemnantSaveManager
 
         public void logMessage(string msg)
         {
+            logMessage(msg, Colors.White);
+        }
+
+        public void logMessage(string msg, LogType lt)
+        {
+            Color color = Color.FromRgb(255,255,255);
+            if (lt == LogType.Success)
+            {
+                color = Color.FromRgb(0, 200, 0);
+            }
+            else if (lt == LogType.Error)
+            {
+                color = Color.FromRgb(200, 0, 0);
+            }
+            logMessage(msg, color);
+        }
+
+        public void logMessage(string msg, Color color)
+        {
             if (!suppressLog)
             {
-                txtLog.Text = txtLog.Text + Environment.NewLine + DateTime.Now.ToString() +": " + msg;
+                txtLog.Text = txtLog.Text + Environment.NewLine + DateTime.Now.ToString() + ": " + msg;
                 lblLastMessage.Content = msg;
+                lblLastMessage.Foreground = new SolidColorBrush(color);
+                if (color.Equals(Colors.White))
+                {
+                    lblLastMessage.FontWeight = FontWeights.Normal;
+                }
+                else
+                {
+                    lblLastMessage.FontWeight = FontWeights.Bold;
+                }
             }
             if (Properties.Settings.Default.CreateLogFile)
             {
@@ -340,7 +379,7 @@ namespace RemnantSaveManager
                 checkBackupLimit();
                 dataBackups.Items.Refresh();
                 this.ActiveSaveIsBackedUp = true;
-                logMessage($"Backup completed ({saveDate.ToString()})!");
+                logMessage($"Backup completed ({saveDate.ToString()})!", LogType.Success);
             }
             catch (IOException ex)
             {
@@ -367,43 +406,41 @@ namespace RemnantSaveManager
         {
             if (isRemnantRunning())
             {
-                logMessage("Exit the game before restoring a save backup.");
+                logMessage("Exit the game before restoring a save backup.", LogType.Error);
                 return;
             }
 
             if (dataBackups.SelectedItem == null)
             {
-                logMessage("Choose a backup to restore from the list!");
+                logMessage("Choose a backup to restore from the list!", LogType.Error);
                 return;
             }
 
-            if (this.ActiveSaveIsBackedUp)
+            if (!this.ActiveSaveIsBackedUp)
             {
-                saveWatcher.EnableRaisingEvents = false;
-                System.IO.DirectoryInfo di = new DirectoryInfo(saveDirPath);
-                foreach (FileInfo file in di.GetFiles())
-                {
-                    file.Delete();
-                }
-                SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
-                foreach (var file in Directory.GetFiles(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks))
-                    File.Copy(file, saveDirPath + "\\" + System.IO.Path.GetFileName(file));
-                foreach (SaveBackup saveBackup in listBackups)
-                {
-                    saveBackup.Active = false;
-                }
-                selectedBackup.Active = true;
-                updateCurrentWorldAnalyzer();
-                dataBackups.Items.Refresh();
-                btnRestore.IsEnabled = false;
-                btnRestore.Content = FindResource("RestoreGrey");
-                logMessage("Backup restored!");
-                saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
+                doBackup();
             }
-            else
+
+            saveWatcher.EnableRaisingEvents = false;
+            System.IO.DirectoryInfo di = new DirectoryInfo(saveDirPath);
+            foreach (FileInfo file in di.GetFiles())
             {
-                logMessage("Backup your current save before restoring another!");
+                file.Delete();
             }
+            SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
+            foreach (var file in Directory.GetFiles(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks))
+                File.Copy(file, saveDirPath + "\\" + System.IO.Path.GetFileName(file));
+            foreach (SaveBackup saveBackup in listBackups)
+            {
+                saveBackup.Active = false;
+            }
+            selectedBackup.Active = true;
+            updateCurrentWorldAnalyzer();
+            dataBackups.Items.Refresh();
+            btnRestore.IsEnabled = false;
+            btnRestore.Content = FindResource("RestoreGrey");
+            logMessage("Backup restored!", LogType.Success);
+            saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
         }
 
         private void ChkAutoBackup_Click(object sender, RoutedEventArgs e)
@@ -878,7 +915,7 @@ namespace RemnantSaveManager
                 {
                     this.Dispatcher.Invoke(() =>
                     {
-                        logMessage("Error checking for new version: " + ex.Message);
+                        logMessage("Error checking for new version: " + ex.Message, LogType.Error);
                     });
                 }
             }).Start();
@@ -982,13 +1019,13 @@ namespace RemnantSaveManager
         {
             if (isRemnantRunning())
             {
-                logMessage("Exit the game before restoring a save backup.");
+                logMessage("Exit the game before restoring a save backup.", LogType.Error);
                 return;
             }
 
             if (dataBackups.SelectedItem == null)
             {
-                logMessage("Choose a backup to restore from the list!");
+                logMessage("Choose a backup to restore from the list!", LogType.Error);
                 return;
             }
 
@@ -1005,33 +1042,32 @@ namespace RemnantSaveManager
                 }
             }
 
-            if (this.ActiveSaveIsBackedUp)
+            if (!this.ActiveSaveIsBackedUp)
             {
-                saveWatcher.EnableRaisingEvents = false;
-                System.IO.DirectoryInfo di = new DirectoryInfo(saveDirPath);
-                foreach (FileInfo file in di.GetFiles("save_?.sav"))
-                {
-                    file.Delete();
-                }
-                di = new DirectoryInfo(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks);
-                foreach (FileInfo file in di.GetFiles("save_?.sav"))
-                    File.Copy(file.FullName, saveDirPath + "\\" + file.Name);
-                foreach (SaveBackup saveBackup in listBackups)
-                {
-                    saveBackup.Active = false;
-                }
-                updateCurrentWorldAnalyzer();
-                dataBackups.Items.Refresh();
-                this.ActiveSaveIsBackedUp = false;
-                btnBackup.IsEnabled = false;
-                btnBackup.Content = FindResource("SaveGrey");
-                logMessage("Backup world data restored!");
-                saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
+                doBackup();
             }
-            else
+
+            saveWatcher.EnableRaisingEvents = false;
+            System.IO.DirectoryInfo di = new DirectoryInfo(saveDirPath);
+            foreach (FileInfo file in di.GetFiles("save_?.sav"))
             {
-                logMessage("Backup your current save before restoring another!");
+                file.Delete();
             }
+            di = new DirectoryInfo(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks);
+            foreach (FileInfo file in di.GetFiles("save_?.sav"))
+                File.Copy(file.FullName, saveDirPath + "\\" + file.Name);
+            foreach (SaveBackup saveBackup in listBackups)
+            {
+                saveBackup.Active = false;
+            }
+            File.SetLastWriteTime(saveDirPath + "\\profile.sav", DateTime.Now);
+            updateCurrentWorldAnalyzer();
+            dataBackups.Items.Refresh();
+            this.ActiveSaveIsBackedUp = false;
+            btnBackup.IsEnabled = false;
+            btnBackup.Content = FindResource("SaveGrey");
+            logMessage("Backup world data restored!", LogType.Success);
+            saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
         }
 
         private void chkCreateLogFile_Click(object sender, RoutedEventArgs e)
@@ -1058,6 +1094,13 @@ namespace RemnantSaveManager
             Properties.Settings.Default.ShowPossibleItems = newValue;
             Properties.Settings.Default.Save();
             updateCurrentWorldAnalyzer();
+        }
+
+        private void chkAutoCheckUpdate_Click(object sender, RoutedEventArgs e)
+        {
+            bool newValue = chkAutoCheckUpdate.IsChecked.HasValue ? chkAutoCheckUpdate.IsChecked.Value : false;
+            Properties.Settings.Default.AutoCheckUpdate = newValue;
+            Properties.Settings.Default.Save();
         }
     }
 }

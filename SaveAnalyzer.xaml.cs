@@ -238,7 +238,7 @@ namespace RemnantSaveManager
                     e.Cancel = true;
                     return;
                 }
-                e.Column.Header = "Possible Items";
+                e.Column.Header = "All Items";
                 e.Column.CellStyle.Setters.Add(new Setter(DataGridCell.FontSizeProperty, ((fontSize / 3) * 2)));
                 if (Properties.Settings.Default.MissingItemColor.Equals("Red"))
                 {
