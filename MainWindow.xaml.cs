@@ -285,7 +285,7 @@ namespace RemnantSaveManager
 
         public void logMessage(string msg, LogType lt)
         {
-            Color color = Color.FromRgb(255,255,255);
+            Color color = Colors.White;
             if (lt == LogType.Success)
             {
                 color = Color.FromRgb(0, 200, 0);
