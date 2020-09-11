@@ -510,7 +510,7 @@
       <Item>/Items/Trinkets/TalismanOfAnimosity</Item>
     </Event>
     <Event name="TalismanOfPerseverance">
-      <Item>/Items/Trinkets/TalismanOfPerseverance</Item>
+      <Item note="According to devs, can also be a random drop on Yaesha">/Items/Trinkets/TalismanOfPerseverance</Item>
     </Event>
     <Event name="TerrorMargin">
       <Item dlc="Subject 2923" notes="Random drop on Rural Earth">/Items/Trinkets/TerrorMargin</Item>
