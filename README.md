@@ -6,7 +6,7 @@ You can also analyze the world to see what events rolled for your campaign or ad
 Download the latest .exe from the Releases page:
 https://github.com/Razzmatazzz/RemnantSaveManager/releases
 
-For images of the interface, check out the wiki:
+For an explanation of the interface, check out the wiki:
 https://github.com/Razzmatazzz/RemnantSaveManager/wiki
 
 Requires .NET Framework 4.7.2 to run. Download here:
