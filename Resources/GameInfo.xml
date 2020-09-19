@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="38">
+<GameInfo version="39">
   <Zones>
     <Zone name="Earth"/>
     <Zone name="Rhom"/>
@@ -510,7 +510,7 @@
       <Item>/Items/Trinkets/TalismanOfAnimosity</Item>
     </Event>
     <Event name="TalismanOfPerseverance">
-      <Item note="According to devs, can also be a random drop on Yaesha">/Items/Trinkets/TalismanOfPerseverance</Item>
+      <Item notes="According to devs, can also be a random drop on Yaesha (unconfirmed)">/Items/Trinkets/TalismanOfPerseverance</Item>
     </Event>
     <Event name="TerrorMargin">
       <Item dlc="Subject 2923" notes="Random drop on Rural Earth">/Items/Trinkets/TerrorMargin</Item>
@@ -646,9 +646,9 @@
     </Event>
     <Event name="WarningTotems">
       <Item dlc="Subject 2923">/Items/Trinkets/BloodlettersInsignia</Item>
-      <Item dlc="Subject 2923" note="Destroy some unactivated and some activated totems">/Items/Trinkets/JuggernautBand</Item>
-      <Item dlc="Subject 2923" note="Destroy all totems without activating them">/Items/Trinkets/Trinket_EvokersSeal</Item>
-      <Item dlc="Subject 2923" note="Destroy all totems after activating them">/Items/Trinkets/VulcansDetonator</Item>
+      <Item dlc="Subject 2923" notes="Destroy some unactivated and some activated totems">/Items/Trinkets/JuggernautBand</Item>
+      <Item dlc="Subject 2923" notes="Destroy all totems without activating them">/Items/Trinkets/Trinket_EvokersSeal</Item>
+      <Item dlc="Subject 2923" notes="Destroy all totems after activating them">/Items/Trinkets/VulcansDetonator</Item>
     </Event>
     <Event name="Wisp" altname="CircletHatchery">
       <Item>/Items/Trinkets/SoulEmber</Item>
