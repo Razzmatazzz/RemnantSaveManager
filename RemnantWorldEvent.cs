@@ -228,7 +228,7 @@ namespace RemnantSaveManager
                                     beetle.setMissingItems(character);
                                     zoneEvents[zone].Add(beetle);
                                 }
-                                else if (eventName.Equals("BarnSiege"))
+                                else if (eventName.Equals("BarnSiege") || eventName.Equals("Homestead"))
                                 {
                                     RemnantWorldEvent wardPrime = new RemnantWorldEvent();
                                     wardPrime.setKey("WardPrime");
