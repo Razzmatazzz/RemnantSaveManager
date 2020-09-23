@@ -82,7 +82,7 @@ namespace RemnantSaveManager
             Dictionary<string, Dictionary<string, string>> zones = new Dictionary<string, Dictionary<string, string>>();
             Dictionary<string, List<RemnantWorldEvent>> zoneEvents = new Dictionary<string, List<RemnantWorldEvent>>();
             List<RemnantWorldEvent> churchEvents = new List<RemnantWorldEvent>();
-            foreach (string z in GameInfo.Zones)
+            foreach (string z in GameInfo.Zones.Keys)
             {
                 zones.Add(z, new Dictionary<string, string>());
                 zoneEvents.Add(z, new List<RemnantWorldEvent>());
@@ -192,7 +192,12 @@ namespace RemnantSaveManager
                             {
                                 zones[zone][eventType] += ", " + eventName;
                                 List<string> locationList = new List<string>();
-                                locationList.Add(zone);
+                                string zonelabel = zone;
+                                if (GameInfo.Zones.ContainsKey(zone))
+                                {
+                                    zonelabel = GameInfo.Zones[zone];
+                                }
+                                locationList.Add(zonelabel);
                                 if (currentMainLocation != null) locationList.Add(Regex.Replace(currentMainLocation, "([a-z])([A-Z])", "$1 $2"));
                                 if (currentSublocation != null) locationList.Add(Regex.Replace(currentSublocation, "([a-z])([A-Z])", "$1 $2"));
                                 se.Location = string.Join(": ", locationList);

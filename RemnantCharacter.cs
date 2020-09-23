@@ -133,11 +133,18 @@ namespace RemnantSaveManager
                 for (var i = 1; i < characters.Length; i++)
                 {
                     RemnantCharacter cd = new RemnantCharacter();
-                    cd.Archetype = "Undefined";
+                    cd.Archetype = GameInfo.Archetypes["Undefined"];
                     Match archetypeMatch = new Regex(@"/Game/_Core/Archetypes/[a-zA-Z_]+").Match(characters[i-1]);
                     if (archetypeMatch.Success)
                     {
-                        cd.Archetype = archetypeMatch.Value.Replace("/Game/_Core/Archetypes/", "").Split('_')[1];
+                        string archetype = archetypeMatch.Value.Replace("/Game/_Core/Archetypes/", "").Split('_')[1];
+                        if (GameInfo.Archetypes.ContainsKey(archetype))
+                        {
+                            cd.Archetype = GameInfo.Archetypes[archetype];
+                        } else
+                        {
+                            cd.Archetype = archetype;
+                        }
                     }
                     cd.savePath = saveFolderPath;
                     List<string> saveItems = new List<string>();

@@ -12,11 +12,12 @@ namespace RemnantSaveManager
     class GameInfo
     {
         public static event EventHandler<GameInfoUpdateEventArgs> GameInfoUpdate;
-        private static List<string> zones = new List<string>();
+        private static Dictionary<string, string> zones = new Dictionary<string, string>();
         private static Dictionary<string, string> events = new Dictionary<string, string>();
         private static Dictionary<string, RemnantItem[]> eventItem = new Dictionary<string, RemnantItem[]>();
         private static Dictionary<string, string> subLocations = new Dictionary<string, string>();
         private static Dictionary<string, string> mainLocations = new Dictionary<string, string>();
+        private static Dictionary<string, string> archetypes = new Dictionary<string, string>();
         public static Dictionary<string, string> Events
         {
             get
@@ -41,7 +42,7 @@ namespace RemnantSaveManager
                 return eventItem;
             }
         }
-        public static List<string> Zones
+        public static Dictionary<string,string> Zones
         {
             get
             {
@@ -77,6 +78,19 @@ namespace RemnantSaveManager
             }
         }
 
+        public static Dictionary<string, string> Archetypes
+        {
+            get
+            {
+                if (archetypes.Count == 0)
+                {
+                    RefreshGameInfo();
+                }
+
+                return archetypes;
+            }
+        }
+
         public static void RefreshGameInfo()
         {
             zones.Clear();
@@ -84,6 +98,7 @@ namespace RemnantSaveManager
             eventItem.Clear();
             subLocations.Clear();
             mainLocations.Clear();
+            archetypes.Clear();
             string eventName = null;
             string altEventName = null;
             string itemMode = null;
@@ -114,7 +129,7 @@ namespace RemnantSaveManager
                             itemAltName = reader.GetAttribute("altname");
                         } else if (reader.Name.Equals("Zone"))
                         {
-                            zones.Add(reader.GetAttribute("name"));
+                            zones.Add(reader.GetAttribute("key"), reader.GetAttribute("name"));
                         }
                         else if (reader.Name.Equals("SubLocation"))
                         {
@@ -124,7 +139,11 @@ namespace RemnantSaveManager
                         {
                             mainLocations.Add(reader.GetAttribute("key"), reader.GetAttribute("name"));
                         }
-                        break;
+                        else if (reader.Name.Equals("Archetype"))
+                        {
+                            archetypes.Add(reader.GetAttribute("key"), reader.GetAttribute("name"));
+                        }
+                            break;
                     case XmlNodeType.Text:
                         if (eventName != null)
                         {

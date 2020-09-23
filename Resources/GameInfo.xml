@@ -1,11 +1,17 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
-<GameInfo version="39">
+<GameInfo version="40">
+  <Archetypes>
+    <Archetype key="Undefined" name="Undefined"/>
+    <Archetype key="Scrapper" name="Scrapper"/>
+    <Archetype key="Cultist" name="Cultist"/>
+    <Archetype key="Hunter" name="Hunter"/>
+  </Archetypes>
   <Zones>
-    <Zone name="Earth"/>
-    <Zone name="Rhom"/>
-    <Zone name="Corsus"/>
-    <Zone name="Yaesha"/>
-    <Zone name="Reisum"/>
+    <Zone key="Earth" name="Earth"/>
+    <Zone key="Rhom" name="Rhom"/>
+    <Zone key="Corsus" name="Corsus"/>
+    <Zone key="Yaesha" name="Yaesha"/>
+    <Zone key="Reisum" name="Reisum"/>
   </Zones>
   <SubLocations>
     <SubLocation eventName="ArmorVault" location="VaultOfTheHeralds"/>
