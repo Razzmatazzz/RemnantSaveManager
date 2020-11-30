@@ -9,7 +9,7 @@ https://github.com/Razzmatazzz/RemnantSaveManager/releases
 For an explanation of the interface, check out the wiki:
 https://github.com/Razzmatazzz/RemnantSaveManager/wiki
 
-Requires .NET Framework 4.7.2 to run. Download here:
+Requires .NET Framework 4.7.2 Runtime. Download here:
 https://dotnet.microsoft.com/download/dotnet-framework/net472
 
 Credit to hzla for the original online world analyzer:
