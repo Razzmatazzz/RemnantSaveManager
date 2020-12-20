@@ -89,15 +89,16 @@
                     <Label Content="Minutes between backups" ToolTip="Minimum amount of time that must have passed since last backup before a new backup is made" HorizontalAlignment="Left" Margin="90,33,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtBackupLimit" HorizontalAlignment="Left" Height="23" Margin="10,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" KeyUp="TxtBackupLimit_KeyUp" LostFocus="TxtBackupLimit_LostFocus" TabIndex="103"/>
                     <Label Content="Backups to keep (0 for unlimited)" ToolTip="When your number of backups reaches this number, backups will automatically be deleted starting with the oldest" HorizontalAlignment="Left" Margin="90,61,0,0" VerticalAlignment="Top" />
-                    <Label Content="Backup Folder" ToolTip="Where your save backups should be stored" HorizontalAlignment="Left" Margin="10,92,0,0" VerticalAlignment="Top"/>
-                    <TextBox x:Name="txtBackupFolder" Height="23" Margin="193,95,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True" TabIndex="-1"/>
-                    <Button x:Name="btnBackupFolder" Content="Choose" HorizontalAlignment="Left" Margin="113,95,0,0" VerticalAlignment="Top" Click="BtnBackupFolder_Click" MinWidth="75" MinHeight="20" TabIndex="104" Height="23"/>
-                    <Button x:Name="btnGameInfoUpdate" Content="Check for update" ToolTip="Check to see if there's a new version of this program available" HorizontalAlignment="Left" Margin="10,190,0,0" VerticalAlignment="Top" Click="btnGameInfoUpdate_Click" MinWidth="113" MinHeight="20" TabIndex="106" Height="23"/>
-                    <CheckBox x:Name="chkCreateLogFile" Content="Create log file" ToolTip="Whether a log.txt file should be created" HorizontalAlignment="Left" Margin="10,123,0,0" VerticalAlignment="Top" Click="chkCreateLogFile_Click" TabIndex="105"/>
-                    <ComboBox x:Name="cmbMissingItemColor" HorizontalAlignment="Left" Margin="10,143,0,0" VerticalAlignment="Top" Width="113"/>
-                    <Label Content="World analzyer missing item color" HorizontalAlignment="Left" Margin="128,139,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="chkShowPossibleItems" Content="Show all items column in analyzer" HorizontalAlignment="Left" Margin="322,145,0,0" VerticalAlignment="Top" Click="chkShowPossibleItems_Click"/>
-                    <CheckBox x:Name="chkAutoCheckUpdate" Content="Automatically check for program update" HorizontalAlignment="Left" Margin="10,170,0,0" VerticalAlignment="Top" Click="chkAutoCheckUpdate_Click"/>
+                    <TextBox x:Name="txtBackupFolder" ToolTip="Where your save backups are stored" Height="23" Margin="105,126,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True" TabIndex="-1" IsTabStop="False"/>
+                    <Button x:Name="btnBackupFolder" Content="Backup Folder" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Click="BtnBackupFolder_Click" MinWidth="75" MinHeight="20" TabIndex="104" Height="23" Width="90"/>
+                    <Button x:Name="btnGameInfoUpdate" Content="Check for update" ToolTip="Check to see if there's a new version of this program available" HorizontalAlignment="Left" Margin="10,221,0,0" VerticalAlignment="Top" Click="btnGameInfoUpdate_Click" MinWidth="113" MinHeight="20" TabIndex="106" Height="23"/>
+                    <CheckBox x:Name="chkCreateLogFile" Content="Create log file" ToolTip="Whether a log.txt file should be created" HorizontalAlignment="Left" Margin="10,154,0,0" VerticalAlignment="Top" Click="chkCreateLogFile_Click" TabIndex="105"/>
+                    <ComboBox x:Name="cmbMissingItemColor" HorizontalAlignment="Left" Margin="10,174,0,0" VerticalAlignment="Top" Width="113"/>
+                    <Label Content="World analzyer missing item color" HorizontalAlignment="Left" Margin="128,170,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="chkShowPossibleItems" Content="Show all items column in analyzer" HorizontalAlignment="Left" Margin="322,176,0,0" VerticalAlignment="Top" Click="chkShowPossibleItems_Click"/>
+                    <CheckBox x:Name="chkAutoCheckUpdate" Content="Automatically check for program update" HorizontalAlignment="Left" Margin="10,201,0,0" VerticalAlignment="Top" Click="chkAutoCheckUpdate_Click"/>
+                    <Button x:Name="btnSaveFolder" Content="Save Folder" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="90" Height="23" ToolTip="Only change if you know what you're doing!" Click="btnSaveFolder_Click"/>
+                    <TextBox x:Name="txtSaveFolder" Height="23" Margin="105,93,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="6" IsTabStop="False" IsReadOnly="True" ToolTip="Where your Remnant saves are located"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabLog" Header="Log">

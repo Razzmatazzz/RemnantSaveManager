@@ -31,7 +31,8 @@ namespace RemnantSaveManager
     {
         private static string defaultBackupFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Remnant\\Saved\\Backups";
         private static string backupDirPath;
-        private static string saveDirPath = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Remnant\\Saved\\SaveGames";
+        private static string defaultSaveFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Remnant\\Saved\\SaveGames";
+        private static string saveDirPath;
         private List<SaveBackup> listBackups;
         private Boolean suppressLog;
         private FileSystemWatcher saveWatcher;
@@ -103,6 +104,18 @@ namespace RemnantSaveManager
                 Properties.Settings.Default.Save();
             }
 
+            if (Properties.Settings.Default.SaveFolder.Length == 0)
+            {
+                logMessage("Save folder not set; reverting to default.");
+                Properties.Settings.Default.SaveFolder = defaultSaveFolder;
+                Properties.Settings.Default.Save();
+            }
+            else if (!Directory.Exists(Properties.Settings.Default.SaveFolder) && !Properties.Settings.Default.SaveFolder.Equals(defaultSaveFolder))
+            {
+                logMessage("Save folder (" + Properties.Settings.Default.SaveFolder + ") not found; reverting to default.");
+                Properties.Settings.Default.SaveFolder = defaultSaveFolder;
+                Properties.Settings.Default.Save();
+            }
             if (Properties.Settings.Default.BackupFolder.Length == 0)
             {
                 logMessage("Backup folder not set; reverting to default.");
@@ -114,7 +127,9 @@ namespace RemnantSaveManager
                 logMessage("Backup folder ("+ Properties.Settings.Default.BackupFolder + ") not found; reverting to default.");
                 Properties.Settings.Default.BackupFolder = defaultBackupFolder;
                 Properties.Settings.Default.Save();
-            } 
+            }
+            saveDirPath = Properties.Settings.Default.SaveFolder;
+            txtSaveFolder.Text = saveDirPath;
             backupDirPath = Properties.Settings.Default.BackupFolder;
             txtBackupFolder.Text = backupDirPath;
 
@@ -1101,6 +1116,40 @@ namespace RemnantSaveManager
             bool newValue = chkAutoCheckUpdate.IsChecked.HasValue ? chkAutoCheckUpdate.IsChecked.Value : false;
             Properties.Settings.Default.AutoCheckUpdate = newValue;
             Properties.Settings.Default.Save();
+        }
+
+        private void btnSaveFolder_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog openFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
+            openFolderDialog.SelectedPath = saveDirPath;
+            openFolderDialog.Description = "Select where your Remnant saves are stored.";
+            System.Windows.Forms.DialogResult result = openFolderDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string folderName = openFolderDialog.SelectedPath;
+                if (folderName.Equals(backupDirPath))
+                {
+                    MessageBox.Show("Please select a folder other than the backup folder.",
+                                     "Invalid Folder", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK);
+                    return;
+                }
+                if (folderName.Equals(saveDirPath))
+                {
+                    return;
+                }
+                if (!RemnantSave.ValidSaveFolder(folderName))
+                {
+                    MessageBox.Show("Please select the folder containing your Remnant save.",
+                                     "Invalid Folder", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK);
+                    return;
+                }
+                txtSaveFolder.Text = folderName;
+                saveDirPath = folderName;
+                Properties.Settings.Default.SaveFolder = folderName;
+                Properties.Settings.Default.Save();
+                activeSave = new RemnantSave(saveDirPath);
+                updateCurrentWorldAnalyzer();
+            }
         }
     }
 }
