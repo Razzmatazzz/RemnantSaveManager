@@ -32,6 +32,7 @@ namespace RemnantSaveManager
         private static string defaultBackupFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Remnant\\Saved\\Backups";
         private static string backupDirPath;
         private static string defaultSaveFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Remnant\\Saved\\SaveGames";
+        private static string defaultWgsSaveFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Packages\PerfectWorldEntertainment.RemnantFromtheAshes_jrajkyc4tsa6w\SystemAppData\wgs";
         private static string saveDirPath;
         private List<SaveBackup> listBackups;
         private Boolean suppressLog;
@@ -57,7 +58,7 @@ namespace RemnantSaveManager
 
         private bool ActiveSaveIsBackedUp { 
             get {
-                DateTime saveDate = File.GetLastWriteTime(saveDirPath + "\\profile.sav");
+                DateTime saveDate = File.GetLastWriteTime(new RemnantSave(saveDirPath).SaveProfilePath);
                 for (int i = 0; i < listBackups.Count; i++)
                 {
                     DateTime backupDate = listBackups.ToArray()[i].SaveDate;
@@ -108,6 +109,21 @@ namespace RemnantSaveManager
             {
                 logMessage("Save folder not set; reverting to default.");
                 Properties.Settings.Default.SaveFolder = defaultSaveFolder;
+                if (!Directory.Exists(defaultSaveFolder))
+                {
+                    if (Directory.Exists(defaultWgsSaveFolder))
+                    {
+                        var dirs = Directory.GetDirectories(defaultWgsSaveFolder);
+                        foreach (var dir in dirs)
+                        {
+                            if (dir != "t" && Directory.GetDirectories(dir).Length > 0)
+                            {
+                                var saveDir = Directory.GetDirectories(dir)[0];
+                                Properties.Settings.Default.SaveFolder = saveDir;
+                            }
+                        }
+                    }
+                }
                 Properties.Settings.Default.Save();
             }
             else if (!Directory.Exists(Properties.Settings.Default.SaveFolder) && !Properties.Settings.Default.SaveFolder.Equals(defaultSaveFolder))
@@ -129,6 +145,11 @@ namespace RemnantSaveManager
                 Properties.Settings.Default.Save();
             }
             saveDirPath = Properties.Settings.Default.SaveFolder;
+            if (!Directory.Exists(saveDirPath))
+            {
+                logMessage("Save folder not found, creating...");
+                Directory.CreateDirectory(saveDirPath);
+            }
             txtSaveFolder.Text = saveDirPath;
             backupDirPath = Properties.Settings.Default.BackupFolder;
             txtBackupFolder.Text = backupDirPath;
@@ -147,7 +168,17 @@ namespace RemnantSaveManager
             saveWatcher.NotifyFilter = NotifyFilters.LastWrite;
 
             // Only watch sav files.
-            saveWatcher.Filter = "profile.sav";
+            activeSave = new RemnantSave(saveDirPath);
+            if (activeSave.SaveType == RemnantSaveType.Normal)
+            {
+                saveWatcher.Filter = "profile.sav";
+            }
+            else
+            {
+                menuRestoreWorlds.Visibility = Visibility.Collapsed;
+                btnRestore.IsEnabled = false;
+                saveWatcher.Filter = "container.*";
+            }
 
             // Add event handlers.
             saveWatcher.Changed += OnSaveFileChanged;
@@ -176,7 +207,7 @@ namespace RemnantSaveManager
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
             txtLog.IsReadOnly = true;
-            logMessage("Current save date: " + File.GetLastWriteTime(saveDirPath + "\\profile.sav").ToString());
+            logMessage("Current save date: " + File.GetLastWriteTime(activeSave.SaveProfilePath).ToString());
             //logMessage("Backups folder: " + backupDirPath);
             //logMessage("Save folder: " + saveDirPath);
             loadBackups();
@@ -199,7 +230,6 @@ namespace RemnantSaveManager
             cmbMissingItemColor.SelectionChanged += cmbMissingItemColorSelectionChanged;
 
             saveWatcher.EnableRaisingEvents = true;
-            activeSave = new RemnantSave(saveDirPath);
             updateCurrentWorldAnalyzer();
 
             if (Properties.Settings.Default.AutoCheckUpdate)
@@ -281,16 +311,11 @@ namespace RemnantSaveManager
 
         private Boolean backupActive(SaveBackup saveBackup)
         {
-            if (DateTime.Compare(saveBackup.SaveDate, File.GetLastWriteTime(saveDirPath + "\\profile.sav")) == 0)
+            if (DateTime.Compare(saveBackup.SaveDate, File.GetLastWriteTime(activeSave.SaveProfilePath)) == 0)
             {
                 return true;
             }
             return false;
-        }
-
-        private DateTime getBackupDateTime(string backupFolder)
-        {
-            return File.GetLastWriteTime(backupDirPath + "\\" + backupFolder + "\\profile.sav");
         }
 
         public void logMessage(string msg)
@@ -346,12 +371,13 @@ namespace RemnantSaveManager
             try
             {
                 int existingSaveIndex = -1;
-                DateTime saveDate = File.GetLastWriteTime(saveDirPath + "\\profile.sav");
+                DateTime saveDate = File.GetLastWriteTime(activeSave.SaveProfilePath);
                 string backupFolder = backupDirPath + "\\" + saveDate.Ticks;
                 if (!Directory.Exists(backupFolder))
                 {
                     Directory.CreateDirectory(backupFolder);
-                } else if (RemnantSave.ValidSaveFolder(backupFolder))
+                } 
+                else if (RemnantSave.ValidSaveFolder(backupFolder))
                 {
                     for (int i=listBackups.Count-1; i >= 0; i--)
                     {
@@ -466,6 +492,10 @@ namespace RemnantSaveManager
 
         private void OnSaveFileChanged(object source, FileSystemEventArgs e)
         {
+            if (activeSave.SaveType == RemnantSaveType.WindowsStore)
+            {
+                activeSave = new RemnantSave(saveDirPath);
+            }
             // Specify what is done when a file is changed, created, or deleted.
             this.Dispatcher.Invoke(() =>
             {
@@ -980,19 +1010,16 @@ namespace RemnantSaveManager
                         List<String> backupFiles = Directory.GetDirectories(backupDirPath).ToList();
                         foreach (string file in backupFiles)
                         {
-                            if (File.Exists(file+@"\profile.sav"))
+                            string subFolderName = file.Substring(file.LastIndexOf(@"\"));
+                            Directory.CreateDirectory(folderName + subFolderName);
+                            Directory.SetCreationTime(folderName + subFolderName, Directory.GetCreationTime(file));
+                            Directory.SetLastWriteTime(folderName + subFolderName, Directory.GetCreationTime(file));
+                            foreach (string filename in Directory.GetFiles(file))
                             {
-                                string subFolderName = file.Substring(file.LastIndexOf(@"\"));
-                                Directory.CreateDirectory(folderName + subFolderName);
-                                Directory.SetCreationTime(folderName + subFolderName, Directory.GetCreationTime(file));
-                                Directory.SetLastWriteTime(folderName + subFolderName, Directory.GetCreationTime(file));
-                                foreach (string filename in Directory.GetFiles(file))
-                                {
-                                    File.Copy(filename, filename.Replace(backupDirPath, folderName));
-                                }
-                                Directory.Delete(file, true);
-                                //Directory.Move(file, folderName + subFolderName);
+                                File.Copy(filename, filename.Replace(backupDirPath, folderName));
                             }
+                            Directory.Delete(file, true);
+                            //Directory.Move(file, folderName + subFolderName);
                         }
                     }
                 }
@@ -1075,7 +1102,7 @@ namespace RemnantSaveManager
             {
                 saveBackup.Active = false;
             }
-            File.SetLastWriteTime(saveDirPath + "\\profile.sav", DateTime.Now);
+            File.SetLastWriteTime(activeSave.SaveProfilePath, DateTime.Now);
             updateCurrentWorldAnalyzer();
             dataBackups.Items.Refresh();
             this.ActiveSaveIsBackedUp = false;

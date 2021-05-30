@@ -9,33 +9,60 @@ namespace RemnantSaveManager
 {
     public class RemnantSave
     {
-        private string profilePath;
+        private string savePath;
+        private string profileFile;
         private List<RemnantCharacter> saveCharacters;
+        private RemnantSaveType saveType;
+        private WindowsSave winSave;
 
-        public RemnantSave(string saveProfilePath)
+        public RemnantSave(string path)
         {
-            if (!saveProfilePath.EndsWith("profile.sav"))
+            if (!Directory.Exists(path))
             {
-                if (File.Exists(saveProfilePath+"\\profile.sav"))
-                {
-                    saveProfilePath += "\\profile.sav";
-                } else
-                {
-                    throw new Exception(saveProfilePath + " is not a valid save.");
-                }
-            } else if (!File.Exists(saveProfilePath)) {
-                throw new Exception(saveProfilePath + " does not exist.");
+                throw new Exception(path + " does not exist.");
             }
-            this.profilePath = saveProfilePath;
-            saveCharacters = RemnantCharacter.GetCharactersFromSave(this.SaveFolderPath, RemnantCharacter.CharacterProcessingMode.NoEvents);
+
+            if (File.Exists(path + "\\profile.sav"))
+            {
+                this.saveType = RemnantSaveType.Normal;
+                this.profileFile = "profile.sav";
+            }
+            else
+            {
+                var winFiles = Directory.GetFiles(path, "container.*");
+                if (winFiles.Length > 0)
+                {
+                    this.winSave = new WindowsSave(winFiles[0]);
+                    this.saveType = RemnantSaveType.WindowsStore;
+                    profileFile = winSave.Profile;
+                }
+                else
+                {
+                    throw new Exception(path + " is not a valid save.");
+                }
+            }
+            this.savePath = path;
+            saveCharacters = RemnantCharacter.GetCharactersFromSave(this, RemnantCharacter.CharacterProcessingMode.NoEvents);
         }
 
         public string SaveFolderPath
         {
             get
             {
-                return this.profilePath.Replace("\\profile.sav", "");
+                return this.savePath;
             }
+        }
+
+        public string SaveProfilePath
+        {
+            get
+            {
+                return this.savePath + $@"\{this.profileFile}";
+            }
+        }
+        public RemnantSaveType SaveType
+        {
+            get { return this.saveType; }
         }
 
         public List<RemnantCharacter> Characters
@@ -45,24 +72,58 @@ namespace RemnantSaveManager
                 return saveCharacters;
             }
         }
+        public string[] WorldSaves
+        {
+            get
+            {
+                if (this.saveType == RemnantSaveType.Normal)
+                {
+                    return Directory.GetFiles(SaveFolderPath, "save_*.sav");
+                }
+                else
+                {
+                    System.Console.WriteLine(this.winSave.Worlds.ToArray());
+                    return this.winSave.Worlds.ToArray();
+                }
+            }
+        }
 
         public static Boolean ValidSaveFolder(String folder)
         {
-            if (!File.Exists(folder + "\\profile.sav"))
+            if (!Directory.Exists(folder))
             {
                 return false;
             }
-            return true;
+
+            if (File.Exists(folder + "\\profile.sav"))
+            {
+                return true;
+            }
+            else
+            {
+                var winFiles = Directory.GetFiles(folder, "container.*");
+                if (winFiles.Length > 0)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
 
         public void UpdateCharacters()
         {
-            saveCharacters = RemnantCharacter.GetCharactersFromSave(this.SaveFolderPath);
+            saveCharacters = RemnantCharacter.GetCharactersFromSave(this);
         }
 
         public void UpdateCharacters(RemnantCharacter.CharacterProcessingMode mode)
         {
-            saveCharacters = RemnantCharacter.GetCharactersFromSave(this.SaveFolderPath, mode);
+            saveCharacters = RemnantCharacter.GetCharactersFromSave(this, mode);
         }
+    }
+
+    public enum RemnantSaveType
+    {
+        Normal,
+        WindowsStore
     }
 }

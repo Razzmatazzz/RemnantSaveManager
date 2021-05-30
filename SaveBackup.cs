@@ -177,7 +177,7 @@ namespace RemnantSaveManager
         {
             get
             {
-                return File.GetLastWriteTime(save.SaveFolderPath + "\\profile.sav");
+                return File.GetLastWriteTime(save.SaveProfilePath);
             }
         }
     }

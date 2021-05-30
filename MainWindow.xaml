@@ -32,37 +32,43 @@
     </Window.Resources>
     <Grid Background="#FF4B4B4B">
         <Grid.RowDefinitions>
-            <RowDefinition x:Name="ForToolbar"  Height="37" />
+            <RowDefinition x:Name="ForToolbar"  Height="Auto" />
             <RowDefinition x:Name="ForBackups"  Height="*" />
-            <RowDefinition x:Name="ForStatusbar" Height="37" />
+            <RowDefinition x:Name="ForStatusbar" Height="Auto" />
         </Grid.RowDefinitions>
-        <ToolBarTray Background="{x:Null}" Grid.Row="0">
-            <ToolBar Band="1" BandIndex="1" Background="{x:Null}" VerticalAlignment="Top" Foreground="Black">
-                <Button x:Name="btnBackup" HorizontalAlignment="Left" VerticalAlignment="Top" Width="32" Click="BtnBackup_Click" Height="32" ToolTip="Backup current save" Margin="10,0" TabIndex="1">
-                    <DynamicResource ResourceKey="Save"/>
-                </Button>
-                <Button x:Name="btnRestore" HorizontalAlignment="Left" VerticalAlignment="Top" Width="32" IsEnabled="False" Click="BtnRestore_Click" ToolTip="Restore selected backup" Height="32" Margin="10,0" TabIndex="2">
-                    <DynamicResource ResourceKey="RestoreGrey"/>
-                    <Button.ContextMenu>
-                        <ContextMenu x:Name="menuRestore">
-                            <MenuItem x:Name="menuRestoreWorlds" Header="Restore Worlds (experimental)" Click="menuRestoreWorlds_Click" ToolTip="Keep current character data and restore the world data from this backup">
-                                <MenuItem.Icon>
-                                    <Image Source="Resources/StatusSecurityWarning_32x.png"/>
-                                </MenuItem.Icon>
-                            </MenuItem>
-                        </ContextMenu>
-                    </Button.ContextMenu>
-                </Button>
-                <Separator Style="{DynamicResource VerticalSeparatorStyle}" />
-                <Button x:Name="btnAnalyzeCurrent" Width="32" Height="32" Click="BtnAnalyzeCurrent_Click" ToolTip="Analyze active save" Margin="10,0" TabIndex="3">
-                    <Image Height="22" Width="22" Source="Resources/SearchMember_32x.png"/>
-                </Button>
-                <Separator Style="{DynamicResource VerticalSeparatorStyle}" />
-                <Button x:Name="btnOpenFolder" Width="32" Height="32" IsCancel="True" Foreground="Black" Click="BtnOpenFolder_Click" ToolTip="Open backups folder" Margin="10,0" TabIndex="4">
-                    <Image Height="22" Width="22" Source="Resources/OpenFolder_32x.png" ToolTip="Open backups folder"/>
-                </Button>
-            </ToolBar>
-        </ToolBarTray>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <Button x:Name="btnBackup" HorizontalAlignment="Left" VerticalAlignment="Center" Click="BtnBackup_Click" ToolTip="Backup current save" Margin="10,5" TabIndex="1" Grid.Column="0">
+                <DynamicResource ResourceKey="Save"/>
+            </Button>
+            <Button x:Name="btnRestore" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="False" Click="BtnRestore_Click" ToolTip="Restore selected backup" Margin="10,5" TabIndex="2" Grid.Column="1">
+                <DynamicResource ResourceKey="RestoreGrey"/>
+                <Button.ContextMenu>
+                    <ContextMenu x:Name="menuRestore">
+                        <MenuItem x:Name="menuRestoreWorlds" Header="Restore Worlds (experimental)" Click="menuRestoreWorlds_Click" ToolTip="Keep current character data and restore the world data from this backup">
+                            <MenuItem.Icon>
+                                <Image Source="Resources/StatusSecurityWarning_32x.png"/>
+                            </MenuItem.Icon>
+                        </MenuItem>
+                    </ContextMenu>
+                </Button.ContextMenu>
+            </Button>
+            <Separator Style="{DynamicResource VerticalSeparatorStyle}" Grid.Column="2" />
+            <Button x:Name="btnAnalyzeCurrent" Click="BtnAnalyzeCurrent_Click" ToolTip="Analyze active save" Margin="10,5" TabIndex="3" Grid.Column="3">
+                <Image Height="22" Width="22" Source="Resources/SearchMember_32x.png"/>
+            </Button>
+            <Separator Style="{DynamicResource VerticalSeparatorStyle}" Grid.Column="4" />
+            <Button x:Name="btnOpenFolder" IsCancel="True" Foreground="Black" Click="BtnOpenFolder_Click" ToolTip="Open backups folder" Margin="10,5" TabIndex="4" Grid.Column="5">
+                <Image Height="22" Width="22" Source="Resources/OpenFolder_32x.png" ToolTip="Open backups folder"/>
+            </Button>
+        </Grid>
         <TabControl Background="#FFB9B9B9" Grid.Row="1" TabIndex="5">
             <TabItem x:Name="tabBackups" Header="Backups">
                 <DataGrid x:Name="dataBackups" BeginningEdit="DataBackups_BeginningEdit" SelectionMode="Single" CellEditEnding="DataBackups_CellEditEnding" SelectionChanged="DataBackups_SelectionChanged" AutoGeneratingColumn="DataBackups_AutoGeneratingColumn">
@@ -109,12 +115,12 @@
         </TabControl>
         <StatusBar Background="{x:Null}" Grid.Row="2">
             <StatusBarItem HorizontalAlignment="Left">
-                <Label x:Name="lblStatus" HorizontalAlignment="Left" VerticalAlignment="Top" Foreground="White" ToolTip="Not backed up" Height="26">
+                <Label x:Name="lblStatus" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" ToolTip="Not backed up" Margin="5">
                     <DynamicResource ResourceKey="StatusNo"/>
                 </Label>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
-                <Label x:Name="lblLastMessage" Content="" HorizontalAlignment="Left" VerticalAlignment="Bottom" Background="{x:Null}" Foreground="White"/>
+                <Label x:Name="lblLastMessage" Content="" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" Foreground="White" Margin="5"/>
             </StatusBarItem>
         </StatusBar>
     </Grid>

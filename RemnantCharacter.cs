@@ -23,7 +23,7 @@ namespace RemnantSaveManager
 
         private List<RemnantItem> missingItems;
 
-        private string savePath;
+        private RemnantSave save;
 
         public enum ProcessMode { Campaign, Adventure };
 
@@ -45,7 +45,7 @@ namespace RemnantSaveManager
             this.CampaignEvents = new List<RemnantWorldEvent>();
             this.AdventureEvents = new List<RemnantWorldEvent>();
             this.missingItems = new List<RemnantItem>();
-            this.savePath = null;
+            this.save = null;
         }
 
         public void processSaveData(string savetext)
@@ -118,17 +118,17 @@ namespace RemnantSaveManager
 
         public enum CharacterProcessingMode { All, NoEvents };
 
-        public static List<RemnantCharacter> GetCharactersFromSave(string saveFolderPath)
+        public static List<RemnantCharacter> GetCharactersFromSave(RemnantSave remnantSave)
         {
-            return GetCharactersFromSave(saveFolderPath, CharacterProcessingMode.All);
+            return GetCharactersFromSave(remnantSave, CharacterProcessingMode.All);
         }
 
-        public static List<RemnantCharacter> GetCharactersFromSave(string saveFolderPath, CharacterProcessingMode mode)
+        public static List<RemnantCharacter> GetCharactersFromSave(RemnantSave remnantSave, CharacterProcessingMode mode)
         {
             List<RemnantCharacter> charData = new List<RemnantCharacter>();
             try
             {
-                string profileData = File.ReadAllText(saveFolderPath + "\\profile.sav");
+                string profileData = File.ReadAllText(remnantSave.SaveProfilePath);
                 string[] characters = profileData.Split(new string[] { "/Game/Characters/Player/Base/Character_Master_Player.Character_Master_Player_C" }, StringSplitOptions.None);
                 for (var i = 1; i < characters.Length; i++)
                 {
@@ -146,7 +146,7 @@ namespace RemnantSaveManager
                             cd.Archetype = archetype;
                         }
                     }
-                    cd.savePath = saveFolderPath;
+                    cd.save = remnantSave;
                     List<string> saveItems = new List<string>();
                     string charEnd = "Character_Master_Player_C";
                     string inventory = characters[i].Substring(0, characters[i].IndexOf(charEnd));
@@ -213,7 +213,7 @@ namespace RemnantSaveManager
 
                 if (mode == CharacterProcessingMode.All)
                 {
-                    string[] saves = Directory.GetFiles(saveFolderPath, "save_*.sav");
+                    string[] saves = remnantSave.WorldSaves;
                     for (int i = 0; i < saves.Length && i < charData.Count; i++)
                     {
                         charData[i].processSaveData(File.ReadAllText(saves[i]));
@@ -226,7 +226,7 @@ namespace RemnantSaveManager
                 {
                     Console.WriteLine("Save file in use; waiting 0.5 seconds and retrying.");
                     System.Threading.Thread.Sleep(500);
-                    charData = GetCharactersFromSave(saveFolderPath, mode);
+                    charData = GetCharactersFromSave(remnantSave, mode);
                 }
             }
             return charData;
@@ -234,11 +234,11 @@ namespace RemnantSaveManager
 
         public void LoadWorldData(int charIndex)
         {
-            if (this.savePath != null)
+            if (this.save != null)
             {
                 if (this.CampaignEvents.Count == 0)
                 {
-                    string[] saves = Directory.GetFiles(this.savePath, "save_*.sav");
+                    string[] saves = this.save.WorldSaves;
                     if (charIndex < saves.Length)
                     {
                         try
