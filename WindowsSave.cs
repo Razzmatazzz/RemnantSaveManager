@@ -13,6 +13,8 @@ namespace RemnantSaveManager
         public string Container { get; set; }
         public string Profile { get; set; }
         public List<string> Worlds { get; set; }
+        private bool isValid;
+        public bool Valid { get { return isValid; } }
 
         public WindowsSave(string containerPath)
         {
@@ -25,6 +27,7 @@ namespace RemnantSaveManager
             Array.Copy(byteBuffer, offset, profileBytes, 0, 16);
             var profileGuid = new Guid(profileBytes);
             Profile = profileGuid.ToString().ToUpper().Replace("-", "");
+            isValid = File.Exists($@"{folderPath}\{Profile}");
             offset += 160;
             while (offset + 16 < byteBuffer.Length)
             {

@@ -58,7 +58,7 @@ namespace RemnantSaveManager
 
         private bool ActiveSaveIsBackedUp { 
             get {
-                DateTime saveDate = File.GetLastWriteTime(new RemnantSave(saveDirPath).SaveProfilePath);
+                DateTime saveDate = File.GetLastWriteTime(activeSave.SaveProfilePath);
                 for (int i = 0; i < listBackups.Count; i++)
                 {
                     DateTime backupDate = listBackups.ToArray()[i].SaveDate;
@@ -370,6 +370,11 @@ namespace RemnantSaveManager
         {
             try
             {
+                if (!activeSave.Valid)
+                {
+                    logMessage("Active save is not valid; backup skipped.");
+                    return;
+                }
                 int existingSaveIndex = -1;
                 DateTime saveDate = File.GetLastWriteTime(activeSave.SaveProfilePath);
                 string backupFolder = backupDirPath + "\\" + saveDate.Ticks;
@@ -494,7 +499,13 @@ namespace RemnantSaveManager
         {
             if (activeSave.SaveType == RemnantSaveType.WindowsStore)
             {
-                activeSave = new RemnantSave(saveDirPath);
+                var newSave = new RemnantSave(saveDirPath);
+                if (!newSave.Valid)
+                {
+                    return;
+                    
+                }
+                activeSave = newSave;
             }
             // Specify what is done when a file is changed, created, or deleted.
             this.Dispatcher.Invoke(() =>
@@ -1174,7 +1185,12 @@ namespace RemnantSaveManager
                 saveDirPath = folderName;
                 Properties.Settings.Default.SaveFolder = folderName;
                 Properties.Settings.Default.Save();
-                activeSave = new RemnantSave(saveDirPath);
+                var newSave = new RemnantSave(saveDirPath);
+                if (!newSave.Valid)
+                {
+                    return;
+                }
+                activeSave = newSave;
                 updateCurrentWorldAnalyzer();
             }
         }

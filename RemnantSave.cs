@@ -88,6 +88,14 @@ namespace RemnantSaveManager
             }
         }
 
+        public bool Valid
+        {
+            get
+            {
+                return this.saveType == RemnantSaveType.Normal || this.winSave.Valid;
+            }
+        }
+
         public static Boolean ValidSaveFolder(String folder)
         {
             if (!Directory.Exists(folder))
