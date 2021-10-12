@@ -13,6 +13,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using System.Diagnostics;
+using System.IO;
 
 namespace RemnantSaveManager
 {
@@ -326,6 +327,125 @@ namespace RemnantSaveManager
                 lblCredits.FontSize = sliderSize.Value;
             }
 
+        }
+
+        private void btnExport_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.SaveFileDialog saveFileDialog = new System.Windows.Forms.SaveFileDialog();
+            string name = (string)((TabItem)tabAnalyzer.SelectedItem).Header;
+            saveFileDialog.FileName = name + ".md";
+            System.Windows.Forms.DialogResult result = saveFileDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                using (System.IO.FileStream fs = (System.IO.FileStream)saveFileDialog.OpenFile())
+                using (System.IO.StreamWriter sw = new StreamWriter(fs))
+                {
+                    switch (tabAnalyzer.SelectedIndex)
+                    {
+                        case 0:
+                            sw.Write(ExportCampaign(isAdventure: false));
+                            break;
+                        case 1:
+                            sw.Write(ExportCampaign(isAdventure: true));
+                            break;
+                        case 3:
+                            sw.Write(ExportMissingItems());
+                            break;
+                        case 4:
+                            sw.Write(ExportCredits());
+                            break;
+                        default:
+                            throw new Exception("Tab does not exist");
+                    }
+                }
+            }
+        }
+
+        private string FormatItems(string header, string items)
+        {
+            StringBuilder sb = new StringBuilder();
+            if (string.IsNullOrEmpty(items))
+            {
+                sb.AppendLine($"- **{header}** - None");
+            }
+            else
+            {
+                sb.AppendLine($"- **{header}:**");
+                foreach (string item in items.Split('\n'))
+                {
+                    sb.AppendLine($"  - {item}");
+                }
+            }
+            return sb.ToString();
+        }
+
+        private string DumpEvents(IEnumerable<RemnantWorldEvent> events)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach(RemnantWorldEvent eItem in events)
+            {
+                sb.AppendLine($"##### {eItem.Name}");
+                sb.AppendLine($"- **Type** - {eItem.Type}");
+                sb.Append(FormatItems("Missing Items", eItem.MissingItems));
+                if (Properties.Settings.Default.ShowPossibleItems)
+                {
+                    sb.Append(FormatItems("Possible Items", eItem.PossibleItems));
+                }
+            }
+            return sb.ToString();
+        }
+        private string ExportCampaign(bool isAdventure = false)
+        {
+            StringBuilder sb = new StringBuilder();
+
+            List<RemnantWorldEvent> events = isAdventure ?
+                listCharacters[cmbCharacter.SelectedIndex].AdventureEvents :
+                listCharacters[cmbCharacter.SelectedIndex].CampaignEvents;
+            foreach(var region in events.GroupBy(x => x.Location.Split(':')[0].Trim()))
+            {
+                sb.AppendLine();
+                sb.AppendLine($"## {region.Key}");
+                sb.Append(DumpEvents(region.Where(x => x.Location.Split(':').Length == 1)));
+                foreach (var zone in region.Where(x=>x.Location.Split(':').Length > 1).GroupBy(x => x.Location.Split(':')[1].Trim()))
+                {
+                    sb.AppendLine($"### {zone.Key}");
+                    sb.Append(DumpEvents(zone.Where(x => x.Location.Split(':').Length == 2)));
+                    foreach (var locality in zone.Where(x => x.Location.Split(':').Length > 2).GroupBy(x => x.Location.Split(':')[2].Trim()))
+                    {
+                        sb.AppendLine($"#### {locality.Key}");
+                        sb.Append(DumpEvents(locality));
+                    }
+                }
+            }
+            return sb.ToString().TrimStart('\r','\n');
+        }
+        private string ExportMissingItems()
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach(var mode in listCharacters[cmbCharacter.SelectedIndex].GetMissingItems().GroupBy(x => x.ItemMode))
+            {
+                sb.AppendLine($"## {mode.Key}");
+                foreach(var type in mode.GroupBy(x=> x.ItemType))
+                {
+                    sb.AppendLine($"- {type.Key}");
+                    foreach (var item in type)
+                    {
+                        if (string.IsNullOrEmpty(item.ItemNotes))
+                        {
+                            sb.AppendLine($"  - {item.ItemName}");
+                        }
+                        else
+                        {
+                            sb.AppendLine($"  - {item.ItemName} {{{item.ItemNotes}}}");
+                        }
+                    }
+                }
+            }
+            return sb.ToString();
+        }
+        private string ExportCredits()
+        {
+            return (string)lblCredits.Content;
         }
     }
 }
