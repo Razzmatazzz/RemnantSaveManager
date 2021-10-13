@@ -179,7 +179,8 @@ namespace RemnantSaveManager
             listBackups = new List<SaveBackup>();
 
             ((MenuItem)dataBackups.ContextMenu.Items[0]).Click += BtnRestore_Click;
-            ((MenuItem)dataBackups.ContextMenu.Items[2]).Click += deleteMenuItem_Click;
+            ((MenuItem)dataBackups.ContextMenu.Items[2]).Click += openFolderMenuItem_Click;
+            ((MenuItem)dataBackups.ContextMenu.Items[3]).Click += deleteMenuItem_Click;
 
             activeSaveAnalyzer = new SaveAnalyzer(this)
             {
@@ -526,8 +527,6 @@ namespace RemnantSaveManager
 
             updateCurrentWorldAnalyzer();
             dataBackups.Items.Refresh();
-            //btnRestore.IsEnabled = false;
-            //btnRestore.Content = FindResource("RestoreGrey");
             logMessage("Backup restored!", LogType.Success);
             saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
         }
@@ -868,16 +867,6 @@ namespace RemnantSaveManager
             if (e.AddedItems.Count > 0)
             {
                 SaveBackup selectedBackup = (SaveBackup)(dataBackups.SelectedItem);
-                //if (backupActive(selectedBackup))
-                //{
-                //    btnRestore.IsEnabled = false;
-                //    btnRestore.Content = FindResource("RestoreGrey");
-                //}
-                //else
-                //{
-                //    btnRestore.IsEnabled = true;
-                //    btnRestore.Content = FindResource("Restore");
-                //}
 
                 analyzeMenu.IsEnabled = true;
                 deleteMenu.IsEnabled = true;
@@ -886,8 +875,6 @@ namespace RemnantSaveManager
             {
                 analyzeMenu.IsEnabled = false;
                 deleteMenu.IsEnabled = false;
-                //btnRestore.IsEnabled = false;
-                //btnRestore.Content = FindResource("RestoreGrey");
             }
         }
 
@@ -911,6 +898,12 @@ namespace RemnantSaveManager
         private void Backup_Analyzer_Closing(object sender, System.ComponentModel.CancelEventArgs e)
         {
             backupSaveAnalyzers.Remove((SaveAnalyzer)sender);
+        }
+
+        private void openFolderMenuItem_Click(object sender, System.EventArgs e)
+        {
+            SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
+            Process.Start(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks);
         }
 
         private void deleteMenuItem_Click(object sender, System.EventArgs e)

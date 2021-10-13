@@ -72,6 +72,11 @@
                                     <Image Source="Resources/SearchMember_32x.png"/>
                                 </MenuItem.Icon>
                             </MenuItem>
+                            <MenuItem Header="Open in Explorer">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/OpenFolder_32x.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <MenuItem Header="Delete">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/Trash_32x.png"/>
