@@ -167,7 +167,6 @@ namespace RemnantSaveManager
             }
             else
             {
-                btnRestore.IsEnabled = false;
                 saveWatcher.Filter = "container.*";
             }
 
@@ -179,7 +178,8 @@ namespace RemnantSaveManager
 
             listBackups = new List<SaveBackup>();
 
-            ((MenuItem)dataBackups.ContextMenu.Items[1]).Click += deleteMenuItem_Click;
+            ((MenuItem)dataBackups.ContextMenu.Items[0]).Click += BtnRestore_Click;
+            ((MenuItem)dataBackups.ContextMenu.Items[2]).Click += deleteMenuItem_Click;
 
             activeSaveAnalyzer = new SaveAnalyzer(this)
             {
@@ -188,7 +188,7 @@ namespace RemnantSaveManager
             };
             backupSaveAnalyzers = new List<SaveAnalyzer>();
 
-            ((MenuItem)dataBackups.ContextMenu.Items[0]).Click += analyzeMenuItem_Click;
+            ((MenuItem)dataBackups.ContextMenu.Items[1]).Click += analyzeMenuItem_Click;
 
             GameInfo.GameInfoUpdate += OnGameInfoUpdate;
             dataBackups.CanUserDeleteRows = false;

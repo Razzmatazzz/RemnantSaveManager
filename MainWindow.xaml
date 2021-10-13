@@ -48,9 +48,6 @@
             <Button x:Name="btnBackup" HorizontalAlignment="Left" VerticalAlignment="Center" Click="BtnBackup_Click" ToolTip="Backup current save" Margin="10,5" TabIndex="1" Grid.Column="0">
                 <DynamicResource ResourceKey="Save"/>
             </Button>
-            <Button x:Name="btnRestore" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="True" Click="BtnRestore_Click" ToolTip="Restore selected backup" Margin="10,5" TabIndex="2" Grid.Column="1">
-                <DynamicResource ResourceKey="Restore"/>
-            </Button>
             <Separator Style="{DynamicResource VerticalSeparatorStyle}" Grid.Column="2" />
             <Button x:Name="btnAnalyzeCurrent" Click="BtnAnalyzeCurrent_Click" ToolTip="Analyze active save" Margin="10,5" TabIndex="3" Grid.Column="3">
                 <Image Height="22" Width="22" Source="Resources/SearchMember_32x.png"/>
@@ -65,6 +62,11 @@
                 <DataGrid x:Name="dataBackups" BeginningEdit="DataBackups_BeginningEdit" SelectionMode="Single" CellEditEnding="DataBackups_CellEditEnding" SelectionChanged="DataBackups_SelectionChanged" AutoGeneratingColumn="DataBackups_AutoGeneratingColumn">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
+                            <MenuItem Header="Restore Backup">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Undo_32x.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <MenuItem Header="Analyze World">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/SearchMember_32x.png"/>
