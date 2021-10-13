@@ -13,7 +13,7 @@
         <Image x:Key="RestoreGrey" Height="22" Width="22" Source="Resources/Undo_grey_32x.png"/>
         <Image x:Key="StatusOK" Height="16" Width="16" Source="Resources/StatusOK_32x.png"/>
         <Image x:Key="StatusNo" Height="16" Width="16" Source="Resources/StatusNo_32x.png"/>
-        <Style x:Key="VerticalSeparatorStyle" 
+        <Style x:Key="VerticalSeparatorStyle"
        TargetType="{x:Type Separator}"
        BasedOn="{StaticResource {x:Type Separator}}">
             <Setter Property="Margin" Value="6,0,6,0"/>
@@ -48,17 +48,8 @@
             <Button x:Name="btnBackup" HorizontalAlignment="Left" VerticalAlignment="Center" Click="BtnBackup_Click" ToolTip="Backup current save" Margin="10,5" TabIndex="1" Grid.Column="0">
                 <DynamicResource ResourceKey="Save"/>
             </Button>
-            <Button x:Name="btnRestore" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="False" Click="BtnRestore_Click" ToolTip="Restore selected backup" Margin="10,5" TabIndex="2" Grid.Column="1">
-                <DynamicResource ResourceKey="RestoreGrey"/>
-                <Button.ContextMenu>
-                    <ContextMenu x:Name="menuRestore">
-                        <MenuItem x:Name="menuRestoreWorlds" Header="Restore Worlds (experimental)" Click="menuRestoreWorlds_Click" ToolTip="Keep current character data and restore the world data from this backup">
-                            <MenuItem.Icon>
-                                <Image Source="Resources/StatusSecurityWarning_32x.png"/>
-                            </MenuItem.Icon>
-                        </MenuItem>
-                    </ContextMenu>
-                </Button.ContextMenu>
+            <Button x:Name="btnRestore" HorizontalAlignment="Left" VerticalAlignment="Center" IsEnabled="True" Click="BtnRestore_Click" ToolTip="Restore selected backup" Margin="10,5" TabIndex="2" Grid.Column="1">
+                <DynamicResource ResourceKey="Restore"/>
             </Button>
             <Separator Style="{DynamicResource VerticalSeparatorStyle}" Grid.Column="2" />
             <Button x:Name="btnAnalyzeCurrent" Click="BtnAnalyzeCurrent_Click" ToolTip="Analyze active save" Margin="10,5" TabIndex="3" Grid.Column="3">

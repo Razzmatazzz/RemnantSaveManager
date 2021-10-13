@@ -1,26 +1,16 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.IO;
 using System.Diagnostics;
-using System.Data;
+using System.Globalization;
 using System.Text.RegularExpressions;
-using System.Xml;
 using System.Threading;
 using System.Net;
-using RemnantSaveManager.Properties;
-using System.Windows.Markup;
 
 namespace RemnantSaveManager
 {
@@ -45,6 +35,8 @@ namespace RemnantSaveManager
         private SaveAnalyzer activeSaveAnalyzer;
         private List<SaveAnalyzer> backupSaveAnalyzers;
 
+        private RestoreDialog restoreDialog;
+
         private System.Timers.Timer saveTimer;
         private DateTime lastUpdateCheck;
         private int saveCount;
@@ -56,7 +48,7 @@ namespace RemnantSaveManager
             Error
         }
 
-        private bool ActiveSaveIsBackedUp { 
+        private bool ActiveSaveIsBackedUp {
             get {
                 DateTime saveDate = File.GetLastWriteTime(activeSave.SaveProfilePath);
                 for (int i = 0; i < listBackups.Count; i++)
@@ -68,7 +60,7 @@ namespace RemnantSaveManager
                     }
                 }
                 return false;
-            } 
+            }
             set
             {
                 if (value)
@@ -137,7 +129,7 @@ namespace RemnantSaveManager
                 logMessage("Backup folder not set; reverting to default.");
                 Properties.Settings.Default.BackupFolder = defaultBackupFolder;
                 Properties.Settings.Default.Save();
-            } 
+            }
             else if (!Directory.Exists(Properties.Settings.Default.BackupFolder) && !Properties.Settings.Default.BackupFolder.Equals(defaultBackupFolder))
             {
                 logMessage("Backup folder ("+ Properties.Settings.Default.BackupFolder + ") not found; reverting to default.");
@@ -175,7 +167,6 @@ namespace RemnantSaveManager
             }
             else
             {
-                menuRestoreWorlds.Visibility = Visibility.Collapsed;
                 btnRestore.IsEnabled = false;
                 saveWatcher.Filter = "container.*";
             }
@@ -381,7 +372,7 @@ namespace RemnantSaveManager
                 if (!Directory.Exists(backupFolder))
                 {
                     Directory.CreateDirectory(backupFolder);
-                } 
+                }
                 else if (RemnantSave.ValidSaveFolder(backupFolder))
                 {
                     for (int i=listBackups.Count-1; i >= 0; i--)
@@ -461,6 +452,14 @@ namespace RemnantSaveManager
                 logMessage("Choose a backup to restore from the list!", LogType.Error);
                 return;
             }
+            SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
+
+            this.restoreDialog = new RestoreDialog(this, selectedBackup, this.activeSave);
+            this.restoreDialog.Owner = this;
+            var dialogResult = this.restoreDialog.ShowDialog();
+            if (dialogResult.HasValue && dialogResult.Value == false) return;
+
+            var restoreResult = this.restoreDialog.Result;
 
             if (!this.ActiveSaveIsBackedUp)
             {
@@ -468,23 +467,67 @@ namespace RemnantSaveManager
             }
 
             saveWatcher.EnableRaisingEvents = false;
-            System.IO.DirectoryInfo di = new DirectoryInfo(saveDirPath);
-            foreach (FileInfo file in di.GetFiles())
+
+
+            DirectoryInfo di = new DirectoryInfo(saveDirPath);
+            DirectoryInfo buDi = new DirectoryInfo(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks);
+            switch (restoreResult)
             {
-                file.Delete();
+                case "All":
+                    foreach (FileInfo file in di.GetFiles())
+                    {
+                        file.Delete();
+                    }
+
+                    foreach (FileInfo file in buDi.GetFiles())
+                    {
+                        file.CopyTo(saveDirPath + "\\" + file.Name);
+                    }
+                    break;
+                case "Character":
+                    foreach (FileInfo file in di.GetFiles("profile.sav"))
+                    {
+                        if (file.Name.Contains("profile"))
+                            file.Delete();
+                    }
+
+                    foreach (FileInfo file in buDi.GetFiles("profile.sav"))
+                    {
+                        if (file.Name.Contains("profile"))
+                            file.CopyTo(saveDirPath + "\\" + file.Name);
+                    }
+                    break;
+                case "World":
+                    foreach (FileInfo file in di.GetFiles("save_?.sav"))
+                    {
+                        if (file.Name.Contains("save"))
+                            file.Delete();
+                    }
+
+                    foreach (FileInfo file in buDi.GetFiles("save_?.sav"))
+                    {
+                        if (file.Name.Contains("save"))
+                            file.CopyTo(saveDirPath + "\\" + file.Name);
+                    }
+                    break;
+                default:
+                    logMessage("Something went wrong!", LogType.Error);
+                    return;
             }
-            SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
-            foreach (var file in Directory.GetFiles(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks))
-                File.Copy(file, saveDirPath + "\\" + System.IO.Path.GetFileName(file));
+
             foreach (SaveBackup saveBackup in listBackups)
             {
                 saveBackup.Active = false;
             }
-            selectedBackup.Active = true;
+            if (restoreResult != "Character")
+            {
+                selectedBackup.Active = true;
+            }
+
             updateCurrentWorldAnalyzer();
             dataBackups.Items.Refresh();
-            btnRestore.IsEnabled = false;
-            btnRestore.Content = FindResource("RestoreGrey");
+            //btnRestore.IsEnabled = false;
+            //btnRestore.Content = FindResource("RestoreGrey");
             logMessage("Backup restored!", LogType.Success);
             saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
         }
@@ -503,7 +546,7 @@ namespace RemnantSaveManager
                 if (!newSave.Valid)
                 {
                     return;
-                    
+
                 }
                 activeSave = newSave;
             }
@@ -825,16 +868,16 @@ namespace RemnantSaveManager
             if (e.AddedItems.Count > 0)
             {
                 SaveBackup selectedBackup = (SaveBackup)(dataBackups.SelectedItem);
-                if (backupActive(selectedBackup))
-                {
-                    btnRestore.IsEnabled = false;
-                    btnRestore.Content = FindResource("RestoreGrey");
-                }
-                else
-                {
-                    btnRestore.IsEnabled = true;
-                    btnRestore.Content = FindResource("Restore");
-                }
+                //if (backupActive(selectedBackup))
+                //{
+                //    btnRestore.IsEnabled = false;
+                //    btnRestore.Content = FindResource("RestoreGrey");
+                //}
+                //else
+                //{
+                //    btnRestore.IsEnabled = true;
+                //    btnRestore.Content = FindResource("Restore");
+                //}
 
                 analyzeMenu.IsEnabled = true;
                 deleteMenu.IsEnabled = true;
@@ -843,8 +886,8 @@ namespace RemnantSaveManager
             {
                 analyzeMenu.IsEnabled = false;
                 deleteMenu.IsEnabled = false;
-                btnRestore.IsEnabled = false;
-                btnRestore.Content = FindResource("RestoreGrey");
+                //btnRestore.IsEnabled = false;
+                //btnRestore.Content = FindResource("RestoreGrey");
             }
         }
 
@@ -1068,6 +1111,8 @@ namespace RemnantSaveManager
             dataBackups.CancelEdit();
             dataBackups.CancelEdit();
         }
+
+        // Not longer needed, since its part of the dialog now.
         private void menuRestoreWorlds_Click(object sender, RoutedEventArgs e)
         {
             if (isRemnantRunning())
