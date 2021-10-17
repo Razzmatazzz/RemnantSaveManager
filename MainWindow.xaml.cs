@@ -34,6 +34,7 @@ namespace RemnantSaveManager
         private static string defaultSaveFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + "\\Remnant\\Saved\\SaveGames";
         private static string defaultWgsSaveFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Packages\PerfectWorldEntertainment.RemnantFromtheAshes_jrajkyc4tsa6w\SystemAppData\wgs";
         private static string saveDirPath;
+        private static string gameDirPath;
         private List<SaveBackup> listBackups;
         private Boolean suppressLog;
         private FileSystemWatcher saveWatcher;
@@ -151,6 +152,19 @@ namespace RemnantSaveManager
                 Directory.CreateDirectory(saveDirPath);
             }
             txtSaveFolder.Text = saveDirPath;
+
+            gameDirPath = Properties.Settings.Default.GameFolder;
+            this.txtGameFolder.Text = gameDirPath;
+            if (!Directory.Exists(gameDirPath))
+            {
+                logMessage("Game folder not found...");
+                this.btnStartGame.IsEnabled = false;
+                if (gameDirPath == "")
+                {
+                    this.TryFindGameFolder();
+                }
+            }
+
             backupDirPath = Properties.Settings.Default.BackupFolder;
             txtBackupFolder.Text = backupDirPath;
 
@@ -188,16 +202,12 @@ namespace RemnantSaveManager
 
             listBackups = new List<SaveBackup>();
 
-            ((MenuItem)dataBackups.ContextMenu.Items[1]).Click += deleteMenuItem_Click;
-
             activeSaveAnalyzer = new SaveAnalyzer(this)
             {
                 ActiveSave = true,
                 Title = "Active Save World Analyzer"
             };
             backupSaveAnalyzers = new List<SaveAnalyzer>();
-
-            ((MenuItem)dataBackups.ContextMenu.Items[0]).Click += analyzeMenuItem_Click;
 
             GameInfo.GameInfoUpdate += OnGameInfoUpdate;
             dataBackups.CanUserDeleteRows = false;
@@ -1193,6 +1203,158 @@ namespace RemnantSaveManager
                 activeSave = newSave;
                 updateCurrentWorldAnalyzer();
             }
+        }
+
+
+        private void TryFindGameFolder()
+        {
+            if (File.Exists(gameDirPath + "\\Remnant.exe"))
+            {
+                return;
+            }
+
+            // Check if game is installed via Steam
+            // In registry, we can see IF the game is installed with steam or not
+            // To find the actual game, we need to search within ALL library folders
+            Microsoft.Win32.RegistryKey key = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Valve\\Steam\\Apps\\617290", false);
+            if (key != null) // null if remnant is not in steam library (or steam itself is not (or never was) installed)
+            {
+                bool? steamRemnantInstalled = null;
+                object keyValue = key.GetValue("Installed"); // Value is true when remnant is installed
+                if (keyValue != null) steamRemnantInstalled = Convert.ToBoolean(keyValue);
+                if (steamRemnantInstalled.HasValue && steamRemnantInstalled.Value)
+                {
+                    Microsoft.Win32.RegistryKey steamRegKey = Microsoft.Win32.Registry.CurrentUser.OpenSubKey("SOFTWARE\\Valve\\Steam", false);
+                    string steamInstallPath = steamRegKey?.GetValue("SteamPath") as string; // Get install path for steam
+                    DirectoryInfo steamInstallDir = new DirectoryInfo(steamInstallPath);
+                    if (steamInstallDir.Exists)
+                    {
+                        FileInfo libraryFolders = new FileInfo(steamInstallDir.FullName + "\\steamapps\\libraryfolders.vdf");
+                        // Find Steam-Library, remnant is installed in
+                        //
+                        string[] libraryFolderContent = File.ReadAllLines(libraryFolders.FullName);
+                        int remnantIndex = Array.IndexOf(libraryFolderContent, libraryFolderContent.FirstOrDefault(t => t.Contains("\"617290\"")));
+                        libraryFolderContent = libraryFolderContent.Take(remnantIndex).ToArray();
+                        string steamLibraryPathRaw = libraryFolderContent.LastOrDefault(t => t.Contains("\"path\""));
+                        string[] steamLibraryPathRawSplit = steamLibraryPathRaw?.Split('\"');
+                        string steamLibraryPath = steamLibraryPathRawSplit?[3];
+
+                        string steamRemnantInstallPath = $"{steamLibraryPath?.Replace("\\\\", "\\")}\\steamapps\\common\\Remnant";
+                        if (Directory.Exists(steamRemnantInstallPath))
+                        {
+                            if (File.Exists(steamRemnantInstallPath + "\\Remnant.exe"))
+                            {
+                                SetGameFolder(steamRemnantInstallPath);
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+
+            // Check if game is installed via Epic
+            // Epic stores manifests for every installed game withing "C:\ProgramData\Epic\EpicGamesLauncher\Data\Manifests"
+            // These "Manifests" are in json format, so if one of them is for Remnant, then Remnant is installed with epic
+            var epicManifestFolder = new DirectoryInfo("C:\\ProgramData\\Epic\\EpicGamesLauncher\\Data\\Manifests");
+            if (epicManifestFolder.Exists) // If Folder don't exist, epic is not installed
+            {
+                foreach (FileInfo fi in epicManifestFolder.GetFiles("*.item"))
+                {
+                    string[] itemContent = File.ReadAllLines(fi.FullName);
+                    if (itemContent.All(t => t.Contains("Remnant: From the Ashes") == false)) continue;
+
+                    string epicRemnantInstallPathRaw = itemContent.FirstOrDefault(t => t.Contains("\"InstallLocation\""));
+                    string[] epicRemnantInstallPathRawSplit = epicRemnantInstallPathRaw?.Split('\"');
+                    string epicRemnantInstallPath = epicRemnantInstallPathRawSplit?[3].Replace("\\\\", "\\");
+
+                    if (Directory.Exists(epicRemnantInstallPath))
+                    {
+                        if (File.Exists($"{epicRemnantInstallPath}\\Remnant.exe"))
+                        {
+                            SetGameFolder(epicRemnantInstallPath);
+                            return;
+                        }
+                    }
+
+                    break;
+                }
+            }
+            // Check if game is installed via Windows Store
+            // TODO - don't have windows store version (yet)
+
+            // Remnant not found or not installed, clear path
+            gameDirPath = "";
+            this.txtGameFolder.Text = "";
+            this.btnStartGame.IsEnabled = false;
+            Properties.Settings.Default.GameFolder = "";
+            Properties.Settings.Default.Save();
+        }
+
+        private void SetGameFolder(string folderPath)
+        {
+            if (Directory.Exists(folderPath))
+            {
+                gameDirPath = folderPath;
+                this.txtGameFolder.Text = folderPath;
+                this.btnStartGame.IsEnabled = true;
+                Properties.Settings.Default.GameFolder = folderPath;
+                Properties.Settings.Default.Save();
+            }
+        }
+        private void BtnStartGame_Click(object sender, RoutedEventArgs e)
+        {
+            if (!Directory.Exists(gameDirPath))
+            {
+                return;
+            }
+
+            var remnantExe = new FileInfo(gameDirPath + "\\Remnant.exe");
+            var remnantExe64 = new FileInfo(gameDirPath + "\\Remnant\\Binaries\\Win64\\Remnant-Win64-Shipping.exe");
+            if (!remnantExe64.Exists && !remnantExe.Exists)
+            {
+                return;
+            }
+
+            if (Environment.Is64BitOperatingSystem)
+            {
+                if (remnantExe64.Exists)
+                {
+                    Process.Start(remnantExe64.FullName);
+                }
+                else
+                {
+                    Process.Start(remnantExe.FullName);
+                }
+            }
+        }
+
+        private void btnGameFolder_Click(object sender, RoutedEventArgs e)
+        {
+            System.Windows.Forms.FolderBrowserDialog openFolderDialog = new System.Windows.Forms.FolderBrowserDialog();
+            openFolderDialog.SelectedPath = gameDirPath;
+            openFolderDialog.Description = "Select where your Remnant game is installed.";
+            System.Windows.Forms.DialogResult result = openFolderDialog.ShowDialog();
+            if (result == System.Windows.Forms.DialogResult.OK)
+            {
+                string folderName = openFolderDialog.SelectedPath;
+                if (!File.Exists(folderName + "\\Remnant.exe"))
+                {
+                    MessageBox.Show("Please select the folder containing your Remnant game.",
+                                     "Invalid Folder", MessageBoxButton.OK, MessageBoxImage.Warning, MessageBoxResult.OK);
+                    return;
+                }
+                if (folderName.Equals(gameDirPath))
+                {
+                    return;
+                }
+
+                SetGameFolder(folderName);
+            }
+        }
+
+        private void btnFindGameFolder_Click(object sender, RoutedEventArgs e)
+        {
+            this.TryFindGameFolder();
         }
     }
 }

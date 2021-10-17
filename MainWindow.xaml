@@ -7,6 +7,8 @@
         mc:Ignorable="d"
         Title="Remnant Save Manager" Height="450" Width="800" Loaded="Window_Loaded" Icon="Resources/SaveAll_32x.png" Closing="Window_Closing" Closed="Window_Closed" Deactivated="Window_Deactivated" MinHeight="200" MinWidth="300">
     <Window.Resources>
+        <Image x:Key="Play" Height="22" Width="22" Source="Resources/Play_32x.png"/>
+        <Image x:Key="PlayGrey" Height="22" Width="22" Source="Resources/Play_grey_32x.png"/>
         <Image x:Key="Save" Height="22" Width="22" Source="Resources/Save_32x.png"/>
         <Image x:Key="SaveGrey" Height="22" Width="22" Source="Resources/Save_grey_32x.png"/>
         <Image x:Key="Restore" Height="22" Width="22" Source="Resources/Undo_32x.png"/>
@@ -44,6 +46,8 @@
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
                 <ColumnDefinition Width="Auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="46"/>
             </Grid.ColumnDefinitions>
             <Button x:Name="btnBackup" HorizontalAlignment="Left" VerticalAlignment="Center" Click="BtnBackup_Click" ToolTip="Backup current save" Margin="10,5" TabIndex="1" Grid.Column="0">
                 <DynamicResource ResourceKey="Save"/>
@@ -68,18 +72,21 @@
             <Button x:Name="btnOpenFolder" IsCancel="True" Foreground="Black" Click="BtnOpenFolder_Click" ToolTip="Open backups folder" Margin="10,5" TabIndex="4" Grid.Column="5">
                 <Image Height="22" Width="22" Source="Resources/OpenFolder_32x.png" ToolTip="Open backups folder"/>
             </Button>
+            <Button x:Name="btnStartGame" Foreground="Black" Click="BtnStartGame_Click" ToolTip="Launch the game" Margin="10,5" TabIndex="5" Grid.Column="7">
+                <Image Height="22" Width="22" ToolTip="Launch the game" Source="Resources/Play_32x.png"/>
+            </Button>
         </Grid>
         <TabControl Background="#FFB9B9B9" Grid.Row="1" TabIndex="5">
             <TabItem x:Name="tabBackups" Header="Backups">
                 <DataGrid x:Name="dataBackups" BeginningEdit="DataBackups_BeginningEdit" SelectionMode="Single" CellEditEnding="DataBackups_CellEditEnding" SelectionChanged="DataBackups_SelectionChanged" AutoGeneratingColumn="DataBackups_AutoGeneratingColumn">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Analyze World">
+                            <MenuItem Header="Analyze World" Click="analyzeMenuItem_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/SearchMember_32x.png"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Delete">
+                            <MenuItem Header="Delete" Click="deleteMenuItem_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/Trash_32x.png"/>
                                 </MenuItem.Icon>
@@ -95,16 +102,19 @@
                     <Label Content="Minutes between backups" ToolTip="Minimum amount of time that must have passed since last backup before a new backup is made" HorizontalAlignment="Left" Margin="90,33,0,0" VerticalAlignment="Top"/>
                     <TextBox x:Name="txtBackupLimit" HorizontalAlignment="Left" Height="23" Margin="10,61,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="64" KeyUp="TxtBackupLimit_KeyUp" LostFocus="TxtBackupLimit_LostFocus" TabIndex="103"/>
                     <Label Content="Backups to keep (0 for unlimited)" ToolTip="When your number of backups reaches this number, backups will automatically be deleted starting with the oldest" HorizontalAlignment="Left" Margin="90,61,0,0" VerticalAlignment="Top" />
-                    <TextBox x:Name="txtBackupFolder" ToolTip="Where your save backups are stored" Height="23" Margin="105,126,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True" TabIndex="-1" IsTabStop="False"/>
-                    <Button x:Name="btnBackupFolder" Content="Backup Folder" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Click="BtnBackupFolder_Click" MinWidth="75" MinHeight="20" TabIndex="104" Height="23" Width="90"/>
-                    <Button x:Name="btnGameInfoUpdate" Content="Check for update" ToolTip="Check to see if there's a new version of this program available" HorizontalAlignment="Left" Margin="10,221,0,0" VerticalAlignment="Top" Click="btnGameInfoUpdate_Click" MinWidth="113" MinHeight="20" TabIndex="106" Height="23"/>
-                    <CheckBox x:Name="chkCreateLogFile" Content="Create log file" ToolTip="Whether a log.txt file should be created" HorizontalAlignment="Left" Margin="10,154,0,0" VerticalAlignment="Top" Click="chkCreateLogFile_Click" TabIndex="105"/>
-                    <ComboBox x:Name="cmbMissingItemColor" HorizontalAlignment="Left" Margin="10,174,0,0" VerticalAlignment="Top" Width="113"/>
-                    <Label Content="World analzyer missing item color" HorizontalAlignment="Left" Margin="128,170,0,0" VerticalAlignment="Top"/>
-                    <CheckBox x:Name="chkShowPossibleItems" Content="Show all items column in analyzer" HorizontalAlignment="Left" Margin="322,176,0,0" VerticalAlignment="Top" Click="chkShowPossibleItems_Click"/>
-                    <CheckBox x:Name="chkAutoCheckUpdate" Content="Automatically check for program update" HorizontalAlignment="Left" Margin="10,201,0,0" VerticalAlignment="Top" Click="chkAutoCheckUpdate_Click"/>
+                    <TextBox x:Name="txtBackupFolder" ToolTip="Where your save backups are stored" Height="23" Margin="105,156,10,0" TextWrapping="Wrap" VerticalAlignment="Top" IsReadOnly="True" TabIndex="-1" IsTabStop="False"/>
+                    <Button x:Name="btnBackupFolder" Content="Backup Folder" HorizontalAlignment="Left" Margin="10,156,0,0" VerticalAlignment="Top" Click="BtnBackupFolder_Click" MinWidth="75" MinHeight="20" TabIndex="104" Height="23" Width="90"/>
+                    <Button x:Name="btnGameInfoUpdate" Content="Check for update" ToolTip="Check to see if there's a new version of this program available" HorizontalAlignment="Left" Margin="10,251,0,0" VerticalAlignment="Top" Click="btnGameInfoUpdate_Click" MinWidth="113" MinHeight="20" TabIndex="106" Height="23"/>
+                    <CheckBox x:Name="chkCreateLogFile" Content="Create log file" ToolTip="Whether a log.txt file should be created" HorizontalAlignment="Left" Margin="10,184,0,0" VerticalAlignment="Top" Click="chkCreateLogFile_Click" TabIndex="105"/>
+                    <ComboBox x:Name="cmbMissingItemColor" HorizontalAlignment="Left" Margin="10,204,0,0" VerticalAlignment="Top" Width="113"/>
+                    <Label Content="World analzyer missing item color" HorizontalAlignment="Left" Margin="128,200,0,0" VerticalAlignment="Top"/>
+                    <CheckBox x:Name="chkShowPossibleItems" Content="Show all items column in analyzer" HorizontalAlignment="Left" Margin="322,206,0,0" VerticalAlignment="Top" Click="chkShowPossibleItems_Click"/>
+                    <CheckBox x:Name="chkAutoCheckUpdate" Content="Automatically check for program update" HorizontalAlignment="Left" Margin="10,231,0,0" VerticalAlignment="Top" Click="chkAutoCheckUpdate_Click"/>
                     <Button x:Name="btnSaveFolder" Content="Save Folder" HorizontalAlignment="Left" Margin="10,93,0,0" VerticalAlignment="Top" Width="90" Height="23" ToolTip="Only change if you know what you're doing!" Click="btnSaveFolder_Click"/>
                     <TextBox x:Name="txtSaveFolder" Height="23" Margin="105,93,10,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="6" IsTabStop="False" IsReadOnly="True" ToolTip="Where your Remnant saves are located"/>
+                    <Button x:Name="btnGameFolder" Content="Game Folder" HorizontalAlignment="Left" Margin="10,126,0,0" VerticalAlignment="Top" Width="90" Height="23" Click="btnGameFolder_Click"/>
+                    <TextBox x:Name="txtGameFolder" Height="23" Margin="105,126,60,0" TextWrapping="Wrap" VerticalAlignment="Top" TabIndex="6" IsTabStop="False" IsReadOnly="True" ToolTip="Where your Remnant game is located"/>
+                    <Button x:Name="btnFindGameFolder" Content="Auto" HorizontalAlignment="Right" Margin="10,126,10,0" VerticalAlignment="Top" Width="45" Height="23" Click="btnFindGameFolder_Click"/>
                 </Grid>
             </TabItem>
             <TabItem x:Name="tabLog" Header="Log">

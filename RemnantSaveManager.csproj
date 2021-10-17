@@ -155,6 +155,8 @@
     <None Include="Images\RSM3.png" />
     <None Include="Images\RSM4.png" />
     <None Include="Images\RSM_Analyzer.png" />
+    <Resource Include="Resources\Play_32x.png" />
+    <Resource Include="Resources\Play_grey_32x.png" />
     <Content Include="Resources\SaveAll.ico" />
     <Resource Include="SaveAll_32x.ico" />
     <Resource Include="Resources\SaveAll_32x.png" />
@@ -190,7 +192,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)Resources\GameInfo.xml" "$(ProjectDir)$(OutDir)"
-copy "$(ProjectDir)Resources\GameInfo.xml" "$(ProjectDir)$(OutDir)app.publish\"</PostBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)Resources\GameInfo.xml" "$(TargetDir)"
+copy "$(ProjectDir)Resources\GameInfo.xml" "$(TargetDir)app.publish\"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>RD /S /Q "$(TargetDir)app.publish\"</PreBuildEvent>
   </PropertyGroup>
 </Project>
