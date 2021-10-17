@@ -62,22 +62,22 @@
                 <DataGrid x:Name="dataBackups" BeginningEdit="DataBackups_BeginningEdit" SelectionMode="Single" CellEditEnding="DataBackups_CellEditEnding" SelectionChanged="DataBackups_SelectionChanged" AutoGeneratingColumn="DataBackups_AutoGeneratingColumn">
                     <DataGrid.ContextMenu>
                         <ContextMenu>
-                            <MenuItem Header="Restore Backup">
+                            <MenuItem Header="Restore Backup" Click="BtnRestore_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/Undo_32x.png"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Analyze World">
+                            <MenuItem Header="Analyze World" Click="analyzeMenuItem_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/SearchMember_32x.png"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Open in Explorer">
+                            <MenuItem Header="Open in Explorer" Click="openFolderMenuItem_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/OpenFolder_32x.png"/>
                                 </MenuItem.Icon>
                             </MenuItem>
-                            <MenuItem Header="Delete">
+                            <MenuItem Header="Delete" Click="deleteMenuItem_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/Trash_32x.png"/>
                                 </MenuItem.Icon>

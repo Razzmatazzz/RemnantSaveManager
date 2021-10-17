@@ -178,18 +178,12 @@ namespace RemnantSaveManager
 
             listBackups = new List<SaveBackup>();
 
-            ((MenuItem)dataBackups.ContextMenu.Items[0]).Click += BtnRestore_Click;
-            ((MenuItem)dataBackups.ContextMenu.Items[2]).Click += openFolderMenuItem_Click;
-            ((MenuItem)dataBackups.ContextMenu.Items[3]).Click += deleteMenuItem_Click;
-
             activeSaveAnalyzer = new SaveAnalyzer(this)
             {
                 ActiveSave = true,
                 Title = "Active Save World Analyzer"
             };
             backupSaveAnalyzers = new List<SaveAnalyzer>();
-
-            ((MenuItem)dataBackups.ContextMenu.Items[1]).Click += analyzeMenuItem_Click;
 
             GameInfo.GameInfoUpdate += OnGameInfoUpdate;
             dataBackups.CanUserDeleteRows = false;
