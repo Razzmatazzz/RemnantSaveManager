@@ -73,7 +73,12 @@
                                 <MenuItem.Icon>
                                     <Image Source="Resources/Undo_32x.png"/>
                                 </MenuItem.Icon>
-                            </MenuItem>-->
+                            </MenuItem>
+                            <MenuItem Name="backupCMStart" Header="Restore Backup And Start Game" Click="BtnRestoreStart_Click">
+                                <MenuItem.Icon>
+                                    <Image Source="Resources/Play_32x.png"/>
+                                </MenuItem.Icon>
+                            </MenuItem>
                             <MenuItem Header="Analyze World" Click="analyzeMenuItem_Click">
                                 <MenuItem.Icon>
                                     <Image Source="Resources/SearchMember_32x.png"/>

@@ -151,7 +151,9 @@ namespace RemnantSaveManager
             {
                 logMessage("Game folder not found...");
                 this.btnStartGame.IsEnabled = false;
-                this.btnStartGame.Content = FindResource("PlayGrey");
+                this.btnStartGame.Content = this.FindResource("PlayGrey");
+                this.backupCMStart.IsEnabled = false;
+                this.backupCMStart.Icon = this.FindResource("PlayGrey");
                 if (gameDirPath == "")
                 {
                     this.TryFindGameFolder();
@@ -450,41 +452,43 @@ namespace RemnantSaveManager
         }
         private void BtnRestoreStart_Click(object sender, RoutedEventArgs e)
         {
-            throw new NotImplementedException();
-        }
-        private void BtnRestore_Click(object sender, RoutedEventArgs e)
-        {
-            if (isRemnantRunning())
+            if (this.isRemnantRunning())
             {
-                logMessage("Exit the game before restoring a save backup.", LogType.Error);
+                this.logMessage("Exit the game before restoring a save backup.", LogType.Error);
                 return;
             }
 
-            if (dataBackups.SelectedItem == null)
+            if (this.dataBackups.SelectedItem == null)
             {
-                logMessage("Choose a backup to restore from the list!", LogType.Error);
+                this.logMessage("Choose a backup to restore from the list!", LogType.Error);
                 return;
             }
             SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
 
             this.restoreDialog = new RestoreDialog(this, selectedBackup, this.activeSave);
             this.restoreDialog.Owner = this;
-            var dialogResult = this.restoreDialog.ShowDialog();
+            bool? dialogResult = this.restoreDialog.ShowDialog();
             if (dialogResult.HasValue && dialogResult.Value == false) return;
 
-            var restoreResult = this.restoreDialog.Result;
+            string restoreResult = this.restoreDialog.Result;
+
+            this.RestoreBackup(selectedBackup, restoreResult, true);
+        }
+
+        private void RestoreBackup(SaveBackup backup, string type = "All", bool startGame = false)
+        {
 
             if (!this.ActiveSaveIsBackedUp)
             {
-                doBackup();
+                this.doBackup();
             }
 
-            saveWatcher.EnableRaisingEvents = false;
-
+            this.saveWatcher.EnableRaisingEvents = false;
 
             DirectoryInfo di = new DirectoryInfo(saveDirPath);
-            DirectoryInfo buDi = new DirectoryInfo(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks);
-            switch (restoreResult)
+            DirectoryInfo buDi = new DirectoryInfo(backupDirPath + "\\" + backup.SaveDate.Ticks);
+
+            switch (type)
             {
                 case "All":
                     foreach (FileInfo file in di.GetFiles())
@@ -524,23 +528,50 @@ namespace RemnantSaveManager
                     }
                     break;
                 default:
-                    logMessage("Something went wrong!", LogType.Error);
+                    this.logMessage("Something went wrong!", LogType.Error);
                     return;
             }
 
-            foreach (SaveBackup saveBackup in listBackups)
+            foreach (SaveBackup saveBackup in this.listBackups)
             {
                 saveBackup.Active = false;
             }
-            if (restoreResult != "Character")
+            if (type != "Character")
             {
-                selectedBackup.Active = true;
+                backup.Active = true;
             }
 
-            updateCurrentWorldAnalyzer();
-            dataBackups.Items.Refresh();
-            logMessage("Backup restored!", LogType.Success);
-            saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
+            this.updateCurrentWorldAnalyzer();
+            this.dataBackups.Items.Refresh();
+            this.logMessage("Backup restored!", LogType.Success);
+            this.saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
+
+
+            if (startGame) this.LaunchGame();
+        }
+        private void BtnRestore_Click(object sender, RoutedEventArgs e)
+        {
+            if (this.isRemnantRunning())
+            {
+                this.logMessage("Exit the game before restoring a save backup.", LogType.Error);
+                return;
+            }
+
+            if (this.dataBackups.SelectedItem == null)
+            {
+                this.logMessage("Choose a backup to restore from the list!", LogType.Error);
+                return;
+            }
+            SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
+
+            this.restoreDialog = new RestoreDialog(this, selectedBackup, this.activeSave);
+            this.restoreDialog.Owner = this;
+            bool? dialogResult = this.restoreDialog.ShowDialog();
+            if (dialogResult.HasValue && dialogResult.Value == false) return;
+
+            string restoreResult = this.restoreDialog.Result;
+
+            this.RestoreBackup(selectedBackup, restoreResult);
         }
 
         private void ChkAutoBackup_Click(object sender, RoutedEventArgs e)
@@ -1117,62 +1148,6 @@ namespace RemnantSaveManager
             dataBackups.CancelEdit();
         }
 
-        // Not longer needed, since its part of the dialog now.
-        private void menuRestoreWorlds_Click(object sender, RoutedEventArgs e)
-        {
-            if (isRemnantRunning())
-            {
-                logMessage("Exit the game before restoring a save backup.", LogType.Error);
-                return;
-            }
-
-            if (dataBackups.SelectedItem == null)
-            {
-                logMessage("Choose a backup to restore from the list!", LogType.Error);
-                return;
-            }
-
-            SaveBackup selectedBackup = (SaveBackup)dataBackups.SelectedItem;
-            if (selectedBackup.Save.Characters.Count != activeSave.Characters.Count)
-            {
-                logMessage("Backup character count does not match current character count.");
-                MessageBoxResult confirmResult = MessageBox.Show("The active save has a different number of characters than the backup worlds you are restoring. This may result in unexpected behavior. Proceed?",
-                                     "Character Mismatch", MessageBoxButton.YesNo, MessageBoxImage.Warning, MessageBoxResult.No);
-                if (confirmResult == MessageBoxResult.No)
-                {
-                    logMessage("Canceling world restore.");
-                    return;
-                }
-            }
-
-            if (!this.ActiveSaveIsBackedUp)
-            {
-                doBackup();
-            }
-
-            saveWatcher.EnableRaisingEvents = false;
-            System.IO.DirectoryInfo di = new DirectoryInfo(saveDirPath);
-            foreach (FileInfo file in di.GetFiles("save_?.sav"))
-            {
-                file.Delete();
-            }
-            di = new DirectoryInfo(backupDirPath + "\\" + selectedBackup.SaveDate.Ticks);
-            foreach (FileInfo file in di.GetFiles("save_?.sav"))
-                File.Copy(file.FullName, saveDirPath + "\\" + file.Name);
-            foreach (SaveBackup saveBackup in listBackups)
-            {
-                saveBackup.Active = false;
-            }
-            File.SetLastWriteTime(activeSave.SaveProfilePath, DateTime.Now);
-            updateCurrentWorldAnalyzer();
-            dataBackups.Items.Refresh();
-            this.ActiveSaveIsBackedUp = false;
-            btnBackup.IsEnabled = false;
-            btnBackup.Content = FindResource("SaveGrey");
-            logMessage("Backup world data restored!", LogType.Success);
-            saveWatcher.EnableRaisingEvents = Properties.Settings.Default.AutoBackup;
-        }
-
         private void chkCreateLogFile_Click(object sender, RoutedEventArgs e)
         {
             bool newValue = chkCreateLogFile.IsChecked.HasValue ? chkCreateLogFile.IsChecked.Value : false;
@@ -1311,7 +1286,7 @@ namespace RemnantSaveManager
                     {
                         if (File.Exists($"{epicRemnantInstallPath}\\Remnant.exe"))
                         {
-                            SetGameFolder(epicRemnantInstallPath);
+                            this.SetGameFolder(epicRemnantInstallPath);
                             return;
                         }
                     }
@@ -1326,22 +1301,25 @@ namespace RemnantSaveManager
             gameDirPath = "";
             this.txtGameFolder.Text = "";
             this.btnStartGame.IsEnabled = false;
-            this.btnStartGame.Content = FindResource("PlayGrey");
+            this.btnStartGame.Content = this.FindResource("PlayGrey");
+            this.backupCMStart.IsEnabled = false;
+            this.backupCMStart.Icon = this.FindResource("PlayGrey");
             Properties.Settings.Default.GameFolder = "";
             Properties.Settings.Default.Save();
         }
 
         private void SetGameFolder(string folderPath)
         {
-            if (Directory.Exists(folderPath))
-            {
-                gameDirPath = folderPath;
-                this.txtGameFolder.Text = folderPath;
-                this.btnStartGame.IsEnabled = true;
-                this.btnStartGame.Content = FindResource("Play");
-                Properties.Settings.Default.GameFolder = folderPath;
-                Properties.Settings.Default.Save();
-            }
+            if (!Directory.Exists(folderPath)) return;
+
+            gameDirPath = folderPath;
+            this.txtGameFolder.Text = folderPath;
+            this.btnStartGame.IsEnabled = true;
+            this.btnStartGame.Content = this.FindResource("Play");
+            this.backupCMStart.IsEnabled = true;
+            this.backupCMStart.Icon = this.FindResource("Play");
+            Properties.Settings.Default.GameFolder = folderPath;
+            Properties.Settings.Default.Save();
         }
         private void BtnStartGame_Click(object sender, RoutedEventArgs e)
         {
