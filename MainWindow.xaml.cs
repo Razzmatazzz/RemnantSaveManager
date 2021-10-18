@@ -159,6 +159,7 @@ namespace RemnantSaveManager
             {
                 logMessage("Game folder not found...");
                 this.btnStartGame.IsEnabled = false;
+                this.btnStartGame.Content = FindResource("PlayGrey");
                 if (gameDirPath == "")
                 {
                     this.TryFindGameFolder();
@@ -1289,6 +1290,7 @@ namespace RemnantSaveManager
             gameDirPath = "";
             this.txtGameFolder.Text = "";
             this.btnStartGame.IsEnabled = false;
+            this.btnStartGame.Content = FindResource("PlayGrey");
             Properties.Settings.Default.GameFolder = "";
             Properties.Settings.Default.Save();
         }
@@ -1300,6 +1302,7 @@ namespace RemnantSaveManager
                 gameDirPath = folderPath;
                 this.txtGameFolder.Text = folderPath;
                 this.btnStartGame.IsEnabled = true;
+                this.btnStartGame.Content = FindResource("Play");
                 Properties.Settings.Default.GameFolder = folderPath;
                 Properties.Settings.Default.Save();
             }
