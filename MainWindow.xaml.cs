@@ -57,7 +57,7 @@ namespace RemnantSaveManager
             Error
         }
 
-        private bool ActiveSaveIsBackedUp { 
+        private bool ActiveSaveIsBackedUp {
             get {
                 DateTime saveDate = File.GetLastWriteTime(activeSave.SaveProfilePath);
                 for (int i = 0; i < listBackups.Count; i++)
@@ -69,7 +69,7 @@ namespace RemnantSaveManager
                     }
                 }
                 return false;
-            } 
+            }
             set
             {
                 if (value)
@@ -138,7 +138,7 @@ namespace RemnantSaveManager
                 logMessage("Backup folder not set; reverting to default.");
                 Properties.Settings.Default.BackupFolder = defaultBackupFolder;
                 Properties.Settings.Default.Save();
-            } 
+            }
             else if (!Directory.Exists(Properties.Settings.Default.BackupFolder) && !Properties.Settings.Default.BackupFolder.Equals(defaultBackupFolder))
             {
                 logMessage("Backup folder ("+ Properties.Settings.Default.BackupFolder + ") not found; reverting to default.");
@@ -391,7 +391,7 @@ namespace RemnantSaveManager
                 if (!Directory.Exists(backupFolder))
                 {
                     Directory.CreateDirectory(backupFolder);
-                } 
+                }
                 else if (RemnantSave.ValidSaveFolder(backupFolder))
                 {
                     for (int i=listBackups.Count-1; i >= 0; i--)
@@ -457,7 +457,10 @@ namespace RemnantSaveManager
             }
             return true;
         }
-
+        private void BtnRestoreStart_Click(object sender, RoutedEventArgs e)
+        {
+            throw new NotImplementedException();
+        }
         private void BtnRestore_Click(object sender, RoutedEventArgs e)
         {
             if (isRemnantRunning())
@@ -513,7 +516,7 @@ namespace RemnantSaveManager
                 if (!newSave.Valid)
                 {
                     return;
-                    
+
                 }
                 activeSave = newSave;
             }
@@ -1303,29 +1306,24 @@ namespace RemnantSaveManager
         }
         private void BtnStartGame_Click(object sender, RoutedEventArgs e)
         {
+            this.LaunchGame();
+        }
+
+        private void LaunchGame()
+        {
             if (!Directory.Exists(gameDirPath))
             {
                 return;
             }
 
-            var remnantExe = new FileInfo(gameDirPath + "\\Remnant.exe");
-            var remnantExe64 = new FileInfo(gameDirPath + "\\Remnant\\Binaries\\Win64\\Remnant-Win64-Shipping.exe");
+            FileInfo remnantExe = new FileInfo(gameDirPath + "\\Remnant.exe");
+            FileInfo remnantExe64 = new FileInfo(gameDirPath + "\\Remnant\\Binaries\\Win64\\Remnant-Win64-Shipping.exe");
             if (!remnantExe64.Exists && !remnantExe.Exists)
             {
                 return;
             }
 
-            if (Environment.Is64BitOperatingSystem)
-            {
-                if (remnantExe64.Exists)
-                {
-                    Process.Start(remnantExe64.FullName);
-                }
-                else
-                {
-                    Process.Start(remnantExe.FullName);
-                }
-            }
+            Process.Start((remnantExe64.Exists && Environment.Is64BitOperatingSystem) ? remnantExe64.FullName : remnantExe.FullName);
         }
 
         private void btnGameFolder_Click(object sender, RoutedEventArgs e)
