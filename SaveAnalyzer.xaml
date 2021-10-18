@@ -50,7 +50,7 @@
         <Label Content="Zoom" HorizontalAlignment="Right" Margin="0,18,221,0" VerticalAlignment="Top" Foreground="#FFF8F9FA"/>
         <Image HorizontalAlignment="Right" Height="16" Margin="0,20,200,0" VerticalAlignment="Top" Width="16" Source="Resources/ZoomOut_16x.png"/>
         <Image HorizontalAlignment="Right" Height="16" Margin="0,20,10,0" VerticalAlignment="Top" Width="16" Source="Resources/ZoomIn_16x.png"/>
-        <Button x:Name="btnExport" Content="Save to File" HorizontalAlignment="Right" Margin="0,49,38,0" VerticalAlignment="Top" Width="90" Height="23" ToolTip="Expert the current tab to a text file" Click="btnExport_Click"/>
+        <Button x:Name="btnExport" Content="Save to File" HorizontalAlignment="Right" Margin="0,49,38,0" VerticalAlignment="Top" Width="90" Height="23" ToolTip="Export the current tab to a text file" Click="btnExport_Click"/>
         <Button x:Name="btnCopy" Content="⎘" HorizontalAlignment="Right" Margin="0,49,10,0" VerticalAlignment="Top" Width="23" Height="23" ToolTip="Copy current tab to clipboard." FontSize="20" Padding="1,-4,1,1" Click="btnCopy_Click"/>
     </Grid>
 </Window>
