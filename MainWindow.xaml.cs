@@ -498,33 +498,26 @@ namespace RemnantSaveManager
 
                     foreach (FileInfo file in buDi.GetFiles())
                     {
-                        file.CopyTo(saveDirPath + "\\" + file.Name);
+                        file.CopyTo($"{saveDirPath}\\{file.Name}");
                     }
                     break;
                 case "Character":
-                    foreach (FileInfo file in di.GetFiles("profile.sav"))
-                    {
-                        if (file.Name.Contains("profile"))
-                            file.Delete();
-                    }
 
                     foreach (FileInfo file in buDi.GetFiles("profile.sav"))
                     {
-                        if (file.Name.Contains("profile"))
-                            file.CopyTo(saveDirPath + "\\" + file.Name);
+                        FileInfo oldFile = new FileInfo($"{di.FullName}\\{file.Name}");
+                        if (oldFile.Exists) oldFile.Delete();
+
+                        file.CopyTo($"{saveDirPath}\\{file.Name}");
                     }
                     break;
                 case "World":
-                    foreach (FileInfo file in di.GetFiles("save_?.sav"))
-                    {
-                        if (file.Name.Contains("save"))
-                            file.Delete();
-                    }
-
                     foreach (FileInfo file in buDi.GetFiles("save_?.sav"))
                     {
-                        if (file.Name.Contains("save"))
-                            file.CopyTo(saveDirPath + "\\" + file.Name);
+                        FileInfo oldFile = new FileInfo($"{di.FullName}\\{file.Name}");
+                        if (oldFile.Exists) oldFile.Delete();
+
+                        file.CopyTo($"{saveDirPath}\\{file.Name}");
                     }
                     break;
                 default:
