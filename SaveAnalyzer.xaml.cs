@@ -79,18 +79,21 @@ namespace RemnantSaveManager
             nodeNormal.IsExpanded = Properties.Settings.Default.NormalExpanded;
             nodeNormal.Expanded += GameType_CollapsedExpanded;
             nodeNormal.Collapsed += GameType_CollapsedExpanded;
+            nodeNormal.Tag = "mode";
             TreeViewItem nodeHardcore = new TreeViewItem();
             nodeHardcore.Header = "Hardcore";
             nodeHardcore.Foreground = treeMissingItems.Foreground;
             nodeHardcore.IsExpanded = Properties.Settings.Default.HardcoreExpanded;
             nodeHardcore.Expanded += GameType_CollapsedExpanded;
             nodeHardcore.Collapsed += GameType_CollapsedExpanded;
+            nodeHardcore.Tag = "mode";
             TreeViewItem nodeSurvival = new TreeViewItem();
             nodeSurvival.Header = "Survival";
             nodeSurvival.Foreground = treeMissingItems.Foreground;
             nodeSurvival.IsExpanded = Properties.Settings.Default.SurvivalExpanded;
             nodeSurvival.Expanded += GameType_CollapsedExpanded;
             nodeSurvival.Collapsed += GameType_CollapsedExpanded;
+            nodeSurvival.Tag = "mode";
             treeMissingItems.Items.Add(nodeNormal);
             treeMissingItems.Items.Add(nodeHardcore);
             treeMissingItems.Items.Add(nodeSurvival);
@@ -165,6 +168,8 @@ namespace RemnantSaveManager
                     item.Header = rItem.ItemName;
                     if (!rItem.ItemNotes.Equals("")) item.ToolTip = rItem.ItemNotes;
                     item.Foreground = treeMissingItems.Foreground;
+                    item.ContextMenu = this.treeMissingItems.Resources["ItemContext"] as System.Windows.Controls.ContextMenu;
+                    item.Tag = "item";
                     TreeViewItem modeNode = ((TreeViewItem)treeMissingItems.Items[(int)rItem.ItemMode]);
                     TreeViewItem itemTypeNode = null;
                     foreach (TreeViewItem typeNode in modeNode.Items)
@@ -181,6 +186,8 @@ namespace RemnantSaveManager
                         itemTypeNode.Header = rItem.ItemType;
                         itemTypeNode.Foreground = treeMissingItems.Foreground;
                         itemTypeNode.IsExpanded = true;
+                        itemTypeNode.ContextMenu = this.treeMissingItems.Resources["ItemGroupContext"] as System.Windows.Controls.ContextMenu;
+                        itemTypeNode.Tag = "type";
                         ((TreeViewItem)treeMissingItems.Items[(int)rItem.ItemMode]).Items.Add(itemTypeNode);
                     }
                     itemTypeNode.Items.Add(item);
@@ -446,6 +453,64 @@ namespace RemnantSaveManager
         private string ExportCredits()
         {
             return (string)lblCredits.Content;
+        }
+
+        private void btnCopy_Click(object sender, RoutedEventArgs e)
+        {
+            switch (tabAnalyzer.SelectedIndex)
+            {
+                case 0:
+                    Clipboard.SetText(ExportCampaign(isAdventure: false));
+                    break;
+                case 1:
+                    Clipboard.SetText(ExportCampaign(isAdventure: true));
+                    break;
+                case 3:
+                    Clipboard.SetText(ExportMissingItems());
+                    break;
+                case 4:
+                    Clipboard.SetText(ExportCredits());
+                    break;
+                default:
+                    throw new Exception("Tab does not exist");
+            }
+
+            MessageBox.Show("Content copied.");
+        }
+
+        private string GetTreeItem(TreeViewItem item)
+        {
+            if ((string)item.Tag == "item") return item.Header.ToString();
+            StringBuilder sb = new StringBuilder();
+            sb.AppendLine(item.Header.ToString() + ":");
+            foreach (TreeViewItem i in item.Items)
+            {
+                sb.AppendLine("\t- " + GetTreeItem(i));
+            }
+            return sb.ToString();
+        }
+
+        private void CopyItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem mnu = sender as MenuItem;
+            TreeViewItem treeItem = ((ContextMenu)mnu?.Parent)?.PlacementTarget as TreeViewItem;
+
+            Clipboard.SetText(GetTreeItem(treeItem));
+        }
+
+        private void SearchItem_Click(object sender, RoutedEventArgs e)
+        {
+            MenuItem mnu = sender as MenuItem;
+            TreeViewItem treeItem = ((ContextMenu)mnu?.Parent)?.PlacementTarget as TreeViewItem;
+            var type = ((TreeViewItem)treeItem?.Parent)?.Header.ToString();
+            var itemname = treeItem?.Header.ToString();
+
+            if (type == "Armor")
+            {
+                itemname = itemname.Substring(0, itemname.IndexOf("(")) + "Set";
+            }
+
+            System.Diagnostics.Process.Start($"https://remnantfromtheashes.wiki.fextralife.com/{itemname}");
         }
     }
 }
