@@ -99,6 +99,9 @@
     <Compile Include="GameInfo.cs" />
     <Compile Include="RemnantItem.cs" />
     <Compile Include="RemnantSave.cs" />
+    <Compile Include="RestoreDialog.xaml.cs">
+      <DependentUpon>RestoreDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SaveAnalyzer.xaml.cs">
       <DependentUpon>SaveAnalyzer.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="RestoreDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SaveAnalyzer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -190,7 +197,10 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)Resources\GameInfo.xml" "$(ProjectDir)$(OutDir)"
-copy "$(ProjectDir)Resources\GameInfo.xml" "$(ProjectDir)$(OutDir)app.publish\"</PostBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)Resources\GameInfo.xml" "$(TargetDir)"
+copy "$(ProjectDir)Resources\GameInfo.xml" "$(TargetDir)app.publish\"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>RD /S /Q "$(TargetDir)app.publish\"</PreBuildEvent>
   </PropertyGroup>
 </Project>
