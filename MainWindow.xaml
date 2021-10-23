@@ -49,10 +49,6 @@
                 <ColumnDefinition Width="*"/>
                 <ColumnDefinition Width="46"/>
             </Grid.ColumnDefinitions>
-            <Button x:Name="btnBackup" HorizontalAlignment="Left" VerticalAlignment="Center" Click="BtnBackup_Click" ToolTip="Backup current save" Margin="10,5" TabIndex="1" Grid.Column="0">
-                <DynamicResource ResourceKey="Save"/>
-            </Button>
-            <Separator Style="{DynamicResource VerticalSeparatorStyle}" Grid.Column="2" />
             <Button x:Name="btnAnalyzeCurrent" Click="BtnAnalyzeCurrent_Click" ToolTip="Analyze active save" Margin="10,5" TabIndex="3" Grid.Column="3">
                 <Image Height="22" Width="22" Source="Resources/SearchMember_32x.png"/>
             </Button>
@@ -131,6 +127,11 @@
                 <Label x:Name="lblStatus" HorizontalAlignment="Left" VerticalAlignment="Center" Foreground="White" ToolTip="Not backed up" Margin="5">
                     <DynamicResource ResourceKey="StatusNo"/>
                 </Label>
+            </StatusBarItem>
+            <StatusBarItem HorizontalAlignment="Left">
+                <Button x:Name="btnBackup" HorizontalAlignment="Left" VerticalAlignment="Center" Click="BtnBackup_Click" ToolTip="Backup current save" Margin="10,5" TabIndex="1" Grid.Column="0">
+                    <DynamicResource ResourceKey="Save"/>
+                </Button>
             </StatusBarItem>
             <StatusBarItem HorizontalAlignment="Right">
                 <Label x:Name="lblLastMessage" Content="" HorizontalAlignment="Left" VerticalAlignment="Center" Background="{x:Null}" Foreground="White" Margin="5"/>
