@@ -162,6 +162,8 @@
     <None Include="Images\RSM3.png" />
     <None Include="Images\RSM4.png" />
     <None Include="Images\RSM_Analyzer.png" />
+    <Resource Include="Resources\Play_32x.png" />
+    <Resource Include="Resources\Play_grey_32x.png" />
     <Content Include="Resources\SaveAll.ico" />
     <Resource Include="SaveAll_32x.ico" />
     <Resource Include="Resources\SaveAll_32x.png" />
