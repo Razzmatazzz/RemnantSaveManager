@@ -99,6 +99,9 @@
     <Compile Include="GameInfo.cs" />
     <Compile Include="RemnantItem.cs" />
     <Compile Include="RemnantSave.cs" />
+    <Compile Include="RestoreDialog.xaml.cs">
+      <DependentUpon>RestoreDialog.xaml</DependentUpon>
+    </Compile>
     <Compile Include="SaveAnalyzer.xaml.cs">
       <DependentUpon>SaveAnalyzer.xaml</DependentUpon>
     </Compile>
@@ -118,6 +121,10 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Page Include="RestoreDialog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="SaveAnalyzer.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
