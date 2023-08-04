@@ -17,3 +17,5 @@ https://hzla.github.io/Remnant-World-Analyzer/
 
 Also credit to the folks on the official Remnant discord for chasing down items. If you're looking for info on how to get the Swamps of Corsus DLC items, check out this spreadsheet:
 https://docs.google.com/spreadsheets/d/1AmM7c4lhXQYTMbqKH2ZssDONsS9X-r7j6_SaC9HhTUg/edit#gid=0
+
+Note: If you're looking for a similiar tool for Remnant 2, check out (Remnant Save Guardian)[https://github.com/Razzmatazzz/RemnantSaveGuardian].
