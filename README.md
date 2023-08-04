@@ -9,7 +9,7 @@ For an explanation of the interface, check out [the wiki](https://github.com/Raz
 
 Requires [.NET Framework 4.7.2 Runtime](https://dotnet.microsoft.com/download/dotnet-framework/net472).
 
-Credit to hzla for the [original online world analyzer(https://hzla.github.io/Remnant-World-Analyzer/).
+Credit to hzla for the [original online world analyzer](https://hzla.github.io/Remnant-World-Analyzer/).
 
 Also credit to the folks on the official Remnant discord for chasing down items. If you're looking for info on how to get the Swamps of Corsus DLC items, check out [this spreadsheet](https://docs.google.com/spreadsheets/d/1AmM7c4lhXQYTMbqKH2ZssDONsS9X-r7j6_SaC9HhTUg/edit#gid=0).
 
