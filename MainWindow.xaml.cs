@@ -396,7 +396,7 @@ namespace RemnantSaveManager
                         }
                     }
                 }
-                foreach (string file in Directory.GetFiles(saveDirPath))
+                foreach (string file in Directory.GetFiles(saveDirPath, "*.sav"))
                     File.Copy(file, backupFolder + "\\" + System.IO.Path.GetFileName(file), true);
                 if (RemnantSave.ValidSaveFolder(backupFolder))
                 {
