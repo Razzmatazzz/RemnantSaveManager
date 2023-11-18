@@ -11,6 +11,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 using System.Threading;
 using System.Net;
+using System.ComponentModel;
 
 namespace RemnantSaveManager
 {
@@ -250,6 +251,7 @@ namespace RemnantSaveManager
             }
             dataBackups.ItemsSource = null;
             listBackups.Clear();
+            dataBackups.Items.SortDescriptions.Add(new SortDescription("SaveDate", ListSortDirection.Descending));
             Dictionary<long, string> backupNames = getSavedBackupNames();
             Dictionary<long, bool> backupKeeps = getSavedBackupKeeps();
             string[] files = Directory.GetDirectories(backupDirPath);
@@ -302,14 +304,6 @@ namespace RemnantSaveManager
             {
                 updateSavedKeeps();
             }
-        }
-
-        private void loadBackups(Boolean verbose)
-        {
-            Boolean oldVal = suppressLog;
-            suppressLog = !verbose;
-            loadBackups();
-            suppressLog = oldVal;
         }
 
         private Boolean backupActive(SaveBackup saveBackup)
