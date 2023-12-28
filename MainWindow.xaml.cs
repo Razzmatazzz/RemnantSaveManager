@@ -12,6 +12,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Net;
 using System.ComponentModel;
+using System.Collections.ObjectModel;
 
 namespace RemnantSaveManager
 {
@@ -26,7 +27,7 @@ namespace RemnantSaveManager
         private static string defaultWgsSaveFolder = Environment.GetFolderPath(Environment.SpecialFolder.LocalApplicationData) + @"\Packages\PerfectWorldEntertainment.RemnantFromtheAshes_jrajkyc4tsa6w\SystemAppData\wgs";
         private static string saveDirPath;
         private static string gameDirPath;
-        private List<SaveBackup> listBackups;
+        private ObservableCollection<SaveBackup> listBackups;
         private Boolean suppressLog;
         private FileSystemWatcher saveWatcher;
         private Process gameProcess;
@@ -35,7 +36,7 @@ namespace RemnantSaveManager
         private RemnantSave activeSave;
 
         private SaveAnalyzer activeSaveAnalyzer;
-        private List<SaveAnalyzer> backupSaveAnalyzers;
+        private ObservableCollection<SaveAnalyzer> backupSaveAnalyzers;
 
         private RestoreDialog restoreDialog;
 
@@ -194,14 +195,14 @@ namespace RemnantSaveManager
             saveWatcher.Deleted += OnSaveFileChanged;
             //watcher.Renamed += OnRenamed;
 
-            listBackups = new List<SaveBackup>();
+            listBackups = new ObservableCollection<SaveBackup>();
 
             activeSaveAnalyzer = new SaveAnalyzer(this)
             {
                 ActiveSave = true,
                 Title = "Active Save World Analyzer"
             };
-            backupSaveAnalyzers = new List<SaveAnalyzer>();
+            backupSaveAnalyzers = new ObservableCollection<SaveAnalyzer>();
 
             GameInfo.GameInfoUpdate += OnGameInfoUpdate;
             dataBackups.CanUserDeleteRows = false;

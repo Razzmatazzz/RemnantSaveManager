@@ -14,6 +14,7 @@ using System.Windows.Shapes;
 using System.Windows.Controls.Primitives;
 using System.Diagnostics;
 using System.IO;
+using System.Collections.ObjectModel;
 
 namespace RemnantSaveManager
 {
@@ -24,7 +25,7 @@ namespace RemnantSaveManager
     {
         private MainWindow mainWindow;
         public bool ActiveSave { get; set; }
-        private List<RemnantCharacter> listCharacters;
+        private ObservableCollection<RemnantCharacter> listCharacters;
         private AnalyzerColor analyzerColor;
         private Dictionary<string,Dictionary<string,double>> columnWidths;
         private bool initialized;
@@ -35,7 +36,7 @@ namespace RemnantSaveManager
 
             mainWindow = mw;
 
-            listCharacters = new List<RemnantCharacter>();
+            listCharacters = new ObservableCollection<RemnantCharacter>();
 
             cmbCharacter.ItemsSource = listCharacters;
 
@@ -119,7 +120,8 @@ namespace RemnantSaveManager
         public void LoadData(List<RemnantCharacter> chars)
         {
             int selectedChar = cmbCharacter.SelectedIndex;
-            listCharacters = chars;
+            listCharacters.Clear();
+            chars.ForEach(c => listCharacters.Add(c));
             /*Console.WriteLine("Loading characters in analyzer: " + listCharacters.Count);
             foreach (CharacterData cd in listCharacters)
             {
